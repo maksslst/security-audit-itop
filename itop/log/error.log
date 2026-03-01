@@ -1,0 +1,218 @@
+2026-03-01 10:37:54 | Error   | 1     | Uncaught TypeError: get_class(): Argument #1 ($object) must be of type object, null given in /var/www/html/application/displayblock.class.inc.php:2000
+Stack trace:
+#0 /var/www/html/sources/Application/UI/Base/Component/DataTable/DataTableUIBlockFactory.php(153): MenuBlock->GetRenderContent(Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array, 'Menu_AgentToken...')
+#1 /var/www/html/sources/Application/UI/Base/Component/DataTable/DataTableUIBlockFactory.php(85): Combodo\iTop\Application\UI\Base\Component\DataTable\DataTableUIBlockFactory::RenderDataTable(Object(Combodo\iTop\Application\UI\Base\Component\DataTable\DataTable), 'list', Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'Menu_AgentToken...', Object(CMDBObjectSet), Array)
+#2 /var/www/html/application/displayblock.class.inc.php(1453): Combodo\iTop\Application\UI\Base\Component\DataTable\DataTableUIBlockFactory::MakeForResult(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'Menu_AgentToken...', Object(CMDBObjectSet), Array)
+#3 /var/www/html/application/displayblock.class.inc.php(770): DisplayBlock->RenderList(Array, Object(Combodo\iTop\Application\WebPage\iTopWebPage))
+#4 /var/www/html/application/displayblock.class.inc.php(560): DisplayBlock->GetRenderContent(Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array, 'Menu_AgentToken...')
+#5 /var/www/html/application/displayblock.class.inc.php(530): DisplayBlock->GetDisplay(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'Menu_AgentToken...', Array)
+#6 /var/www/html/application/menunode.class.inc.php(1179): DisplayBlock->Display(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'Menu_AgentToken...')
+#7 /var/www/html/application/menunode.class.inc.php(1141): OQLMenuNode::RenderOQLSearch('SELECT AuditAge...', 'Menu:AgentToken...', 'Menu_AgentToken...', false, true, Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array, true)
+#8 /var/www/html/pages/UI.php(1503): OQLMenuNode->RenderContent(Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array)
+#9 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/application/displayblock.class.inc.php',
+  'line' => 2000,
+)
+2026-03-01 11:45:26 | Error   |       | Uncaught Error: Class "Combodo\iTop\AuthentToken\Helper\TokenAuthLog" not found in /var/www/html/env-production/authent-token/src/Hook/TokenLoginExtension.php:34
+Stack trace:
+#0 /var/www/html/core/plugininstanciationmanager.class.inc.php(23): Combodo\iTop\AuthentToken\Hook\TokenLoginExtension->__construct()
+#1 /var/www/html/core/pluginmanager.class.inc.php(70): PluginInstanciationManager->InstantiatePlugins(Array, 'iLoginFSMExtens...')
+#2 /var/www/html/core/pluginmanager.class.inc.php(60): PluginManager->InstantiatePlugins('iLoginFSMExtens...')
+#3 /var/www/html/core/metamodel.class.php(7487): PluginManager->EnumPlugins('iLoginFSMExtens...', NULL)
+#4 /var/www/html/application/loginwebpage.class.inc.php(552): MetaModel::EnumPlugins('iLoginFSMExtens...')
+#5 /var/www/html/application/loginwebpage.class.inc.php(479): LoginWebPage::GetLoginPluginList()
+#6 /var/www/html/application/loginwebpage.class.inc.php(1028): LoginWebPage::Login(0)
+#7 /var/www/html/pages/ajax.render.php(60): LoginWebPage::DoLoginEx('backoffice', false)
+#8 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/authent-token/src/Hook/TokenLoginExtension.php',
+  'line' => 34,
+)
+2026-03-01 11:45:26 | Error   |       | Uncaught CoreException: Include: unable to load the file '/var/www/html/env-production//core/main.php' in /var/www/html/core/metamodel.class.php:6676
+Stack trace:
+#0 /var/www/html/env-production/autoload.php(6): MetaModel::IncludeModule('/var/www/html/e...')
+#1 /var/www/html/core/metamodel.class.php(6487): require_once('/var/www/html/e...')
+#2 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#3 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#4 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#5 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-03-01 11:45:39 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-03-01 11:53:15 | Error   | 1     | Uncaught Error: Undefined constant AttributeDefinition::HIDDEN in /var/www/html/env-production/audit-console/model.audit-console.php:154
+Stack trace:
+#0 /var/www/html/application/cmdbabstract.class.inc.php(3291): AuditAgentToken->GetInitialStateAttributeFlags('registration_to...')
+#1 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(194): cmdbAbstractObject::DisplayCreationForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'AuditAgentToken', Object(AuditAgentToken), Array, Array)
+#2 /var/www/html/pages/UI.php(711): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationNew()
+#3 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 154,
+)
+2026-03-01 12:31:20 | Error   | 1     | Uncaught Error: Undefined constant AttributeDefinition::HIDDEN in /var/www/html/env-production/audit-console/model.audit-console.php:135
+Stack trace:
+#0 /var/www/html/application/cmdbabstract.class.inc.php(3291): AuditAgentToken->GetInitialStateAttributeFlags('registration_to...')
+#1 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(194): cmdbAbstractObject::DisplayCreationForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'AuditAgentToken', Object(AuditAgentToken), Array, Array)
+#2 /var/www/html/pages/UI.php(711): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationNew()
+#3 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 135,
+)
+2026-03-01 14:59:36 | Error   | 1     | Uncaught Error: Call to undefined method ApplicationContext::SetSessionVar() in /var/www/html/env-production/audit-console/model.audit-console.php:194
+Stack trace:
+#0 /var/www/html/core/dbobject.class.php(3548): AuditAgentToken->AfterInsert()
+#1 /var/www/html/application/cmdbabstract.class.inc.php(4556): DBObject->PostInsertActions()
+#2 /var/www/html/core/dbobject.class.php(3519): cmdbAbstractObject->PostInsertActions()
+#3 /var/www/html/application/cmdbabstract.class.inc.php(4539): DBObject->DBInsertNoReload()
+#4 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(439): cmdbAbstractObject->DBInsertNoReload()
+#5 /var/www/html/pages/UI.php(819): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationApplyNew()
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 194,
+)
+2026-03-01 15:17:04 | Error   | 1     | Uncaught Error: Call to undefined method AuditAgentToken::CallBackendToCreateToken() in /var/www/html/env-production/audit-console/model.audit-console.php:190
+Stack trace:
+#0 /var/www/html/core/dbobject.class.php(3548): AuditAgentToken->AfterInsert()
+#1 /var/www/html/application/cmdbabstract.class.inc.php(4556): DBObject->PostInsertActions()
+#2 /var/www/html/core/dbobject.class.php(3519): cmdbAbstractObject->PostInsertActions()
+#3 /var/www/html/application/cmdbabstract.class.inc.php(4539): DBObject->DBInsertNoReload()
+#4 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(439): cmdbAbstractObject->DBInsertNoReload()
+#5 /var/www/html/pages/UI.php(819): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationApplyNew()
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 190,
+)
+2026-03-01 15:28:38 | Error   | 1     | Uncaught Error: Call to undefined method AuditAgentToken::CallBackendToCreateToken() in /var/www/html/env-production/audit-console/model.audit-console.php:154
+Stack trace:
+#0 /var/www/html/core/dbobject.class.php(3548): AuditAgentToken->AfterInsert()
+#1 /var/www/html/application/cmdbabstract.class.inc.php(4556): DBObject->PostInsertActions()
+#2 /var/www/html/core/dbobject.class.php(3519): cmdbAbstractObject->PostInsertActions()
+#3 /var/www/html/application/cmdbabstract.class.inc.php(4539): DBObject->DBInsertNoReload()
+#4 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(439): cmdbAbstractObject->DBInsertNoReload()
+#5 /var/www/html/pages/UI.php(819): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationApplyNew()
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 154,
+)
+2026-03-01 16:47:12 | Error   | 1     | Uncaught TypeError: Cannot access offset of type string on string in /var/www/html/env-production/audit-console/model.audit-console.php:188
+Stack trace:
+#0 /var/www/html/application/cmdbabstract.class.inc.php(1136): AuditAgentToken->DisplayBareRelations(Object(Combodo\iTop\Application\WebPage\iTopWebPage), false)
+#1 /var/www/html/pages/UI.php(444): cmdbAbstractObject->DisplayDetails(Object(Combodo\iTop\Application\WebPage\iTopWebPage))
+#2 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 188,
+)
+2026-03-01 16:47:40 | Error   | 1     | Uncaught TypeError: Cannot access offset of type string on string in /var/www/html/env-production/audit-console/model.audit-console.php:188
+Stack trace:
+#0 /var/www/html/application/cmdbabstract.class.inc.php(3041): AuditAgentToken->DisplayBareRelations(Object(Combodo\iTop\Application\WebPage\iTopWebPage), true)
+#1 /var/www/html/application/cmdbabstract.class.inc.php(3317): cmdbAbstractObject->DisplayModifyForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array)
+#2 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(194): cmdbAbstractObject::DisplayCreationForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'AuditAgentToken', Object(AuditAgentToken), Array, Array)
+#3 /var/www/html/pages/UI.php(711): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationNew()
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 188,
+)
+2026-03-01 17:02:23 | Error   | 1     | Uncaught TypeError: Cannot access offset of type string on string in /var/www/html/env-production/audit-console/model.audit-console.php:191
+Stack trace:
+#0 /var/www/html/application/cmdbabstract.class.inc.php(3041): AuditAgentToken->DisplayBareRelations(Object(Combodo\iTop\Application\WebPage\iTopWebPage), true)
+#1 /var/www/html/application/cmdbabstract.class.inc.php(3317): cmdbAbstractObject->DisplayModifyForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), Array)
+#2 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(194): cmdbAbstractObject::DisplayCreationForm(Object(Combodo\iTop\Application\WebPage\iTopWebPage), 'AuditAgentToken', Object(AuditAgentToken), Array, Array)
+#3 /var/www/html/pages/UI.php(711): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationNew()
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 191,
+)
+2026-03-01 17:50:30 | Error   | 1     | Uncaught Error: Call to undefined method utils::Redirect() in /var/www/html/env-production/audit-console/model.audit-console.php:178
+Stack trace:
+#0 /var/www/html/core/dbobject.class.php(3548): AuditAgentToken->AfterInsert()
+#1 /var/www/html/application/cmdbabstract.class.inc.php(4556): DBObject->PostInsertActions()
+#2 /var/www/html/core/dbobject.class.php(3519): cmdbAbstractObject->PostInsertActions()
+#3 /var/www/html/application/cmdbabstract.class.inc.php(4539): DBObject->DBInsertNoReload()
+#4 /var/www/html/sources/Controller/Base/Layout/ObjectController.php(439): cmdbAbstractObject->DBInsertNoReload()
+#5 /var/www/html/pages/UI.php(819): Combodo\iTop\Controller\Base\Layout\ObjectController->OperationApplyNew()
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 178,
+)
+2026-03-01 21:03:20 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)

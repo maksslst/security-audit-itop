@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb:10.6
+    container_name: itop-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_USER: ${USER}
+      MYSQL_PASSWORD: ${PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  itop:
+    build: .
+    container_name: itop
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    volumes:
+      - ./itop:/var/www/html
+
+volumes:
+  db_data:

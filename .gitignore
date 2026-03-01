@@ -1,0 +1,17 @@
+/data/
+/log/
+/env-*/
+/node_modules/
+
+env-*/
+data/cache-*/
+data/backups-*/
+
+conf/production/
+conf/params.local.php
+
+.DS_Store
+Thumbs.db
+
+../.idea/
+.vscode/

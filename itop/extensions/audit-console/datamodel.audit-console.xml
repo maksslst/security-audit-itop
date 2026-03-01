@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <classes>
+        <class id="MyAudit" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>audit</db_table>
+                <db_key_field>id</db_key_field>
+            </properties>
+            <fields>
+                <field id="agent_id" xsi:type="AttributeExternalKey">
+                    <sql>agent_id</sql>
+                    <target_class>AuditAgent</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="backend_id" xsi:type="AttributeString">
+                    <sql>backend_id</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="pending">
+                            <code>PENDING</code>
+                        </value>
+                        <value id="in_progress">
+                            <code>IN_PROGRESS</code>
+                        </value>
+                        <value id="completed">
+                            <code>COMPLETED</code>
+                        </value>
+                        <value id="failed">
+                            <code>FAILED</code>
+                        </value>
+                    </values>
+                    <default_value>pending</default_value>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+                <field id="created_at" xsi:type="AttributeDateTime">
+                    <sql>created_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+                <field id="started_at" xsi:type="AttributeDateTime">
+                    <sql>started_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+                <field id="completed_at" xsi:type="AttributeDateTime">
+                    <sql>completed_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="agent_id">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="agent_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="backend_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="created_at">
+                            <rank>40</rank>
+                        </item>
+                        <item id="started_at">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_at">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="agent_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="created_at">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </search>
+            </presentation>
+            <methods>
+                <method id="GetInitialStateAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+{
+    return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
+}
+]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditAgent" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>audit_agent</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>public_id</friendlyname_attcode>
+            </properties>
+            <event_listeners>
+                <listener id="auditagent_before_query">
+                    <event>EVENT_DB_QUERY_BEFORE</event>
+                    <callback>AuditAgent::OnBeforeQuery</callback>
+                </listener>
+            </event_listeners>
+            <fields>
+                <field id="public_id" xsi:type="AttributeString">
+                    <sql>public_id</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="os_type" xsi:type="AttributeEnum">
+                    <sql>os_type</sql>
+                    <values>
+                        <value id="linux">
+                            <code>Linux</code>
+                        </value>
+                        <value id="windows">
+                            <code>Windows</code>
+                        </value>
+                        <value id="unknown">
+                            <code>Unknown</code>
+                        </value>
+                    </values>
+                    <default_value>unknown</default_value>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="audits_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>MyAudit</linked_class>
+                    <ext_key_to_me>agent_id</ext_key_to_me>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="public_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="os_type">
+                            <rank>20</rank>
+                        </item>
+                        <item id="audits_list">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="public_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="os_type">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="GetInitialStateAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+{
+    return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
+}
+]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditAgentToken" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>audit_agent_token</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>friendly_name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="friendly_name" xsi:type="AttributeString">
+                    <sql>friendly_name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="ttl_minutes" xsi:type="AttributeInteger">
+                    <sql>ttl_minutes</sql>
+                    <default_value>15</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="expires_at" xsi:type="AttributeDateTime">
+                    <sql>expires_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="friendly_name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="ttl_minutes">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="friendly_name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="ttl_minutes">
+                            <rank>20</rank>
+                        </item>
+                        <item id="expires_at">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="friendly_name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="ttl_minutes">
+                            <rank>20</rank>
+                        </item>
+                        <item id="expires_at">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="GetInitialStateAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+{
+    $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+
+    if ($this->IsNew())
+    {
+        if (!in_array($sAttCode, array('friendly_name','ttl_minutes')))
+        {
+            $iFlags |= OPT_ATT_HIDDEN;
+        }
+    }
+    else
+    {
+        if ($sAttCode == 'ttl_minutes')
+        {
+            $iFlags |= OPT_ATT_READONLY;
+        }
+    }
+
+    return $iFlags;
+}
+]]></code>
+                </method>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+protected function AfterInsert()
+{
+    parent::AfterInsert();
+    $ttl = (int)$this->Get('ttl_minutes');
+    $response = $this->CallBackendToCreateToken($ttl);
+    if (is_string($response)) {
+        $response = json_decode($response, true);
+    }
+
+    $expiresAt = date('Y-m-d H:i:s', time() + ((int)$response['expiresInMinutes'] * 60));
+    $this->Set('expires_at', $expiresAt);
+    $this->AllowWrite();
+    $this->DBUpdate();
+
+    $_SESSION['audit_console_token_once'] = [
+        'object_id' => $this->GetKey(),
+        'token' => $response['registrationToken']
+    ];
+}
+]]></code>
+                </method>
+                <method id="DisplayBareRelations" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
+{
+    parent::DisplayBareRelations($oPage, $bEditMode);
+
+    if (isset($_SESSION['audit_console_token_once']) && is_array($_SESSION['audit_console_token_once'])) {
+        $data = $_SESSION['audit_console_token_once'];
+
+        if (isset($data['object_id'], $data['token']) && $data['object_id'] == $this->GetKey()) {
+            $token = $data['token'];
+            unset($_SESSION['audit_console_token_once']);
+
+            $html = '
+            <div style="
+                margin:20px 0;
+                padding:20px;
+                border-radius:8px;
+                background:#e8f5e9;
+                border:1px solid #2e7d32;
+            ">
+                <h3 style="margin-top:0;color:#2e7d32;">
+                    Registration token created
+                </h3>
+                <p style="margin:10px 0;">
+                    Please copy this token now. It will not be shown again.
+                </p>
+                <div style="
+                    font-size:18px;
+                    font-weight:bold;
+                    background:#ffffff;
+                    padding:10px;
+                    border-radius:5px;
+                    border:1px dashed #2e7d32;
+                    word-break:break-all;
+                ">
+                    '.$token.'
+                </div>
+            </div>';
+
+            $oPage->add($html);
+        }
+    }
+}
+]]></code>
+                </method>
+                <method id="CallBackendToCreateToken" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+private function CallBackendToCreateToken($ttl)
+{
+    return [
+        'registrationToken' => bin2hex(random_bytes(16)),
+        'expiresInMinutes' => $ttl
+    ];
+}
+]]></code>
+                </method>
+            </methods>
+        </class>
+    </classes>
+
+    <menus>
+        <menu id="AuditConsole" xsi:type="MenuGroup" _delta="define">
+            <parent>ConfigManagement</parent>
+            <rank>100</rank>
+            <label>Audit Console</label>
+        </menu>
+        <menu id="AuditMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>10</rank>
+            <oql>SELECT MyAudit</oql>
+        </menu>
+        <menu id="AgentsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>20</rank>
+            <oql>SELECT AuditAgent</oql>
+        </menu>
+        <menu id="AgentTokensMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>30</rank>
+            <oql>SELECT AuditAgentToken</oql>
+        </menu>
+    </menus>
+</itop_design>

@@ -1,0 +1,272 @@
+2026-02-28 13:22:43 | Error   |       | #0 /var/www/html/core/cmdbsource.class.inc.php(580): CMDBSource::DBQuery('SELECT\n DISTINC...')
+#1 /var/www/html/core/dbobjectset.class.php(771): CMDBSource::Query('SELECT\n DISTINC...')
+#2 /var/www/html/core/dbobjectset.class.php(1009): DBObjectSet->Load()
+#3 /var/www/html/core/userrights.class.inc.php(1957): DBObjectSet->Fetch()
+#4 /var/www/html/core/userrights.class.inc.php(1925): UserRights::FindUser('admin', 'internal', false)
+#5 /var/www/html/core/userrights.class.inc.php(901): UserRights::FindUser('admin', 'any')
+#6 /var/www/html/application/loginwebpage.class.inc.php(702): UserRights::Login('admin')
+#7 /var/www/html/application/loginform.class.inc.php(116): LoginWebPage::CheckLoggedUser(0)
+#8 /var/www/html/application/applicationextension.inc.php(124): LoginForm->OnConnected(0)
+#9 /var/www/html/application/loginwebpage.class.inc.php(498): AbstractLoginFSMExtension->LoginAction('connected', 0)
+#10 /var/www/html/application/loginwebpage.class.inc.php(1028): LoginWebPage::Login(0)
+#11 /var/www/html/application/loginwebpage.class.inc.php(1008): LoginWebPage::DoLoginEx('backoffice', false, 0)
+#12 /var/www/html/pages/UI.php(316): LoginWebPage::DoLogin()
+#13 {main} | IssueLog |||
+2026-02-28 13:31:54 | Error   |       | #0 /var/www/html/core/cmdbsource.class.inc.php(580): CMDBSource::DBQuery('SELECT COUNT(*)...')
+#1 /var/www/html/core/dbobjectset.class.php(962): CMDBSource::Query('SELECT COUNT(*)...')
+#2 /var/www/html/application/applicationcontext.class.inc.php(158): DBObjectSet->CountWithLimit(2)
+#3 /var/www/html/application/applicationcontext.class.inc.php(123): ApplicationContext->ReadContext()
+#4 /var/www/html/sources/Application/WebPage/NiceWebPage.php(206): ApplicationContext->__construct()
+#5 /var/www/html/sources/Application/WebPage/NiceWebPage.php(99): Combodo\iTop\Application\WebPage\NiceWebPage->GetApplicationContext()
+#6 /var/www/html/sources/Application/WebPage/WebPage.php(232): Combodo\iTop\Application\WebPage\NiceWebPage->InitializeScripts()
+#7 /var/www/html/sources/Application/WebPage/NiceWebPage.php(82): Combodo\iTop\Application\WebPage\WebPage->__construct('\xD0\x92\xD1\x85\xD0\xBE\xD0\xB4 \xD0\xB2 iTo...', false)
+#8 /var/www/html/application/loginwebpage.class.inc.php(92): Combodo\iTop\Application\WebPage\NiceWebPage->__construct('\xD0\x92\xD1\x85\xD0\xBE\xD0\xB4 \xD0\xB2 iTo...')
+#9 /var/www/html/application/loginwebpage.class.inc.php(81): LoginWebPage->__construct()
+#10 /var/www/html/application/loginform.class.inc.php(52): LoginWebPage::NewLoginWebPage()
+#11 /var/www/html/application/applicationextension.inc.php(112): LoginForm->OnReadCredentials(0)
+#12 /var/www/html/application/loginwebpage.class.inc.php(498): AbstractLoginFSMExtension->LoginAction('read credential...', 0)
+#13 /var/www/html/application/loginwebpage.class.inc.php(1028): LoginWebPage::Login(0)
+#14 /var/www/html/application/loginwebpage.class.inc.php(1008): LoginWebPage::DoLoginEx('backoffice', false, 0)
+#15 /var/www/html/pages/UI.php(316): LoginWebPage::DoLogin()
+#16 {main} | IssueLog |||
+2026-02-28 14:57:19 | Error   |       | #0 /var/www/html/core/cmdbsource.class.inc.php(580): CMDBSource::DBQuery('SELECT\n DISTINC...')
+#1 /var/www/html/core/dbobjectset.class.php(771): CMDBSource::Query('SELECT\n DISTINC...')
+#2 /var/www/html/core/dbobjectset.class.php(1009): DBObjectSet->Load()
+#3 /var/www/html/core/userrights.class.inc.php(1957): DBObjectSet->Fetch()
+#4 /var/www/html/core/userrights.class.inc.php(1925): UserRights::FindUser('admin', 'internal', false)
+#5 /var/www/html/core/userrights.class.inc.php(901): UserRights::FindUser('admin', 'any')
+#6 /var/www/html/application/loginwebpage.class.inc.php(702): UserRights::Login('admin')
+#7 /var/www/html/application/loginform.class.inc.php(116): LoginWebPage::CheckLoggedUser(0)
+#8 /var/www/html/application/applicationextension.inc.php(124): LoginForm->OnConnected(0)
+#9 /var/www/html/application/loginwebpage.class.inc.php(498): AbstractLoginFSMExtension->LoginAction('connected', 0)
+#10 /var/www/html/application/loginwebpage.class.inc.php(1028): LoginWebPage::Login(0)
+#11 /var/www/html/application/loginwebpage.class.inc.php(1008): LoginWebPage::DoLoginEx('backoffice', false, 0)
+#12 /var/www/html/pages/UI.php(316): LoginWebPage::DoLogin()
+#13 {main} | IssueLog |||
+2026-02-28 15:18:45 | Error   |       | #0 /var/www/html/core/cmdbsource.class.inc.php(580): CMDBSource::DBQuery('SELECT\n DISTINC...')
+#1 /var/www/html/core/dbobjectset.class.php(771): CMDBSource::Query('SELECT\n DISTINC...')
+#2 /var/www/html/core/dbobjectset.class.php(1009): DBObjectSet->Load()
+#3 /var/www/html/core/userrights.class.inc.php(1957): DBObjectSet->Fetch()
+#4 /var/www/html/core/userrights.class.inc.php(1925): UserRights::FindUser('admin', 'internal', false)
+#5 /var/www/html/core/userrights.class.inc.php(901): UserRights::FindUser('admin', 'any')
+#6 /var/www/html/application/loginwebpage.class.inc.php(702): UserRights::Login('admin')
+#7 /var/www/html/application/loginform.class.inc.php(116): LoginWebPage::CheckLoggedUser(0)
+#8 /var/www/html/application/applicationextension.inc.php(124): LoginForm->OnConnected(0)
+#9 /var/www/html/application/loginwebpage.class.inc.php(498): AbstractLoginFSMExtension->LoginAction('connected', 0)
+#10 /var/www/html/application/loginwebpage.class.inc.php(1028): LoginWebPage::Login(0)
+#11 /var/www/html/application/loginwebpage.class.inc.php(1008): LoginWebPage::DoLoginEx('backoffice', false, 0)
+#12 /var/www/html/pages/UI.php(316): LoginWebPage::DoLogin()
+#13 {main} | IssueLog |||
+2026-02-28 16:42:19 | Error   | 1     | Uncaught Error: Class "ApplicationMenuNode" not found in /var/www/html/env-production/audit-console/model.audit-console.php:146
+Stack trace:
+#0 /var/www/html/application/menunode.class.inc.php(85): MenuCreation_audit_console::OnMenuCreation()
+#1 /var/www/html/application/menunode.class.inc.php(265): ApplicationMenu::LoadAdditionalMenus()
+#2 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenu.php(120): ApplicationMenu::GetMenuGroups(Array)
+#3 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenuFactory.php(57): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenu->__construct(Object(ApplicationContext), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\PopoverMenu), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\NewsroomMenu\NewsroomMenu), 'ibo-navigation-...')
+#4 /var/www/html/sources/Application/WebPage/iTopWebPage.php(148): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenuFactory::MakeStandard()
+#5 /var/www/html/pages/UI.php(341): Combodo\iTop\Application\WebPage\iTopWebPage->__construct('\xD0\x94\xD0\xBE\xD0\xB1\xD1\x80\xD0\xBE \xD0\xBF\xD0\xBE...', false)
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 146,
+)
+2026-02-28 16:51:41 | Error   | 1     | Uncaught Error: Class "ApplicationMenuNode" not found in /var/www/html/env-production/audit-console/model.audit-console.php:146
+Stack trace:
+#0 /var/www/html/application/menunode.class.inc.php(85): MenuCreation_audit_console::OnMenuCreation()
+#1 /var/www/html/application/menunode.class.inc.php(265): ApplicationMenu::LoadAdditionalMenus()
+#2 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenu.php(120): ApplicationMenu::GetMenuGroups(Array)
+#3 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenuFactory.php(57): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenu->__construct(Object(ApplicationContext), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\PopoverMenu), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\NewsroomMenu\NewsroomMenu), 'ibo-navigation-...')
+#4 /var/www/html/sources/Application/WebPage/iTopWebPage.php(148): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenuFactory::MakeStandard()
+#5 /var/www/html/pages/UI.php(341): Combodo\iTop\Application\WebPage\iTopWebPage->__construct('\xD0\x94\xD0\xBE\xD0\xB1\xD1\x80\xD0\xBE \xD0\xBF\xD0\xBE...', false)
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 146,
+)
+2026-02-28 17:03:59 | Error   | 1     | Uncaught Error: Class "ApplicationMenuNode" not found in /var/www/html/env-production/audit-console/model.audit-console.php:146
+Stack trace:
+#0 /var/www/html/application/menunode.class.inc.php(85): MenuCreation_audit_console::OnMenuCreation()
+#1 /var/www/html/application/menunode.class.inc.php(265): ApplicationMenu::LoadAdditionalMenus()
+#2 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenu.php(120): ApplicationMenu::GetMenuGroups(Array)
+#3 /var/www/html/sources/Application/UI/Base/Layout/NavigationMenu/NavigationMenuFactory.php(57): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenu->__construct(Object(ApplicationContext), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\PopoverMenu), Object(Combodo\iTop\Application\UI\Base\Component\PopoverMenu\NewsroomMenu\NewsroomMenu), 'ibo-navigation-...')
+#4 /var/www/html/sources/Application/WebPage/iTopWebPage.php(148): Combodo\iTop\Application\UI\Base\Layout\NavigationMenu\NavigationMenuFactory::MakeStandard()
+#5 /var/www/html/pages/UI.php(341): Combodo\iTop\Application\WebPage\iTopWebPage->__construct('\xD0\x94\xD0\xBE\xD0\xB1\xD1\x80\xD0\xBE \xD0\xBF\xD0\xBE...', false)
+#6 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/env-production/audit-console/model.audit-console.php',
+  'line' => 146,
+)
+2026-02-28 19:34:10 | Error   |       | Include: unable to load the file '/var/www/html/env-production//audit-console/datamodel.audit-console.xml'
+Debug trace:
+#0 /var/www/html/env-production/autoload.php(65): MetaModel::IncludeModule('/var/www/html/e...')
+#1 /var/www/html/core/metamodel.class.php(6487): require_once('/var/www/html/e...')
+#2 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#3 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#4 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#5 {main} | IssueLog |||
+2026-02-28 19:53:18 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:18 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:23 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:23 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:27 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:27 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 19:53:27 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
+2026-02-28 21:18:33 | Error   |       | Uncaught Error: Failed opening required '/var/www/html/env-production/dictionaries/languages.php' (include_path='/var/www/html/lib/pear/archive_tar:/var/www/html/lib/pear/console_getopt:/var/www/html/lib/pear/pear-core-minimal/src:/var/www/html/lib/pear/pear_exception:.:/usr/local/lib/php') in /var/www/html/core/metamodel.class.php:6473
+Stack trace:
+#0 /var/www/html/core/metamodel.class.php(6383): MetaModel::LoadConfig(Object(Config), true)
+#1 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#2 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#3 {main}
+
+Next Error: Undefined constant "EVENT_DOWNLOAD_DOCUMENT" in /var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php:37
+Stack trace:
+#0 /var/www/html/sources/Service/Events/EventService.php(51): Combodo\iTop\Core\EventListener\AttributeBlobEventListener->RegisterEventsAndListeners()
+#1 /var/www/html/core/metamodel.class.php(6401): Combodo\iTop\Service\Events\EventService::InitService()
+#2 /var/www/html/application/startup.inc.php(103): MetaModel::Startup('/var/www/html/c...', false, true, false, 'production')
+#3 /var/www/html/pages/ajax.render.php(32): require_once('/var/www/html/a...')
+#4 {main}
+  thrown | IssueLog |||
+array (
+  'type' => 1,
+  'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
+  'line' => 37,
+)
