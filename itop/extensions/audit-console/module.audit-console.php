@@ -1,5 +1,4 @@
 <?php
-
 SetupWebPage::AddModule(
     __FILE__,
     'audit-console/1.0.0',
@@ -14,9 +13,7 @@ SetupWebPage::AddModule(
         'datamodel' => array(
             'datamodel.audit-console.xml'
         ),
-        'model' => array(
-            'model/auditagent.class.inc.php'
-        ),
+        'model' => array(),
         'data.struct' => array(),
         'data.sample' => array(),
         'doc.manual_setup' => '',

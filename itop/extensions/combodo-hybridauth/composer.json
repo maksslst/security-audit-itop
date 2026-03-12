@@ -1,0 +1,13 @@
+{
+	"config": {
+		"classmap-authoritative": true
+	},
+	"autoload": {
+		"psr-4": {
+			"Combodo\\iTop\\HybridAuth\\": "src"
+		}
+	},
+	"minimum-stability" : "RC",
+	"require" : {
+	}
+}

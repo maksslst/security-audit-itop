@@ -25,7 +25,7 @@ $MySettings = array(
 	//	default: false
 	'activity_panel.show_author_name_below_entries' => false,
 
-	'allowed_login_types' => 'form|external|basic|token',
+	'allowed_login_types' => 'form|hybridauth-Keycloak|external|basic',
 
 	// apc_cache.enabled: If set, the APC cache is allowed (the PHP extension must also be active)
 	//	default: true
@@ -37,13 +37,13 @@ $MySettings = array(
 
 	// app_root_url: Root URL used for navigating within the application, or from an email to the application (you can put $SERVER_NAME$ as a placeholder for the server's name)
 	//	default: ''
-	'app_root_url' => 'http://localhost:8080/',
+	'app_root_url' => 'http://itop.local/',
 
-	'application.secret' => '28bf0e00528cd3015d81fbe1cae41c61',
+	'application.secret' => '0078f9d84bd8fd50b014775a5623b6b7',
 
 	// behind_reverse_proxy: If true, then proxies custom header (X-Forwarded-*) are taken into account. Use only if the webserver is not publicly accessible (reachable only by the reverse proxy)
 	//	default: false
-	'behind_reverse_proxy' => false,
+	'behind_reverse_proxy' => true,
 
 	// cron_max_execution_time: Duration (seconds) of the cron.php script : if exceeded the script will exit even if there are remaining tasks to process. Must be shorter than php max_execution_time setting (note than when using CLI, this is set to 0 by default which means unlimited). If cron.php is ran via web, it must be shorter than the web server response timeout.
 	//	default: 600
@@ -107,7 +107,7 @@ $MySettings = array(
 	//	default: '[a-zA-Z0-9._&\'-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9-]{2,}'
 	'email_validation_pattern' => '[a-zA-Z0-9._&\'-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9-]{2,}',
 
-	'encryption_key' => '50669be74381761d7cffb213948e306e74deddefa753d359a633c110e5a5a927',
+	'encryption_key' => '1c18d6d6d5f99fe8a9d86f8a9546c206a1f79626015eaebf15a3400be599d28a',
 
 	'encryption_library' => 'Sodium',
 
@@ -266,6 +266,36 @@ $MyModuleSettings = array(
 		'retention_count' => 5,
 		'enabled' => true,
 		'itop_backup_incident' => '',
+	),
+	'combodo-hybridauth' => array (
+		'debug' => true,
+		'synchronize_user' => true,
+		'synchronize_contact' => true,
+		'default_organization' => 'My Company',
+		'default_profiles' => array (
+		  0 => 'Administrator',
+		),
+		'providers' => array (
+		  'Keycloak' => 
+		  array (
+		    'enabled' => true,
+		    'adapter' => 'Hybridauth\\Provider\\Keycloak',
+		    'keys' => 
+		    array (
+		      'id' => 'itop',
+		      'secret' => getenv('AUDITOR_ITOP_CLIENT_SECRET'),
+		    ),
+		    'url' => 'http://keycloak.local',
+		    'realm' => 'internal',
+		    'scope' => 'openid profile email',
+		    'profiles_idp_key' => 'roles',
+		    'profiles_idp_separator' => ',',
+		    'groups_to_profiles' => 
+		    array (
+		      'sp_id1' => 'Administrator',
+		    ),
+		  ),
+		),
 	),
 );
 

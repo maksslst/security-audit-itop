@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itop_design version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <classes>
+        <class id="Organization" _delta="must_exist">
+            <fields>
+                <field id="auditor_tenant_id" xsi:type="AttributeInteger" _delta="define">
+                    <sql>auditor_tenant_id</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                    <tracking_level>none</tracking_level>
+                </field>
+            </fields>
+        </class>
+
         <class id="MyAudit" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -11,16 +22,35 @@
                 <db_key_field>id</db_key_field>
             </properties>
             <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                    </items>
+                </details>
+            </presentation>
+            <methods/>
+        </class>
+
+        <class id="AuditAgent" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>audit_agent</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>public_id</friendlyname_attcode>
+            </properties>
+            <fields>
                 <field id="agent_id" xsi:type="AttributeExternalKey">
                     <sql>agent_id</sql>
                     <target_class>AuditAgent</target_class>
                     <is_null_allowed>false</is_null_allowed>
-                </field>
-                <field id="backend_id" xsi:type="AttributeString">
-                    <sql>backend_id</sql>
-                    <max_length>64</max_length>
-                    <is_null_allowed>true</is_null_allowed>
-                    <is_read_only>true</is_read_only>
                 </field>
                 <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
@@ -41,121 +71,6 @@
                     <default_value>pending</default_value>
                     <is_null_allowed>true</is_null_allowed>
                     <is_read_only>true</is_read_only>
-                </field>
-                <field id="created_at" xsi:type="AttributeDateTime">
-                    <sql>created_at</sql>
-                    <is_null_allowed>true</is_null_allowed>
-                    <is_read_only>true</is_read_only>
-                </field>
-                <field id="started_at" xsi:type="AttributeDateTime">
-                    <sql>started_at</sql>
-                    <is_null_allowed>true</is_null_allowed>
-                    <is_read_only>true</is_read_only>
-                </field>
-                <field id="completed_at" xsi:type="AttributeDateTime">
-                    <sql>completed_at</sql>
-                    <is_null_allowed>true</is_null_allowed>
-                    <is_read_only>true</is_read_only>
-                </field>
-            </fields>
-            <presentation>
-                <creation>
-                    <items>
-                        <item id="agent_id">
-                            <rank>10</rank>
-                        </item>
-                    </items>
-                </creation>
-                <details>
-                    <items>
-                        <item id="agent_id">
-                            <rank>10</rank>
-                        </item>
-                        <item id="status">
-                            <rank>20</rank>
-                        </item>
-                        <item id="backend_id">
-                            <rank>30</rank>
-                        </item>
-                        <item id="created_at">
-                            <rank>40</rank>
-                        </item>
-                        <item id="started_at">
-                            <rank>50</rank>
-                        </item>
-                        <item id="completed_at">
-                            <rank>60</rank>
-                        </item>
-                    </items>
-                </details>
-                <search>
-                    <items>
-                        <item id="agent_id">
-                            <rank>10</rank>
-                        </item>
-                        <item id="status">
-                            <rank>20</rank>
-                        </item>
-                        <item id="created_at">
-                            <rank>30</rank>
-                        </item>
-                    </items>
-                </search>
-            </presentation>
-            <methods>
-                <method id="GetInitialStateAttributeFlags" _delta="define">
-                    <static>false</static>
-                    <access>public</access>
-                    <code><![CDATA[
-public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
-{
-    return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
-}
-]]></code>
-                </method>
-            </methods>
-        </class>
-
-        <class id="AuditAgent" _delta="define">
-            <parent>cmdbAbstractObject</parent>
-            <properties>
-                <category>bizmodel,searchable</category>
-                <db_table>audit_agent</db_table>
-                <db_key_field>id</db_key_field>
-                <friendlyname_attcode>public_id</friendlyname_attcode>
-            </properties>
-            <event_listeners>
-                <listener id="auditagent_before_query">
-                    <event>EVENT_DB_QUERY_BEFORE</event>
-                    <callback>AuditAgent::OnBeforeQuery</callback>
-                </listener>
-            </event_listeners>
-            <fields>
-                <field id="public_id" xsi:type="AttributeString">
-                    <sql>public_id</sql>
-                    <max_length>64</max_length>
-                    <is_null_allowed>false</is_null_allowed>
-                    <is_editable>false</is_editable>
-                </field>
-                <field id="os_type" xsi:type="AttributeEnum">
-                    <sql>os_type</sql>
-                    <values>
-                        <value id="linux">
-                            <code>Linux</code>
-                        </value>
-                        <value id="windows">
-                            <code>Windows</code>
-                        </value>
-                        <value id="unknown">
-                            <code>Unknown</code>
-                        </value>
-                    </values>
-                    <default_value>unknown</default_value>
-                    <is_editable>false</is_editable>
-                </field>
-                <field id="audits_list" xsi:type="AttributeLinkedSet">
-                    <linked_class>MyAudit</linked_class>
-                    <ext_key_to_me>agent_id</ext_key_to_me>
                 </field>
             </fields>
             <presentation>
@@ -188,11 +103,11 @@ public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
                     <static>false</static>
                     <access>public</access>
                     <code><![CDATA[
-public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
-{
-    return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
-}
-]]></code>
+                        public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+                        {
+                            return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
+                        }
+                    ]]></code>
                 </method>
             </methods>
         </class>
@@ -265,114 +180,566 @@ public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
                     <static>false</static>
                     <access>public</access>
                     <code><![CDATA[
-public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
-{
-    $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+                        public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+                        {
+                            $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+                            if ($this->IsNew())
+                            {
+                                if (!in_array($sAttCode, array('friendly_name','ttl_minutes')))
+                                {
+                                    $iFlags |= OPT_ATT_HIDDEN;
+                                }
+                            }
+                            else
+                            {
+                                if ($sAttCode == 'ttl_minutes')
+                                {
+                                    $iFlags |= OPT_ATT_READONLY;
+                                }
+                            }
 
-    if ($this->IsNew())
-    {
-        if (!in_array($sAttCode, array('friendly_name','ttl_minutes')))
-        {
-            $iFlags |= OPT_ATT_HIDDEN;
-        }
-    }
-    else
-    {
-        if ($sAttCode == 'ttl_minutes')
-        {
-            $iFlags |= OPT_ATT_READONLY;
-        }
-    }
-
-    return $iFlags;
-}
-]]></code>
+                            return $iFlags;
+                        }
+                    ]]></code>
                 </method>
                 <method id="AfterInsert" _delta="define">
                     <static>false</static>
                     <access>protected</access>
                     <code><![CDATA[
-protected function AfterInsert()
-{
-    parent::AfterInsert();
-    $ttl = (int)$this->Get('ttl_minutes');
-    $response = $this->CallBackendToCreateToken($ttl);
-    if (is_string($response)) {
-        $response = json_decode($response, true);
-    }
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            $ttl = (int)$this->Get('ttl_minutes');
+                            $response = $this->CallBackendToCreateToken($ttl);
+                            if (is_string($response)) {
+                                $response = json_decode($response, true);
+                            }
 
-    $expiresAt = date('Y-m-d H:i:s', time() + ((int)$response['expiresInMinutes'] * 60));
-    $this->Set('expires_at', $expiresAt);
-    $this->AllowWrite();
-    $this->DBUpdate();
+                            $expiresAt = date('Y-m-d H:i:s', time() + ((int)$response['expiresInMinutes'] * 60));
+                            $this->Set('expires_at', $expiresAt);
+                            $this->AllowWrite();
+                            $this->DBUpdate();
 
-    $_SESSION['audit_console_token_once'] = [
-        'object_id' => $this->GetKey(),
-        'token' => $response['registrationToken']
-    ];
-}
-]]></code>
+                            $_SESSION['audit_console_token_once'] = [
+                                'object_id' => $this->GetKey(),
+                                'token' => $response['registrationToken']
+                            ];
+                        }
+                    ]]></code>
                 </method>
-                <method id="DisplayBareRelations" _delta="define">
+                <method id="DisplayToken" _delta="define">
                     <static>false</static>
                     <access>public</access>
                     <code><![CDATA[
-public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
-{
-    parent::DisplayBareRelations($oPage, $bEditMode);
+                        public function DisplayToken(WebPage $oPage, $bEditMode = false)
+                        {
+                            parent::DisplayToken($oPage, $bEditMode);
+                            if (isset($_SESSION['audit_console_token_once']) && is_array($_SESSION['audit_console_token_once'])) {
+                                $data = $_SESSION['audit_console_token_once'];
+                                if (isset($data['object_id'], $data['token']) && $data['object_id'] == $this->GetKey()) {
+                                    $token = $data['token'];
+                                    unset($_SESSION['audit_console_token_once']);
 
-    if (isset($_SESSION['audit_console_token_once']) && is_array($_SESSION['audit_console_token_once'])) {
-        $data = $_SESSION['audit_console_token_once'];
+                                    $html = '
+                                    <div style="
+                                        margin:20px 0;
+                                        padding:20px;
+                                        border-radius:8px;
+                                        background:#e8f5e9;
+                                        border:1px solid #2e7d32;
+                                    ">
+                                        <h3 style="margin-top:0;color:#2e7d32;">
+                                            Создан регистрационный токен
+                                        </h3>
+                                        <p style="margin:10px 0;">
+                                            Пожалуйста, скопируйте токен.
+                                        </p>
+                                        <div style="
+                                            font-size:18px;
+                                            font-weight:bold;
+                                            background:#ffffff;
+                                            padding:10px;
+                                            border-radius:5px;
+                                            border:1px dashed #2e7d32;
+                                            word-break:break-all;
+                                        ">
+                                            '.$token.'
+                                        </div>
+                                    </div>';
 
-        if (isset($data['object_id'], $data['token']) && $data['object_id'] == $this->GetKey()) {
-            $token = $data['token'];
-            unset($_SESSION['audit_console_token_once']);
+                                    $oPage->add($html);
+                                }
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_GetServiceAccessToken" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_GetServiceAccessToken()
+                        {
+                            return self::Auditor_StaticGetServiceAccessToken();
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_StaticGetServiceAccessToken" _delta="define">
+                    <static>true</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        public static function Auditor_StaticGetServiceAccessToken()
+                        {
+                            $sTokenUrl = 'http://keycloak.local/realms/internal/protocol/openid-connect/token';
+                            $sClientId = 'itop';
+                            $sClientSecret = getenv('AUDITOR_ITOP_CLIENT_SECRET');
+                            if (empty($sClientSecret)) {
+                                throw new Exception('AUDITOR_ITOP_CLIENT_SECRET env var is not set');
+                            }
 
-            $html = '
-            <div style="
-                margin:20px 0;
-                padding:20px;
-                border-radius:8px;
-                background:#e8f5e9;
-                border:1px solid #2e7d32;
-            ">
-                <h3 style="margin-top:0;color:#2e7d32;">
-                    Registration token created
-                </h3>
-                <p style="margin:10px 0;">
-                    Please copy this token now. It will not be shown again.
-                </p>
-                <div style="
-                    font-size:18px;
-                    font-weight:bold;
-                    background:#ffffff;
-                    padding:10px;
-                    border-radius:5px;
-                    border:1px dashed #2e7d32;
-                    word-break:break-all;
-                ">
-                    '.$token.'
-                </div>
-            </div>';
+                            $aPost = array(
+                                'grant_type' => 'client_credentials',
+                                'client_id' => $sClientId,
+                                'client_secret' => $sClientSecret,
+                            );
 
-            $oPage->add($html);
-        }
-    }
-}
-]]></code>
+                            $ch = curl_init($sTokenUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aPost));
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Content-Type: application/x-www-form-urlencoded',
+                            ));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('Keycloak token request failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('Keycloak token HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $aData = json_decode($sResult, true);
+                            if (!is_array($aData) || empty($aData['access_token'])) {
+                                throw new Exception('Keycloak token response invalid: '.$sResult);
+                            }
+
+                            return $aData['access_token'];
+                        }
+                    ]]></code>
                 </method>
                 <method id="CallBackendToCreateToken" _delta="define">
                     <static>false</static>
                     <access>private</access>
                     <code><![CDATA[
-private function CallBackendToCreateToken($ttl)
-{
-    return [
-        'registrationToken' => bin2hex(random_bytes(16)),
-        'expiresInMinutes' => $ttl
-    ];
-}
-]]></code>
+                        private function CallBackendToCreateToken($ttl)
+                        {
+                            $ttl = (int)$ttl;
+                            $oCurUser = UserRights::GetUserObject();
+                            $sUserId = '';
+                            $iTenantId = 0;
+
+                            if ($oCurUser) {
+                                $sUserId = $oCurUser->Get('login');
+                                $iContactId = $oCurUser->Get('contactid');
+                                if (!empty($iContactId)) {
+                                    $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                                    if ($oPerson) {
+                                        $iOrgId = $oPerson->Get('org_id');
+                                        if (!empty($iOrgId)) {
+                                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                                            if ($oOrg) {
+                                                $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($iTenantId <= 0) {
+                                throw new Exception('Tenant is not synchronized with auditor-service for current organization');
+                            }
+
+                            $aRoles = array();
+                            if (UserRights::IsAdministrator()) {
+                                $aRoles[] = 'ADMIN';
+                            } else {
+                                $aRoles[] = 'AUDITOR';
+                            }
+
+                            $aBody = array(
+                                'ttlMinutes' => $ttl,
+                                'userId' => $sUserId,
+                                'tenantId' => $iTenantId,
+                                'roles' => $aRoles,
+                            );
+
+                            $sUrl = 'http://auditor-service:8081/internal/token/registration-token';
+
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$this->Auditor_GetServiceAccessToken(),
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('Failed to call registration-token backend: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('Backend registration-token returned HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $aData = json_decode($sResult, true);
+                            if (!is_array($aData) || !isset($aData['registrationToken'], $aData['expiresInMinutes'])) {
+                                throw new Exception('Unexpected backend response for registration-token: '.$sResult);
+                            }
+
+                            return $aData;
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditOrgSyncJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>audit_org_sync_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>Синхронизировать организации с сервисом аудита</default_value>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            try {
+                                $sToken = $this->Auditor_GetServiceAccessToken();
+                                $this->Auditor_SyncOrganizations($sToken);
+                            } catch (Exception $e) {
+                                IssueLog::Error('AuditOrgSyncJob failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_GetServiceAccessToken" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_GetServiceAccessToken()
+                        {
+                            return AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_SyncOrganizations" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_SyncOrganizations($sToken)
+                        {
+                            $oSearch = DBObjectSearch::FromOQL("SELECT Organization");
+                            $oSet = new DBObjectSet($oSearch);
+
+                            while ($oOrg = $oSet->Fetch()) {
+                                $aBody = array(
+                                    'name' => $oOrg->GetName(),
+                                );
+
+                                $sUrl = 'http://auditor-service:8081/api/tenants';
+
+                                $ch = curl_init($sUrl);
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_POST, true);
+                                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                    'Authorization: Bearer '.$sToken,
+                                    'Content-Type: application/json',
+                                    'Accept: application/json',
+                                ));
+                                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+
+                                $sResult = curl_exec($ch);
+                                if ($sResult === false) {
+                                    throw new Exception('auditor-service createTenant failed: '.curl_error($ch));
+                                }
+                                $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                curl_close($ch);
+
+                                if ($iStatus !== 201 && $iStatus !== 200) {
+                                    IssueLog::Error('auditor-service createTenant HTTP '.$iStatus.': '.$sResult);
+                                    continue;
+                                }
+
+                                $mData = json_decode($sResult, true);
+                                if (is_array($mData)) {
+                                    $iTenantId = (int) reset($mData);
+                                } else {
+                                    $iTenantId = (int) $sResult;
+                                }
+
+                                if ($iTenantId > 0 && (int)$oOrg->Get('auditor_tenant_id') === 0) {
+                                    $oOrg->Set('auditor_tenant_id', $iTenantId);
+                                    $oOrg->AllowWrite();
+                                    $oOrg->DBUpdate();
+                                }
+                            }
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditUserSyncJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>audit_user_sync_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>Синхронизировать пользователя с сервисом аудита</default_value>
+                </field>
+                <field id="user" xsi:type="AttributeExternalKey">
+                    <sql>user_id</sql>
+                    <target_class>UserExternal</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            try {
+                                $sToken = $this->Auditor_GetServiceAccessToken();
+                                $this->Auditor_SyncSingleUser($sToken);
+                            } catch (Exception $e) {
+                                IssueLog::Error('AuditUserSyncJob failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="DisplayToken" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function DisplayToken(WebPage $oPage, $bEditMode = false)
+                        {
+                            parent::DisplayToken($oPage, $bEditMode);
+
+                            if (isset($_SESSION['audit_user_temp_password_once']) && is_array($_SESSION['audit_user_temp_password_once'])) {
+                                $data = $_SESSION['audit_user_temp_password_once'];
+
+                                if (isset($data['job_id'], $data['username'], $data['tenant_name'], $data['password'])
+                                    && $data['job_id'] == $this->GetKey()) {
+
+                                    $username = $data['username'];
+                                    $tenantName = $data['tenant_name'];
+                                    $password = $data['password'];
+
+                                    unset($_SESSION['audit_user_temp_password_once']);
+
+                                    $html = '
+                                    <div style="
+                                        margin:20px 0;
+                                        padding:20px;
+                                        border-radius:8px;
+                                        background:#e3f2fd;
+                                        border:1px solid #1565c0;
+                                    ">
+                                        <h3 style="margin-top:0;color:#1565c0;">
+                                            Создан временный пароль
+                                        </h3>
+                                        <p style="margin:10px 0;">
+                                            Пользователь: <strong>'.htmlentities($username).'</strong><br/>
+                                            Организация: <strong>'.htmlentities($tenantName).'</strong>
+                                        </p>
+                                        <p style="margin:10px 0;">
+                                            Пожалуйста, скопируйте пароль.
+                                        </p>
+                                        <div style="
+                                            font-size:18px;
+                                            font-weight:bold;
+                                            background:#ffffff;
+                                            padding:10px;
+                                            border-radius:5px;
+                                            border:1px dashed #1565c0;
+                                            word-break:break-all;
+                                        ">
+                                            '.htmlentities($password).'
+                                        </div>
+                                    </div>';
+
+                                    $oPage->add($html);
+                                }
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_GetServiceAccessToken" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_GetServiceAccessToken()
+                        {
+                            return AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_SyncSingleUser" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_SyncSingleUser($sToken)
+                        {
+                            $iUserId = $this->Get('user');
+                            $oUser = MetaModel::GetObject('UserExternal', $iUserId, false);
+                            if (!$oUser) {
+                                throw new Exception('UserExternal not found for id '.$iUserId);
+                            }
+
+                            $sUsername = $oUser->Get('login');
+                            if (empty($sUsername)) {
+                                throw new Exception('UserExternal '.$iUserId.' has empty login');
+                            }
+
+                            $sTenantName = 'Default';
+                            $iTenantId = 0;
+                            $iContactId = $oUser->Get('contactid');
+                            if (!empty($iContactId)) {
+                                $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                                if ($oPerson) {
+                                    $iOrgId = $oPerson->Get('org_id');
+                                    if (!empty($iOrgId)) {
+                                        $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                                        if ($oOrg) {
+                                            $sTenantName = $oOrg->GetName();
+                                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($iTenantId <= 0) {
+                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$sTenantName);
+                            }
+
+                            $sTempPwd = bin2hex(random_bytes(8));
+
+                            if (UserRights::IsAdministrator()) {
+                                $sRole = 'ADMIN';
+                            } else {
+                                $sRole = 'AUDITOR';
+                            }
+
+                            $aBody = array(
+                                'username' => $sUsername,
+                                'temporaryPassword' => $sTempPwd,
+                                'role' => $sRole,
+                                'tenantId' => $iTenantId,
+                            );
+
+                            $sUrl = 'http://auditor-service:8081/api/users/internal';
+
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('auditor-service createUserFromItop failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($iStatus !== 201 && $iStatus !== 200) {
+                                throw new Exception('auditor-service createUserFromItop HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $_SESSION['audit_user_temp_password_once'] = array(
+                                'job_id' => $this->GetKey(),
+                                'username' => $sUsername,
+                                'tenant_name' => $sTenantName,
+                                'password' => $sTempPwd,
+                            );
+                        }
+                    ]]></code>
                 </method>
             </methods>
         </class>
@@ -382,7 +749,7 @@ private function CallBackendToCreateToken($ttl)
         <menu id="AuditConsole" xsi:type="MenuGroup" _delta="define">
             <parent>ConfigManagement</parent>
             <rank>100</rank>
-            <label>Audit Console</label>
+            <label>Консоль аудита</label>
         </menu>
         <menu id="AuditMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
@@ -397,7 +764,20 @@ private function CallBackendToCreateToken($ttl)
         <menu id="AgentTokensMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
             <rank>30</rank>
+            <label>Регистрационный токен агента</label>
             <oql>SELECT AuditAgentToken</oql>
+        </menu>
+        <menu id="SyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>40</rank>
+            <label>Синхронизация организаций</label>
+            <oql>SELECT AuditOrgSyncJob</oql>
+        </menu>
+        <menu id="UserSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>50</rank>
+            <label>Синхронизация пользователей</label>
+            <oql>SELECT AuditUserSyncJob</oql>
         </menu>
     </menus>
 </itop_design>

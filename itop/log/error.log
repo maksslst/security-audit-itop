@@ -216,3 +216,92 @@ array (
   'file' => '/var/www/html/sources/Core/EventListener/AttributeBlobEventListener.php',
   'line' => 37,
 )
+2026-03-11 22:02:51 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-11 22:03:19 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-11 22:03:19 | Info    |       | OpenID UserProfile returned by service provider | Hybridauth |||
+array (
+  'oUserProfile' => 
+  Hybridauth\User\Profile::__set_state(array(
+     'identifier' => '9f046c43-42a1-442e-a8fc-6872a43e7d36',
+     'webSiteURL' => NULL,
+     'profileURL' => NULL,
+     'photoURL' => NULL,
+     'displayName' => 'testuser',
+     'description' => NULL,
+     'firstName' => 'test',
+     'lastName' => 'test',
+     'gender' => NULL,
+     'language' => NULL,
+     'age' => NULL,
+     'birthDay' => NULL,
+     'birthMonth' => NULL,
+     'birthYear' => NULL,
+     'email' => 'test@test.com',
+     'emailVerified' => true,
+     'phone' => NULL,
+     'address' => NULL,
+     'country' => NULL,
+     'region' => NULL,
+     'city' => NULL,
+     'zip' => NULL,
+     'data' => 
+    array (
+    ),
+  )),
+)
