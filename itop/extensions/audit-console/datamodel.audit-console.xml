@@ -12,30 +12,250 @@
             </fields>
         </class>
 
-        <class id="MyAudit" _delta="define">
+        <class id="UserExternal" _delta="if_exists">
+            <fields>
+                <field id="auditor_user_id" xsi:type="AttributeInteger" _delta="define">
+                    <sql>auditor_user_id</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                    <tracking_level>none</tracking_level>
+                </field>
+            </fields>
+        </class>
+
+        <class id="CustomAudit" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
-                <category>bizmodel</category>
+                <category>bizmodel,searchable</category>
                 <abstract>false</abstract>
                 <key_type>autoincrement</key_type>
                 <db_table>audit</db_table>
                 <db_key_field>id</db_key_field>
+                <friendlyname_attcode>audit_id</friendlyname_attcode>
             </properties>
             <fields>
-                <field id="name" xsi:type="AttributeString">
-                    <sql>name</sql>
-                    <max_length>255</max_length>
+                <field id="organization" xsi:type="AttributeExternalKey">
+                    <sql>organization_id</sql>
+                    <target_class>Organization</target_class>
                     <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="user" xsi:type="AttributeExternalKey">
+                    <sql>user_id</sql>
+                    <target_class>UserExternal</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="audit_id" xsi:type="AttributeInteger">
+                    <sql>audit_id</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="status" xsi:type="AttributeString">
+                    <sql>status</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>PENDING</default_value>
+                </field>
+                <field id="created_at" xsi:type="AttributeDateTime">
+                    <sql>created_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="started_at" xsi:type="AttributeDateTime">
+                    <sql>started_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="completed_at" xsi:type="AttributeDateTime">
+                    <sql>completed_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="installed_software_count" xsi:type="AttributeInteger">
+                    <sql>installed_software_count</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="auditor_user_id" xsi:type="AttributeInteger">
+                    <sql>auditor_user_id</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="auditor_agent_id" xsi:type="AttributeInteger">
+                    <sql>auditor_agent_id</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="agent" xsi:type="AttributeExternalKey">
+                    <sql>agent_id</sql>
+                    <target_class>AuditAgent</target_class>
+                    <is_null_allowed>true</is_null_allowed>
                 </field>
             </fields>
             <presentation>
+                <creation>
+                    <items>
+                        <item id="agent"/>
+                    </items>
+                </creation>
                 <details>
                     <items>
-                        <item id="name"/>
+                        <item id="organization">
+                            <rank>10</rank>
+                        </item>
+                        <item id="user">
+                            <rank>20</rank>
+                        </item>
+                        <item id="audit_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="created_at">
+                            <rank>50</rank>
+                        </item>
+                        <item id="started_at">
+                            <rank>60</rank>
+                        </item>
+                        <item id="completed_at">
+                            <rank>70</rank>
+                        </item>
+                        <item id="installed_software_count">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </details>
+                <list>
+                    <items>
+                        <item id="organization">
+                            <rank>10</rank>
+                        </item>
+                        <item id="user">
+                            <rank>20</rank>
+                        </item>
+                        <item id="audit_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="created_at">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_at">
+                            <rank>60</rank>
+                        </item>
+                    </items>
+                </list>
             </presentation>
-            <methods/>
+            <methods>
+                <method id="GetInitialStateAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+                        {
+                            $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+                            if (!$this->IsNew()) {
+                                $iFlags |= OPT_ATT_READONLY;
+                            }
+                            return $iFlags;
+                        }
+                    ]]></code>
+                </method>
+                <method id="BeforeInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function BeforeInsert()
+                        {
+                            $iAgentId = $this->Get('agent');
+                            if (empty($iAgentId)) {
+                                throw new Exception('Выберите агента для запуска аудита');
+                            }
+                            $oAgent = MetaModel::GetObject('AuditAgent', $iAgentId, false);
+                            if (!$oAgent) {
+                                throw new Exception('Агент не найден');
+                            }
+                            $oUser = UserRights::GetUserObject();
+                            if (!$oUser) {
+                                throw new Exception('Пользователь не определён');
+                            }
+                            $iContactId = $oUser->Get('contactid');
+                            if (empty($iContactId)) {
+                                throw new Exception('У текущего пользователя не задан контакт');
+                            }
+                            $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                            if (!$oPerson) {
+                                throw new Exception('Контакт пользователя не найден');
+                            }
+                            $iOrgId = $oPerson->Get('org_id');
+                            if (empty($iOrgId)) {
+                                throw new Exception('У пользователя не указана организация');
+                            }
+                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                            if (!$oOrg) {
+                                throw new Exception('Организация не найдена');
+                            }
+                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
+                            if ($iTenantId <= 0) {
+                                throw new Exception('Организация не синхронизирована с сервисом аудита');
+                            }
+                            $oSearch = new DBObjectSet(DBObjectSearch::FromOQL('SELECT UserExternal WHERE contactid = :cid'), array(), array('cid' => $iContactId));
+                            $oExtUser = $oSearch->Fetch();
+                            if (!$oExtUser) {
+                                throw new Exception('Внешний пользователь для этого контакта не найден. Выполните синхронизацию пользователя.');
+                            }
+                            $iAuditorUserId = (int) $oExtUser->Get('auditor_user_id');
+                            if ($iAuditorUserId <= 0) {
+                                throw new Exception('У пользователя не задан auditor_user_id. Выполните синхронизацию пользователя.');
+                            }
+                            if ((int) $oAgent->Get('organization') !== (int) $iOrgId) {
+                                throw new Exception('Агент не принадлежит организации текущего пользователя');
+                            }
+                            $sPublicId = $oAgent->Get('public_id');
+                            if (empty($sPublicId)) {
+                                throw new Exception('У агента не задан public_id');
+                            }
+                            $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                            $aBody = array(
+                                'tenantId' => $iTenantId,
+                                'initiatedById' => $iAuditorUserId,
+                                'agentPublicId' => $sPublicId,
+                            );
+                            $sUrl = 'http://auditor-service:8081/internal/audits';
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+                            $sResult = curl_exec($ch);
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+                            if ($sResult === false) {
+                                throw new Exception('Ошибка вызова сервиса аудита: '.curl_error($ch));
+                            }
+                            if ($iStatus !== 201 && $iStatus !== 200) {
+                                throw new Exception('Сервис аудита вернул ошибку HTTP '.$iStatus.': '.$sResult);
+                            }
+                            $mResp = json_decode($sResult, true);
+                            $iAuditId = is_array($mResp) ? (int) (isset($mResp['id']) ? $mResp['id'] : reset($mResp)) : (int) $sResult;
+                            if ($iAuditId <= 0) {
+                                throw new Exception('Сервис аудита не вернул идентификатор аудита');
+                            }
+                            $this->Set('organization', $iOrgId);
+                            $this->Set('user', $oExtUser->GetKey());
+                            $this->Set('audit_id', $iAuditId);
+                            $this->Set('status', 'PENDING');
+                            $this->Set('created_at', date('Y-m-d H:i:s'));
+                            parent::BeforeInsert();
+                        }
+                    ]]></code>
+                </method>
+            </methods>
         </class>
 
         <class id="AuditAgent" _delta="define">
@@ -47,53 +267,49 @@
                 <friendlyname_attcode>public_id</friendlyname_attcode>
             </properties>
             <fields>
-                <field id="agent_id" xsi:type="AttributeExternalKey">
-                    <sql>agent_id</sql>
-                    <target_class>AuditAgent</target_class>
+                <field id="organization" xsi:type="AttributeExternalKey">
+                    <sql>organization_id</sql>
+                    <target_class>Organization</target_class>
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-                <field id="status" xsi:type="AttributeEnum">
-                    <sql>status</sql>
-                    <values>
-                        <value id="pending">
-                            <code>PENDING</code>
-                        </value>
-                        <value id="in_progress">
-                            <code>IN_PROGRESS</code>
-                        </value>
-                        <value id="completed">
-                            <code>COMPLETED</code>
-                        </value>
-                        <value id="failed">
-                            <code>FAILED</code>
-                        </value>
-                    </values>
-                    <default_value>pending</default_value>
-                    <is_null_allowed>true</is_null_allowed>
+                <field id="public_id" xsi:type="AttributeString">
+                    <sql>public_id</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_read_only>true</is_read_only>
+                </field>
+                <field id="os_type" xsi:type="AttributeString">
+                    <sql>os_type</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>UNKNOWN</default_value>
                     <is_read_only>true</is_read_only>
                 </field>
             </fields>
             <presentation>
                 <details>
                     <items>
-                        <item id="public_id">
+                        <item id="organization">
                             <rank>10</rank>
                         </item>
-                        <item id="os_type">
+                        <item id="public_id">
                             <rank>20</rank>
                         </item>
-                        <item id="audits_list">
+                        <item id="os_type">
                             <rank>30</rank>
                         </item>
                     </items>
                 </details>
                 <list>
                     <items>
-                        <item id="public_id">
+                        <item id="organization">
                             <rank>10</rank>
                         </item>
-                        <item id="os_type">
+                        <item id="public_id">
                             <rank>20</rank>
+                        </item>
+                        <item id="os_type">
+                            <rank>30</rank>
                         </item>
                     </items>
                 </list>
@@ -227,13 +443,13 @@
                         }
                     ]]></code>
                 </method>
-                <method id="DisplayToken" _delta="define">
+                <method id="DisplayBareRelations" _delta="define">
                     <static>false</static>
                     <access>public</access>
                     <code><![CDATA[
-                        public function DisplayToken(WebPage $oPage, $bEditMode = false)
+                        public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
                         {
-                            parent::DisplayToken($oPage, $bEditMode);
+                            parent::DisplayBareRelations($oPage, $bEditMode);
                             if (isset($_SESSION['audit_console_token_once']) && is_array($_SESSION['audit_console_token_once'])) {
                                 $data = $_SESSION['audit_console_token_once'];
                                 if (isset($data['object_id'], $data['token']) && $data['object_id'] == $this->GetKey()) {
@@ -588,23 +804,22 @@
                         }
                     ]]></code>
                 </method>
-                <method id="DisplayToken" _delta="define">
+                <method id="DisplayBareRelations" _delta="define">
                     <static>false</static>
                     <access>public</access>
                     <code><![CDATA[
-                        public function DisplayToken(WebPage $oPage, $bEditMode = false)
+                        public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
                         {
-                            parent::DisplayToken($oPage, $bEditMode);
-
+                            parent::DisplayBareRelations($oPage, $bEditMode);
                             if (isset($_SESSION['audit_user_temp_password_once']) && is_array($_SESSION['audit_user_temp_password_once'])) {
                                 $data = $_SESSION['audit_user_temp_password_once'];
 
                                 if (isset($data['job_id'], $data['username'], $data['tenant_name'], $data['password'])
                                     && $data['job_id'] == $this->GetKey()) {
 
-                                    $username = $data['username'];
+                                    $username   = $data['username'];
                                     $tenantName = $data['tenant_name'];
-                                    $password = $data['password'];
+                                    $password   = $data['password'];
 
                                     unset($_SESSION['audit_user_temp_password_once']);
 
@@ -732,12 +947,360 @@
                                 throw new Exception('auditor-service createUserFromItop HTTP '.$iStatus.': '.$sResult);
                             }
 
+                            $mData = json_decode($sResult, true);
+                            if (is_array($mData)) {
+                                $iAuditorUserId = (int) reset($mData);
+                            } else {
+                                $iAuditorUserId = (int) $sResult;
+                            }
+
+                            if ($iAuditorUserId > 0 && (int)$oUser->Get('auditor_user_id') === 0) {
+                                $oUser->Set('auditor_user_id', $iAuditorUserId);
+                                $oUser->AllowWrite();
+                                $oUser->DBUpdate();
+                            }
+
                             $_SESSION['audit_user_temp_password_once'] = array(
                                 'job_id' => $this->GetKey(),
                                 'username' => $sUsername,
                                 'tenant_name' => $sTenantName,
                                 'password' => $sTempPwd,
                             );
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditUserAuditsSyncJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>audit_user_audits_sync_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>Синхронизировать аудиты пользователя</default_value>
+                </field>
+                <field id="user" xsi:type="AttributeExternalKey">
+                    <sql>user_id</sql>
+                    <target_class>UserExternal</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                        <item id="user"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            try {
+                                $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                                $this->Auditor_SyncUserAudits($sToken);
+                            } catch (Exception $e) {
+                                IssueLog::Error('AuditUserAuditsSyncJob failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_SyncUserAudits" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_SyncUserAudits($sToken)
+                        {
+                            $iUserId = $this->Get('user');
+                            $oUser = MetaModel::GetObject('UserExternal', $iUserId, false);
+                            if (!$oUser) {
+                                throw new Exception('UserExternal not found for id '.$iUserId);
+                            }
+
+                            $sTenantName = 'Default';
+                            $iTenantId = 0;
+                            $iOrgId = 0;
+                            $iContactId = $oUser->Get('contactid');
+                            if (!empty($iContactId)) {
+                                $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                                if ($oPerson) {
+                                    $iOrgId = $oPerson->Get('org_id');
+                                    if (!empty($iOrgId)) {
+                                        $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                                        if ($oOrg) {
+                                            $sTenantName = $oOrg->GetName();
+                                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($iTenantId <= 0) {
+                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$sTenantName);
+                            }
+
+                            $iAuditorUserId = (int) $oUser->Get('auditor_user_id');
+                            if ($iAuditorUserId <= 0) {
+                                throw new Exception('UserExternal '.$iUserId.' has no auditor_user_id');
+                            }
+
+                            $sUrl = 'http://auditor-service:8081/internal/audits/tenant/'.$iTenantId.'/user/'.$iAuditorUserId;
+
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Accept: application/json',
+                            ));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('auditor-service getAudits failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($iStatus !== 200) {
+                                throw new Exception('auditor-service getAudits HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $aData = json_decode($sResult, true);
+                            if (!is_array($aData)) {
+                                throw new Exception('Unexpected backend response for audits: '.$sResult);
+                            }
+
+                            $oExisting = new DBObjectSet(
+                                DBObjectSearch::FromOQL("SELECT CustomAudit WHERE user = :user"),
+                                array(),
+                                array('user' => $iUserId)
+                            );
+
+                            while ($oAudit = $oExisting->Fetch()) {
+                                $oAudit->DBDelete();
+                            }
+
+                            foreach ($aData as $aAudit) {
+                                if (!isset($aAudit['id'], $aAudit['status'])) {
+                                    continue;
+                                }
+
+                                $iAuditId = (int) $aAudit['id'];
+                                $sStatus  = strtoupper($aAudit['status']);
+
+                                $sCreatedAt  = isset($aAudit['createdAt']) ? $aAudit['createdAt'] : null;
+                                $sStartedAt  = isset($aAudit['startedAt']) ? $aAudit['startedAt'] : null;
+                                $sCompletedAt = isset($aAudit['completedAt']) ? $aAudit['completedAt'] : null;
+
+                                $sCreatedAtDb = null;
+                                $sStartedAtDb = null;
+                                $sCompletedAtDb = null;
+
+                                if (!empty($sCreatedAt)) {
+                                    $t = strtotime($sCreatedAt);
+                                    if ($t !== false) {
+                                        $sCreatedAtDb = date('Y-m-d H:i:s', $t);
+                                    }
+                                }
+                                if (!empty($sStartedAt)) {
+                                    $t = strtotime($sStartedAt);
+                                    if ($t !== false) {
+                                        $sStartedAtDb = date('Y-m-d H:i:s', $t);
+                                    }
+                                }
+                                if (!empty($sCompletedAt)) {
+                                    $t = strtotime($sCompletedAt);
+                                    if ($t !== false) {
+                                        $sCompletedAtDb = date('Y-m-d H:i:s', $t);
+                                    }
+                                }
+
+                                $iCount = isset($aAudit['countInstalledSoftware']) ? (int) $aAudit['countInstalledSoftware'] : 0;
+
+                                $oNew = MetaModel::NewObject('CustomAudit');
+                                $oNew->Set('organization', $iOrgId);
+                                $oNew->Set('user', $iUserId);
+                                $oNew->Set('audit_id', $iAuditId);
+                                $oNew->Set('status', $sStatus);
+
+                                if ($sCreatedAtDb !== null) {
+                                    $oNew->Set('created_at', $sCreatedAtDb);
+                                }
+                                if ($sStartedAtDb !== null) {
+                                    $oNew->Set('started_at', $sStartedAtDb);
+                                }
+                                if ($sCompletedAtDb !== null) {
+                                    $oNew->Set('completed_at', $sCompletedAtDb);
+                                }
+
+                                $oNew->Set('installed_software_count', $iCount);
+
+                                if (isset($aAudit['initiatedById'])) {
+                                    $oNew->Set('auditor_user_id', (int) $aAudit['initiatedById']);
+                                }
+                                if (isset($aAudit['agentId'])) {
+                                    $oNew->Set('auditor_agent_id', (int) $aAudit['agentId']);
+                                }
+
+                                $oNew->DBInsertNoReload();
+                            }
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="AuditAgentSyncJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>audit_agent_sync_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>Sync agents from auditor-service</default_value>
+                </field>
+                <field id="organization" xsi:type="AttributeExternalKey">
+                    <sql>organization_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                        <item id="organization"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                        <item id="organization"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                        <item id="organization"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            try {
+                                $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                                $this->Auditor_SyncAgents($sToken);
+                            } catch (Exception $e) {
+                                IssueLog::Error('AuditAgentSyncJob failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Auditor_SyncAgents" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Auditor_SyncAgents($sToken)
+                        {
+                            $iOrgId = $this->Get('organization');
+                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                            if (!$oOrg) {
+                                throw new Exception('Organization not found for id '.$iOrgId);
+                            }
+
+                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
+                            if ($iTenantId <= 0) {
+                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$oOrg->GetName());
+                            }
+
+                            $sUrl = 'http://auditor-service:8081/internal/agent/tenant/'.$iTenantId;
+
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Accept: application/json',
+                            ));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('auditor-service getAgents failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($iStatus !== 200) {
+                                throw new Exception('auditor-service getAgents HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $aData = json_decode($sResult, true);
+                            if (!is_array($aData)) {
+                                throw new Exception('Unexpected backend response for agents: '.$sResult);
+                            }
+
+                            $oExisting = new DBObjectSet(
+                                DBObjectSearch::FromOQL("SELECT AuditAgent WHERE organization = :organization"),
+                                array(),
+                                array('organization' => $iOrgId)
+                            );
+
+                            while ($oAgent = $oExisting->Fetch()) {
+                                $oAgent->DBDelete();
+                            }
+
+                            foreach ($aData as $aAgent) {
+                                if (!isset($aAgent['publicId'], $aAgent['osType'])) {
+                                    continue;
+                                }
+
+                                $sPublicId = $aAgent['publicId'];
+                                $sOsType = strtoupper($aAgent['osType']);
+
+                                $oNew = MetaModel::NewObject('AuditAgent');
+                                $oNew->Set('organization', $iOrgId);
+                                $oNew->Set('public_id', $sPublicId);
+                                $oNew->Set('os_type', $sOsType);
+
+                                $oNew->DBInsertNoReload();
+                            }
                         }
                     ]]></code>
                 </method>
@@ -754,7 +1317,7 @@
         <menu id="AuditMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
             <rank>10</rank>
-            <oql>SELECT MyAudit</oql>
+            <oql>SELECT CustomAudit</oql>
         </menu>
         <menu id="AgentsMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
@@ -778,6 +1341,18 @@
             <rank>50</rank>
             <label>Синхронизация пользователей</label>
             <oql>SELECT AuditUserSyncJob</oql>
+        </menu>
+        <menu id="UserAuditsSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>55</rank>
+            <label>Синхронизация аудитов пользователей</label>
+            <oql>SELECT AuditUserAuditsSyncJob</oql>
+        </menu>
+        <menu id="AgentSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>60</rank>
+            <label>Синхронизация агентов</label>
+            <oql>SELECT AuditAgentSyncJob</oql>
         </menu>
     </menus>
 </itop_design>

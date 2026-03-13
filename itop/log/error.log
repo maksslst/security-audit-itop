@@ -305,3 +305,425 @@ array (
     ),
   )),
 )
+2026-03-12 17:03:09 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-12 17:03:26 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-12 17:05:23 | Error   | 1     | Unknown attribute public_id from class AuditAgent | Exception |||
+array (
+  'exception class' => 'Exception',
+  'file' => '/var/www/html/core/metamodel.class.php',
+  'line' => 1683,
+)
+2026-03-12 17:14:00 | Error   | 1     | Unknown attribute public_id from class AuditAgent | Exception |||
+array (
+  'exception class' => 'Exception',
+  'file' => '/var/www/html/core/metamodel.class.php',
+  'line' => 1683,
+)
+2026-03-13 11:23:55 | Error   | 1     | AuditOrgSyncJob failed: Keycloak token HTTP 400: <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/>
+<title>Error 400 HTTP method POST is not supported by this URL</title>
+</head>
+<body><h2>HTTP ERROR 400 HTTP method POST is not supported by this URL</h2>
+<table>
+<tr><th>URI:</th><td>/realms/internal/protocol/openid-connect/token</td></tr>
+<tr><th>STATUS:</th><td>400</td></tr>
+<tr><th>MESSAGE:</th><td>HTTP method POST is not supported by this URL</td></tr>
+<tr><th>SERVLET:</th><td>org.eclipse.jetty.servlet.ServletHandler$Default404Servlet-73ee04c8</td></tr>
+</table>
+<hr/><a href="https://jetty.org/">Powered by Jetty:// 9.4.58.v20250814</a><hr/>
+
+</body>
+</html>
+ | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:38 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:38Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:39 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:39Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:39 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:39Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:39 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:39Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:22:39 | Error   | 1     | auditor-service createTenant HTTP 409: {"timestamp":"2026-03-13T11:22:39Z","status":409,"message":"Conflict","path":"Tenant with this name already exists","error":"uri=/api/tenants"} | IssueLog |||
+2026-03-13 12:25:27 | Error   | 1     | AuditUserSyncJob failed: auditor-service createUserFromItop HTTP 500: {"timestamp":"2026-03-13T11:25:27Z","status":500,"message":"Internal Server Error","path":"Произошла непредвиденная ошибка","error":"uri=/api/users/internal"} | IssueLog |||
+2026-03-13 13:00:56 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 13:01:39 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 13:01:40 | Info    |       | OpenID UserProfile returned by service provider | Hybridauth |||
+array (
+  'oUserProfile' => 
+  Hybridauth\User\Profile::__set_state(array(
+     'identifier' => 'db001051-7065-4e26-af7d-cfc6cf522cb0',
+     'webSiteURL' => NULL,
+     'profileURL' => NULL,
+     'photoURL' => NULL,
+     'displayName' => 'anton228',
+     'description' => NULL,
+     'firstName' => 'Anton',
+     'lastName' => 'Timofeef',
+     'gender' => NULL,
+     'language' => NULL,
+     'age' => NULL,
+     'birthDay' => NULL,
+     'birthMonth' => NULL,
+     'birthYear' => NULL,
+     'email' => 'timofeev228@test.com',
+     'emailVerified' => false,
+     'phone' => NULL,
+     'address' => NULL,
+     'country' => NULL,
+     'region' => NULL,
+     'city' => NULL,
+     'zip' => NULL,
+     'data' => 
+    array (
+    ),
+  )),
+)
+2026-03-13 13:01:40 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 13:01:40 | Info    |       | OpenID UserProfile returned by service provider | Hybridauth |||
+array (
+  'oUserProfile' => 
+  Hybridauth\User\Profile::__set_state(array(
+     'identifier' => 'db001051-7065-4e26-af7d-cfc6cf522cb0',
+     'webSiteURL' => NULL,
+     'profileURL' => NULL,
+     'photoURL' => NULL,
+     'displayName' => 'anton228',
+     'description' => NULL,
+     'firstName' => 'Anton',
+     'lastName' => 'Timofeef',
+     'gender' => NULL,
+     'language' => NULL,
+     'age' => NULL,
+     'birthDay' => NULL,
+     'birthMonth' => NULL,
+     'birthYear' => NULL,
+     'email' => 'timofeev228@test.com',
+     'emailVerified' => false,
+     'phone' => NULL,
+     'address' => NULL,
+     'country' => NULL,
+     'region' => NULL,
+     'city' => NULL,
+     'zip' => NULL,
+     'data' => 
+    array (
+    ),
+  )),
+)
+2026-03-13 13:01:40 | Warning |       | Service provider roles not an array | IssueLog |||
+array (
+  'roles' => NULL,
+)
+2026-03-13 13:01:40 | Info    |       | OpenID (Allowed) Organization matching between IdP and iTop | Hybridauth |||
+array (
+  'login_mode' => 'hybridauth-Keycloak',
+  'email' => 'timofeev228@test.com',
+  'orgs' => 
+  array (
+  ),
+)
+2026-03-13 13:01:40 | Warning |       | no valid URP_UserOrg to attach to user | Hybridauth |||
+array (
+  'login_mode' => 'hybridauth-Keycloak',
+  'email' => 'timofeev228@test.com',
+  'sp_org_names' => 
+  array (
+  ),
+)
+2026-03-13 13:07:32 | Error   | 8     | AuditAgentSyncJob failed: auditor-service getAgents HTTP 500: {"timestamp":"2026-03-13T12:07:32Z","status":500,"message":"Internal Server Error","path":"Произошла непредвиденная ошибка","error":"uri=/internal/agent/tenant/43"} | IssueLog |||
+2026-03-13 13:30:41 | Error   | 8     | AuditAgentSyncJob failed: auditor-service getAgents HTTP 500: {"timestamp":"2026-03-13T12:30:41Z","status":500,"message":"Internal Server Error","path":"Произошла непредвиденная ошибка","error":"uri=/internal/agent/tenant/43"} | IssueLog |||
+2026-03-13 13:49:38 | Error   | 8     | AuditAgentSyncJob failed: auditor-service getAgents HTTP 500: {"timestamp":"2026-03-13T12:49:38Z","status":500,"message":"Internal Server Error","path":"Произошла непредвиденная ошибка","error":"uri=/internal/agent/tenant/43"} | IssueLog |||
+2026-03-13 13:57:14 | Error   | 8     | AuditAgentSyncJob failed: Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]: issues = {0=>Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]}, class = AuditAgent, id = -1 | IssueLog |||
+2026-03-13 14:28:38 | Error   | 8     | AuditAgentSyncJob failed: Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]: issues = {0=>Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]}, class = AuditAgent, id = -1 | IssueLog |||
+2026-03-13 14:51:28 | Error   | 8     | AuditAgentSyncJob failed: Unexpected value for attribute 'os type' (os_type) : Value not allowed [unknown]: issues = {0=>Unexpected value for attribute 'os type' (os_type) : Value not allowed [unknown]}, class = AuditAgent, id = -1 | IssueLog |||
+2026-03-13 15:08:30 | Error   | 8     | AuditAgentSyncJob failed: Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]: issues = {0=>Unexpected value for attribute 'os type' (os_type) : Value not allowed [linux]}, class = AuditAgent, id = -1 | IssueLog |||
+2026-03-13 16:10:23 | Info    | 8     | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 16:10:32 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 16:10:41 | Info    |       | Conf passed to HybdridAuth | Hybridauth |||
+array (
+  'conf' => 
+  array (
+    'callback' => 'http://itop.local/env-production/combodo-hybridauth/landing.php',
+    'providers' => 
+    array (
+      'Keycloak' => 
+      array (
+        'enabled' => true,
+        'adapter' => 'Hybridauth\\Provider\\Keycloak',
+        'keys' => 
+        array (
+          'id' => 'itop',
+          'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
+        ),
+        'url' => 'http://keycloak.local',
+        'realm' => 'internal',
+        'scope' => 'openid profile email',
+        'profiles_idp_key' => 'roles',
+        'profiles_idp_separator' => ',',
+        'groups_to_profiles' => 
+        array (
+          'sp_id1' => 'Administrator',
+        ),
+      ),
+    ),
+  ),
+)
+2026-03-13 16:10:42 | Info    |       | OpenID UserProfile returned by service provider | Hybridauth |||
+array (
+  'oUserProfile' => 
+  Hybridauth\User\Profile::__set_state(array(
+     'identifier' => 'db001051-7065-4e26-af7d-cfc6cf522cb0',
+     'webSiteURL' => NULL,
+     'profileURL' => NULL,
+     'photoURL' => NULL,
+     'displayName' => 'anton228',
+     'description' => NULL,
+     'firstName' => 'Anton',
+     'lastName' => 'Timofeef',
+     'gender' => NULL,
+     'language' => NULL,
+     'age' => NULL,
+     'birthDay' => NULL,
+     'birthMonth' => NULL,
+     'birthYear' => NULL,
+     'email' => 'timofeev228@test.com',
+     'emailVerified' => false,
+     'phone' => NULL,
+     'address' => NULL,
+     'country' => NULL,
+     'region' => NULL,
+     'city' => NULL,
+     'zip' => NULL,
+     'data' => 
+    array (
+    ),
+  )),
+)

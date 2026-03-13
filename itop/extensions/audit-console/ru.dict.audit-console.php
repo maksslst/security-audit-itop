@@ -3,11 +3,35 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Menu:AuditConsole' => 'Консоль аудита',
     'Menu:AuditConsole+' => 'Инструменты интеграции с системой аудита',
 
+    'Menu:AuditMenu' => 'Аудиты',
+    'Menu:AuditMenu+' => 'Список созданных аудитов',
+
+    'Menu:AgentsMenu' => 'Агенты',
+    'Menu:AgentsMenu+' => 'Список установленных агентов',
+
+    'Menu:AgentTokensMenu' => 'Регистрационный токен агента',
+    'Menu:AgentTokensMenu+' => 'Создание регистрационного токена агента',
+
     'Menu:SyncJobsMenu' => 'Синхронизация организаций',
     'Menu:SyncJobsMenu+' => 'Создание заданий на синхронизацию организаций с системой аудита',
 
     'Menu:UserSyncJobsMenu' => 'Синхронизация пользователей',
     'Menu:UserSyncJobsMenu+' => 'Создание заданий на синхронизацию внешних пользователей с системой аудита',
+
+    'Menu:UserAuditsSyncJobsMenu' => 'Синхронизация аудитов пользователей',
+    'Menu:UserAuditsSyncJobsMenu+' => 'Создание заданий на синхронизацию аудитов пользователя с системой аудита',
+
+    'Menu:AgentSyncJobsMenu' => 'Синхронизация агентов',
+    'Menu:AgentSyncJobsMenu+' => 'Создание заданий на синхронизацию агентов с системой аудита',
+
+    'Class:AuditAgent' => 'Агенты',
+    'Class:AuditAgent+' => 'Список установленных агентов',
+    'Class:AuditAgent/Attribute:organization' => 'Организация',
+    'Class:AuditAgent/Attribute:organization+' => 'Владелец агента',
+    'Class:AuditAgent/Attribute:public_id' => 'Идентификатор агента',
+    'Class:AuditAgent/Attribute:public_id+' => 'Уникальное значение агента',
+    'Class:AuditAgent/Attribute:os_type' => 'Операционная система',
+    'Class:AuditAgent/Attribute:os_type+' => 'Операционная система хоста, на котором установлен агент',
 
     'Class:AuditOrgSyncJob' => 'Синхронизация организаций',
     'Class:AuditOrgSyncJob+' => 'Ручной запуск синхронизации организаций в систему аудита',
@@ -29,4 +53,39 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Class:AuditAgentToken/Attribute:ttl_minutes+' => 'Сколько минут действителен токен регистрации',
     'Class:AuditAgentToken/Attribute:expires_at' => 'Истекает',
     'Class:AuditAgentToken/Attribute:expires_at+' => 'Момент истечения срока действия токена',
+
+    'Class:CustomAudit' => 'Аудиты пользователя',
+    'Class:CustomAudit+' => 'Список аудитов, выполненных для пользователя в системе аудита',
+    'Class:CustomAudit/Attribute:organization' => 'Организация',
+    'Class:CustomAudit/Attribute:organization+' => 'Организация, к которой относится аудит',
+    'Class:CustomAudit/Attribute:user' => 'Пользователь',
+    'Class:CustomAudit/Attribute:user+' => 'Внешний пользователь iTop, для которого был выполнен аудит',
+    'Class:CustomAudit/Attribute:audit_id' => 'ID аудита',
+    'Class:CustomAudit/Attribute:audit_id+' => 'Идентификатор аудита в системе аудита',
+    'Class:CustomAudit/Attribute:status' => 'Статус',
+    'Class:CustomAudit/Attribute:status+' => 'Текущий статус аудита в системе аудита',
+    'Class:CustomAudit/Attribute:created_at' => 'Создан',
+    'Class:CustomAudit/Attribute:created_at+' => 'Дата и время создания аудита',
+    'Class:CustomAudit/Attribute:started_at' => 'Начат',
+    'Class:CustomAudit/Attribute:started_at+' => 'Дата и время начала аудита',
+    'Class:CustomAudit/Attribute:completed_at' => 'Завершён',
+    'Class:CustomAudit/Attribute:completed_at+' => 'Дата и время завершения аудита',
+    'Class:CustomAudit/Attribute:installed_software_count' => 'Кол-во ПО',
+    'Class:CustomAudit/Attribute:installed_software_count+' => 'Количество установленных программ, найденных в ходе аудита',
+    'Class:CustomAudit/Attribute:agent' => 'Агент',
+    'Class:CustomAudit/Attribute:agent+' => 'Агент, на котором будет запущен аудит (выберите при создании)',
+
+    'Class:AuditUserAuditsSyncJob' => 'Синхронизация аудитов пользователя',
+    'Class:AuditUserAuditsSyncJob+' => 'Ручной запуск синхронизации аудитов выбранного пользователя в систему аудита',
+    'Class:AuditUserAuditsSyncJob/Attribute:name' => 'Название',
+    'Class:AuditUserAuditsSyncJob/Attribute:name+' => 'Произвольное название задания синхронизации аудитов',
+    'Class:AuditUserAuditsSyncJob/Attribute:user' => 'Пользователь',
+    'Class:AuditUserAuditsSyncJob/Attribute:user+' => 'Внешний пользователь iTop, для которого будут синхронизированы аудиты',
+
+    'Class:AuditAgentSyncJob' => 'Синхронизация агентов',
+    'Class:AuditAgentSyncJob+' => 'Ручной запуск синхронизации агентов в систему аудита',
+    'Class:AuditAgentSyncJob/Attribute:name' => 'Название',
+    'Class:AuditAgentSyncJob/Attribute:name+' => 'Произвольное название задания синхронизации',
+    'Class:AuditAgentSyncJob/Attribute:organization' => 'Организация',
+    'Class:AuditAgentSyncJob/Attribute:organization+' => 'Организация, для которой будут синхронизированы агенты',
 ));

@@ -10062,3 +10062,926 @@ Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadH
 
 )
 
+debug -- 172.18.0.3 -- 2026-03-12T17:03:09+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.3 -- 2026-03-12T17:03:09+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.3 -- 2026-03-12T17:03:09+01:00 -- Hybridauth\Provider\Keycloak::authenticateBegin(), redirecting user to:
+Array
+(
+    [0] => http://keycloak.local/realms/internal/protocol/openid-connect/auth?response_type=code&client_id=itop&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&scope=openid+profile+email&state=HA-8ZAJOHKBE4IFY5RP0QUDCM7VN3SX16L92GTW
+)
+
+debug -- 172.18.0.3 -- 2026-03-12T17:03:26+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.3 -- 2026-03-12T17:03:26+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.3 -- 2026-03-12T17:03:26+01:00 -- Hybridauth\Provider\Keycloak::authenticateBegin(), redirecting user to:
+Array
+(
+    [0] => http://keycloak.local/realms/internal/protocol/openid-connect/auth?response_type=code&client_id=itop&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&scope=openid+profile+email&state=HA-5LBYSUIAGN8217EOK6VRC0HF4Z3MDWXPTJ9Q
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T13:00:56+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T13:00:56+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T13:00:56+01:00 -- Hybridauth\Provider\Keycloak::authenticateBegin(), redirecting user to:
+Array
+(
+    [0] => http://keycloak.local/realms/internal/protocol/openid-connect/auth?response_type=code&client_id=itop&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&scope=openid+profile+email&state=HA-QGXDMFSZVEW9B46H231RNJLC0UO5TP7AIY8K
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T13:01:39+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\Provider\Keycloak::authenticateFinish(), callback url:
+Array
+(
+    [0] => http://itop.local/env-production/combodo-hybridauth/landing.php?state=HA-QGXDMFSZVEW9B46H231RNJLC0UO5TP7AIY8K&session_state=trwhOy86eP8jyJ-qC92qusty&iss=http%3A%2F%2Fkeycloak.local%2Frealms%2Finternal&code=8584b1ab-39b8-11d1-b61b-21a0e7d6d74f.trwhOy86eP8jyJ-qC92qusty.571574a1-e4c2-4077-954a-fe58ea7eb800
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\HttpClient\Curl::request( http://keycloak.local/realms/internal/protocol/openid-connect/token, POST ), response:
+Array
+(
+    [request] => Array
+        (
+            [uri] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+            [method] => POST
+            [parameters] => Array
+                (
+                    [client_id] => itop
+                    [client_secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+                    [grant_type] => authorization_code
+                    [redirect_uri] => http://itop.local/env-production/combodo-hybridauth/landing.php
+                    [code] => 8584b1ab-39b8-11d1-b61b-21a0e7d6d74f.trwhOy86eP8jyJ-qC92qusty.571574a1-e4c2-4077-954a-fe58ea7eb800
+                )
+
+            [headers] => Array
+                (
+                    [Accept] => */*
+                    [Cache-Control] => max-age=0
+                    [Connection] => keep-alive
+                    [Expect] => 
+                    [Pragma] => 
+                )
+
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [headers] => Array
+                (
+                    [server] => nginx/1.29.5
+                    [date] => Fri, 13 Mar 2026 12:01:40 GMT
+                    [content_type] => application/json
+                    [content_length] => 3437
+                    [connection] => keep-alive
+                    [cache_control] => no-store
+                    [pragma] => no-cache
+                    [referrer_policy] => no-referrer
+                    [strict_transport_security] => max-age=31536000; includeSubDomains
+                    [x_content_type_options] => nosniff
+                    [x_frame_options] => SAMEORIGIN
+                    [x_robots_tag] => none
+                )
+
+            [body] => {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ","expires_in":900,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0OWQ1MjkxMi1kMzBjLTQ2Y2EtOTZjMC1iYmQ0Mjg3OTU0ZDkifQ.eyJleHAiOjE3NzM0MDUxMDAsImlhdCI6MTc3MzQwMzMwMCwianRpIjoiODVhNTg3MDItNzRjMy1hMGVhLTE0MDQtOWMzNTI1MGI3MjFhIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6Imh0dHA6Ly9rZXljbG9hay5sb2NhbC9yZWFsbXMvaW50ZXJuYWwiLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiaXRvcCIsInNpZCI6InRyd2hPeTg2ZVA4anlKLXFDOTJxdXN0eSIsInNjb3BlIjoib3BlbmlkIHdlYi1vcmlnaW5zIHJvbGVzIGJhc2ljIGVtYWlsIHByb2ZpbGUgYWNyIHNlcnZpY2VfYWNjb3VudCJ9.W49_bLgAdkKc7ecQJIFO4YFqYhb3gKinWfTpkIoL7m5PQKbyZDOIWBqx5nTD5XIlq4kBvaPuK7dkLcSrkNmOpg","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiI0OWYxNzI3Ny01ZTczLTUyYmItYWU3NS0wMmI3ZGUzY2Y3YTgiLCJpc3MiOiJodHRwOi8va2V5Y2xvYWsubG9jYWwvcmVhbG1zL2ludGVybmFsIiwiYXVkIjoiaXRvcCIsInN1YiI6ImRiMDAxMDUxLTcwNjUtNGUyNi1hZjdkLWNmYzZjZjUyMmNiMCIsInR5cCI6IklEIiwiYXpwIjoiaXRvcCIsInNpZCI6InRyd2hPeTg2ZVA4anlKLXFDOTJxdXN0eSIsImF0X2hhc2giOiJoNzUtUVh2WmpFMnNPQmNxREtsNXlBIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.MBzNQp8BT7phLQDqiIBuIuBvu1b5ThlLLIByvQXJWZNYHumySVJsu0xQoaO92KVouYw71cx1W5nUiRSQQ7htkf59IBB4_EBPfcuiHiUB1bCVnRqERjWc8T4fWsO3OI3ks221Prnz7f_AKntZMBxyUsNG4Q38pF2ja76u59l193VikmQxWITxhJxzUP-d_XKFPH7DH08wJJjwvNILBAhNQ6yAeW61MlMiWOAdsxQZXwM7STNU6vVBJwvdz245qrnlI1WgbxL23nsHa-F9CrIyJVCcRw4S69j1G2vyKuk2HxKR1xzHsHQ4oRSknvz8rSwf5hpH-DG4eM9ZtbcKGTCmaw","not-before-policy":0,"session_state":"trwhOy86eP8jyJ-qC92qusty","scope":"openid email profile"}
+        )
+
+    [client] => Array
+        (
+            [error] => 
+            [info] => Array
+                (
+                    [url] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+                    [content_type] => application/json
+                    [http_code] => 200
+                    [header_size] => 375
+                    [request_size] => 632
+                    [filetime] => -1
+                    [ssl_verify_result] => 0
+                    [redirect_count] => 0
+                    [total_time] => 0.034816
+                    [namelookup_time] => 0.001848
+                    [connect_time] => 0.002085
+                    [pretransfer_time] => 0.002647
+                    [size_upload] => 284
+                    [size_download] => 3437
+                    [speed_download] => 98718
+                    [speed_upload] => 8157
+                    [download_content_length] => 3437
+                    [upload_content_length] => 284
+                    [starttransfer_time] => 0.034728
+                    [redirect_time] => 0
+                    [redirect_url] => 
+                    [primary_ip] => 172.18.0.14
+                    [certinfo] => Array
+                        (
+                        )
+
+                    [primary_port] => 80
+                    [local_ip] => 172.18.0.15
+                    [local_port] => 53036
+                    [http_version] => 2
+                    [protocol] => 1
+                    [ssl_verifyresult] => 0
+                    [scheme] => http
+                    [appconnect_time_us] => 0
+                    [connect_time_us] => 2085
+                    [namelookup_time_us] => 1848
+                    [pretransfer_time_us] => 2647
+                    [redirect_time_us] => 0
+                    [starttransfer_time_us] => 34728
+                    [total_time_us] => 34816
+                    [request_header] => POST /realms/internal/protocol/openid-connect/token HTTP/1.1
+Host: keycloak.local
+User-Agent: Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+Accept-Encoding: identity
+Accept: */*
+Cache-Control: max-age=0
+Connection: keep-alive
+Content-Length: 284
+Content-Type: application/x-www-form-urlencoded
+
+
+                )
+
+            [opts] => Array
+                (
+                    [13] => 30
+                    [78] => 30
+                    [64] => 
+                    [81] => 
+                    [19913] => 1
+                    [52] => 1
+                    [68] => 5
+                    [2] => 1
+                    [10102] => identity
+                    [10018] => Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+                    [47] => 1
+                    [10015] => client_id=itop&client_secret=NElsUtEMwJz6slGAUaH8VG55GPddJfVM&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&code=8584b1ab-39b8-11d1-b61b-21a0e7d6d74f.trwhOy86eP8jyJ-qC92qusty.571574a1-e4c2-4077-954a-fe58ea7eb800
+                    [10002] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+                    [10023] => Array
+                        (
+                            [0] => Accept: */*
+                            [1] => Cache-Control: max-age=0
+                            [2] => Connection: keep-alive
+                            [3] => Expect: 
+                            [4] => Pragma: 
+                        )
+
+                    [20079] => *omitted
+                )
+
+        )
+
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\HttpClient\Curl::request( http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?, GET ), response:
+Array
+(
+    [request] => Array
+        (
+            [uri] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+            [method] => GET
+            [parameters] => Array
+                (
+                )
+
+            [headers] => Array
+                (
+                    [Accept] => */*
+                    [Cache-Control] => max-age=0
+                    [Connection] => keep-alive
+                    [Expect] => 
+                    [Pragma] => 
+                    [Authorization] => Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+                )
+
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [headers] => Array
+                (
+                    [server] => nginx/1.29.5
+                    [date] => Fri, 13 Mar 2026 12:01:40 GMT
+                    [content_type] => application/json
+                    [content_length] => 202
+                    [connection] => keep-alive
+                    [cache_control] => no-cache
+                    [pragma] => no-cache
+                    [referrer_policy] => no-referrer
+                    [strict_transport_security] => max-age=31536000; includeSubDomains
+                    [x_content_type_options] => nosniff
+                    [x_frame_options] => SAMEORIGIN
+                    [x_robots_tag] => none
+                )
+
+            [body] => {"sub":"db001051-7065-4e26-af7d-cfc6cf522cb0","email_verified":false,"name":"Anton Timofeef","preferred_username":"anton228","given_name":"Anton","family_name":"Timofeef","email":"timofeev228@test.com"}
+        )
+
+    [client] => Array
+        (
+            [error] => 
+            [info] => Array
+                (
+                    [url] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+                    [content_type] => application/json
+                    [http_code] => 200
+                    [header_size] => 356
+                    [request_size] => 1791
+                    [filetime] => -1
+                    [ssl_verify_result] => 0
+                    [redirect_count] => 0
+                    [total_time] => 0.01562
+                    [namelookup_time] => 0.000713
+                    [connect_time] => 0.000883
+                    [pretransfer_time] => 0.000959
+                    [size_upload] => 0
+                    [size_download] => 202
+                    [speed_download] => 12932
+                    [speed_upload] => 0
+                    [download_content_length] => 202
+                    [upload_content_length] => 0
+                    [starttransfer_time] => 0.015554
+                    [redirect_time] => 0
+                    [redirect_url] => 
+                    [primary_ip] => 172.18.0.14
+                    [certinfo] => Array
+                        (
+                        )
+
+                    [primary_port] => 80
+                    [local_ip] => 172.18.0.15
+                    [local_port] => 53050
+                    [http_version] => 2
+                    [protocol] => 1
+                    [ssl_verifyresult] => 0
+                    [scheme] => http
+                    [appconnect_time_us] => 0
+                    [connect_time_us] => 883
+                    [namelookup_time_us] => 713
+                    [pretransfer_time_us] => 959
+                    [redirect_time_us] => 0
+                    [starttransfer_time_us] => 15554
+                    [total_time_us] => 15620
+                    [request_header] => GET /realms/internal/protocol/openid-connect/userinfo HTTP/1.1
+Host: keycloak.local
+User-Agent: Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+Accept-Encoding: identity
+Accept: */*
+Cache-Control: max-age=0
+Connection: keep-alive
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+
+
+                )
+
+            [opts] => Array
+                (
+                    [13] => 30
+                    [78] => 30
+                    [64] => 
+                    [81] => 
+                    [19913] => 1
+                    [52] => 1
+                    [68] => 5
+                    [2] => 1
+                    [10102] => identity
+                    [10018] => Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+                    [10002] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?
+                    [10023] => Array
+                        (
+                            [0] => Accept: */*
+                            [1] => Cache-Control: max-age=0
+                            [2] => Connection: keep-alive
+                            [3] => Expect: 
+                            [4] => Pragma: 
+                            [5] => Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+                        )
+
+                    [20079] => *omitted
+                )
+
+        )
+
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T13:01:40+01:00 -- Hybridauth\HttpClient\Curl::request( http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?, GET ), response:
+Array
+(
+    [request] => Array
+        (
+            [uri] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+            [method] => GET
+            [parameters] => Array
+                (
+                )
+
+            [headers] => Array
+                (
+                    [Accept] => */*
+                    [Cache-Control] => max-age=0
+                    [Connection] => keep-alive
+                    [Expect] => 
+                    [Pragma] => 
+                    [Authorization] => Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+                )
+
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [headers] => Array
+                (
+                    [server] => nginx/1.29.5
+                    [date] => Fri, 13 Mar 2026 12:01:40 GMT
+                    [content_type] => application/json
+                    [content_length] => 202
+                    [connection] => keep-alive
+                    [cache_control] => no-cache
+                    [referrer_policy] => no-referrer
+                    [strict_transport_security] => max-age=31536000; includeSubDomains
+                    [x_content_type_options] => nosniff
+                    [x_frame_options] => SAMEORIGIN
+                    [x_robots_tag] => none
+                )
+
+            [body] => {"sub":"db001051-7065-4e26-af7d-cfc6cf522cb0","email_verified":false,"name":"Anton Timofeef","preferred_username":"anton228","given_name":"Anton","family_name":"Timofeef","email":"timofeev228@test.com"}
+        )
+
+    [client] => Array
+        (
+            [error] => 
+            [info] => Array
+                (
+                    [url] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+                    [content_type] => application/json
+                    [http_code] => 200
+                    [header_size] => 356
+                    [request_size] => 1791
+                    [filetime] => -1
+                    [ssl_verify_result] => 0
+                    [redirect_count] => 0
+                    [total_time] => 0.007495
+                    [namelookup_time] => 0.002156
+                    [connect_time] => 0.002309
+                    [pretransfer_time] => 0.002363
+                    [size_upload] => 0
+                    [size_download] => 202
+                    [speed_download] => 26951
+                    [speed_upload] => 0
+                    [download_content_length] => 202
+                    [upload_content_length] => 0
+                    [starttransfer_time] => 0.007444
+                    [redirect_time] => 0
+                    [redirect_url] => 
+                    [primary_ip] => 172.18.0.14
+                    [certinfo] => Array
+                        (
+                        )
+
+                    [primary_port] => 80
+                    [local_ip] => 172.18.0.15
+                    [local_port] => 53052
+                    [http_version] => 2
+                    [protocol] => 1
+                    [ssl_verifyresult] => 0
+                    [scheme] => http
+                    [appconnect_time_us] => 0
+                    [connect_time_us] => 2309
+                    [namelookup_time_us] => 2156
+                    [pretransfer_time_us] => 2363
+                    [redirect_time_us] => 0
+                    [starttransfer_time_us] => 7444
+                    [total_time_us] => 7495
+                    [request_header] => GET /realms/internal/protocol/openid-connect/userinfo HTTP/1.1
+Host: keycloak.local
+User-Agent: Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+Accept-Encoding: identity
+Accept: */*
+Cache-Control: max-age=0
+Connection: keep-alive
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+
+
+                )
+
+            [opts] => Array
+                (
+                    [13] => 30
+                    [78] => 30
+                    [64] => 
+                    [81] => 
+                    [19913] => 1
+                    [52] => 1
+                    [68] => 5
+                    [2] => 1
+                    [10102] => identity
+                    [10018] => Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+                    [10002] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?
+                    [10023] => Array
+                        (
+                            [0] => Accept: */*
+                            [1] => Cache-Control: max-age=0
+                            [2] => Connection: keep-alive
+                            [3] => Expect: 
+                            [4] => Pragma: 
+                            [5] => Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MDQyMDAsImlhdCI6MTc3MzQwMzMwMCwiYXV0aF90aW1lIjoxNzczNDAzMjk4LCJqdGkiOiJvbnJ0YWM6NjJiYjViYmQtODhmYy02OGJiLWIwMDgtMDEyMzRiYWZjMGFkIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoidHJ3aE95ODZlUDhqeUotcUM5MnF1c3R5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.jt3Iugq883KoST6K_l11PDBYz8aOFX6MIUPzdxm4odIImjLSQSxraNZXHkchacE5KTw-GOgHXndh9BvV27wJdu2tIXcAVVaqsksrrX3PdWh8TJihQD0TND3JjQwHpg2Oro4JitZ1mT_tPlLF6ZjSNj1CKiMxfQyndbvKzu5G4oNa76wJX3TYAHFpibqq45a7ZG7Hfh8eymRLkYP1ut1Fsu-zEWEnvjbUSQuUUPKUa3G6fgJ-eanFsZBua66spJKfZ1EdEl6K4JSrF2Y3vJeA-a6YzpVe2krbZldL1SoXUpQN-nOx51teM7ny0eyWn1EHRzcqpJ6PK5XezpPHV7OZaQ
+                        )
+
+                    [20079] => *omitted
+                )
+
+        )
+
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T16:10:23+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T16:10:23+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T16:10:32+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T16:10:32+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T16:10:32+01:00 -- Hybridauth\Provider\Keycloak::authenticateBegin(), redirecting user to:
+Array
+(
+    [0] => http://keycloak.local/realms/internal/protocol/openid-connect/auth?response_type=code&client_id=itop&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&scope=openid+profile+email&state=HA-EMZUO4KI5FAX3GHTQD02R19SPBV8CYJ67NWL
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T16:10:41+01:00 -- Initialize Hybridauth\Provider\Keycloak, config: 
+Array
+(
+    [enabled] => 1
+    [adapter] => Hybridauth\Provider\Keycloak
+    [keys] => Array
+        (
+            [id] => itop
+            [secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+        )
+
+    [url] => http://keycloak.local
+    [realm] => internal
+    [scope] => openid profile email
+    [profiles_idp_key] => roles
+    [profiles_idp_separator] => ,
+    [groups_to_profiles] => Array
+        (
+            [sp_id1] => Administrator
+        )
+
+    [debug_mode] => none
+    [debug_file] => 
+    [callback] => http://itop.local/env-production/combodo-hybridauth/landing.php
+)
+
+info -- 172.18.0.14 -- 2026-03-13T16:10:41+01:00 -- Hybridauth\Provider\Keycloak::authenticate()
+debug -- 172.18.0.14 -- 2026-03-13T16:10:41+01:00 -- Hybridauth\Provider\Keycloak::authenticateFinish(), callback url:
+Array
+(
+    [0] => http://itop.local/env-production/combodo-hybridauth/landing.php?state=HA-EMZUO4KI5FAX3GHTQD02R19SPBV8CYJ67NWL&session_state=NEjlDTM6q55W36Cv6hOgpHRu&iss=http%3A%2F%2Fkeycloak.local%2Frealms%2Finternal&code=d6545e5b-dca9-d836-65c2-b18f47146dc8.NEjlDTM6q55W36Cv6hOgpHRu.571574a1-e4c2-4077-954a-fe58ea7eb800
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T16:10:41+01:00 -- Hybridauth\HttpClient\Curl::request( http://keycloak.local/realms/internal/protocol/openid-connect/token, POST ), response:
+Array
+(
+    [request] => Array
+        (
+            [uri] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+            [method] => POST
+            [parameters] => Array
+                (
+                    [client_id] => itop
+                    [client_secret] => NElsUtEMwJz6slGAUaH8VG55GPddJfVM
+                    [grant_type] => authorization_code
+                    [redirect_uri] => http://itop.local/env-production/combodo-hybridauth/landing.php
+                    [code] => d6545e5b-dca9-d836-65c2-b18f47146dc8.NEjlDTM6q55W36Cv6hOgpHRu.571574a1-e4c2-4077-954a-fe58ea7eb800
+                )
+
+            [headers] => Array
+                (
+                    [Accept] => */*
+                    [Cache-Control] => max-age=0
+                    [Connection] => keep-alive
+                    [Expect] => 
+                    [Pragma] => 
+                )
+
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [headers] => Array
+                (
+                    [server] => nginx/1.29.5
+                    [date] => Fri, 13 Mar 2026 15:10:41 GMT
+                    [content_type] => application/json
+                    [content_length] => 3437
+                    [connection] => keep-alive
+                    [cache_control] => no-store
+                    [pragma] => no-cache
+                    [referrer_policy] => no-referrer
+                    [strict_transport_security] => max-age=31536000; includeSubDomains
+                    [x_content_type_options] => nosniff
+                    [x_frame_options] => SAMEORIGIN
+                    [x_robots_tag] => none
+                )
+
+            [body] => {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MTU1NDEsImlhdCI6MTc3MzQxNDY0MSwiYXV0aF90aW1lIjoxNzczNDE0NjQwLCJqdGkiOiJvbnJ0YWM6MTdiZjYwNDQtYWYwMC03NmIyLTU0ZTAtNTRhMDJmMjgxZmExIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoiTkVqbERUTTZxNTVXMzZDdjZoT2dwSFJ1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.BWj9dBjIDJm4WSJGi3qtrnfmdc3l7nUoAJpjJqTNh0Te5mPRkpzJoBJybv_ZvvT60asVoMBtjwizfUrSqYpswrFg0_JBDZ0JJXh44Mw6qVkEsXWObS6UCZs1irY9BgfmwjoCA-pTZqcMRZsVmolhp21w2RbIuQJ1q6eRnG6C3bN6BJ8X7OeljD6mNJvjlLevdlt2_-Gq_-T6mRaFqPhdsxw6hDRjVyqsRJnzYtz8e63OqV2NKo02nI4OzZFVUUxpFS5PiDbPQg-QgwYvGM85fdcRa9zzLflAypLztEIBJPFd94GzkXzDD6wJ32HrXoJVbDaEkde1xH2FlDCV6UXksQ","expires_in":900,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0OWQ1MjkxMi1kMzBjLTQ2Y2EtOTZjMC1iYmQ0Mjg3OTU0ZDkifQ.eyJleHAiOjE3NzM0MTY0NDEsImlhdCI6MTc3MzQxNDY0MSwianRpIjoiNzBhNmE4NTgtYzkwZS01N2ZiLWE0ZjYtNTJmZjM2ZDgzZTFlIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6Imh0dHA6Ly9rZXljbG9hay5sb2NhbC9yZWFsbXMvaW50ZXJuYWwiLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoiaXRvcCIsInNpZCI6Ik5FamxEVE02cTU1VzM2Q3Y2aE9ncEhSdSIsInNjb3BlIjoib3BlbmlkIHdlYi1vcmlnaW5zIHJvbGVzIGJhc2ljIGVtYWlsIHByb2ZpbGUgYWNyIHNlcnZpY2VfYWNjb3VudCJ9.Hz5fqWQ0kmISfzezPG3IqdKNY4vWp8wDuLNd25e55v158mJtgluYN8GRr6Ul3WEssir54mawPvHBvV5aY1t3-A","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MTU1NDEsImlhdCI6MTc3MzQxNDY0MSwiYXV0aF90aW1lIjoxNzczNDE0NjQwLCJqdGkiOiI5ZjZmMGMwZS1lOTlmLTI5NjQtYjI2ZS0xMDM1NGI5MGVjMDAiLCJpc3MiOiJodHRwOi8va2V5Y2xvYWsubG9jYWwvcmVhbG1zL2ludGVybmFsIiwiYXVkIjoiaXRvcCIsInN1YiI6ImRiMDAxMDUxLTcwNjUtNGUyNi1hZjdkLWNmYzZjZjUyMmNiMCIsInR5cCI6IklEIiwiYXpwIjoiaXRvcCIsInNpZCI6Ik5FamxEVE02cTU1VzM2Q3Y2aE9ncEhSdSIsImF0X2hhc2giOiJxQ0NmT3hKMDY4bENuY0ZwQW5rOXdBIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.BP4oRZhMGY6YhBQyxNUGFTOoEeQfhtp4vy6F7LTqkUvl9w8hBVzNqRH9NF69s2gkt0ojuaL1oo0HZfEiqVk5e3FUNblVwz3bpS5stTR0msz-4PXaTos9_2KaKE6it0ftzLP_ZnsIykcreofACEOx7U3bXkuZhb-E9FFBxyL4PNq34Dtimjxj6Rc1SUbzLOwvsQxZiHuUozJnTbL-XfX0_Vze8ddpDjZ8UaaQZz5HoeFkvC6eS5WNrHSxefz9MkpWWm4QujPFhOaSNohfqm70dlLdYtZKjKYpbF55aL-GKha9k3ge0Y5UVlt-P6wJ4DT1AHWOzmMdLIkJpK0EX58ARA","not-before-policy":0,"session_state":"NEjlDTM6q55W36Cv6hOgpHRu","scope":"openid email profile"}
+        )
+
+    [client] => Array
+        (
+            [error] => 
+            [info] => Array
+                (
+                    [url] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+                    [content_type] => application/json
+                    [http_code] => 200
+                    [header_size] => 375
+                    [request_size] => 632
+                    [filetime] => -1
+                    [ssl_verify_result] => 0
+                    [redirect_count] => 0
+                    [total_time] => 0.260516
+                    [namelookup_time] => 0.004156
+                    [connect_time] => 0.004493
+                    [pretransfer_time] => 0.00598
+                    [size_upload] => 284
+                    [size_download] => 3437
+                    [speed_download] => 13193
+                    [speed_upload] => 1090
+                    [download_content_length] => 3437
+                    [upload_content_length] => 284
+                    [starttransfer_time] => 0.260041
+                    [redirect_time] => 0
+                    [redirect_url] => 
+                    [primary_ip] => 172.18.0.14
+                    [certinfo] => Array
+                        (
+                        )
+
+                    [primary_port] => 80
+                    [local_ip] => 172.18.0.15
+                    [local_port] => 46880
+                    [http_version] => 2
+                    [protocol] => 1
+                    [ssl_verifyresult] => 0
+                    [scheme] => http
+                    [appconnect_time_us] => 0
+                    [connect_time_us] => 4493
+                    [namelookup_time_us] => 4156
+                    [pretransfer_time_us] => 5980
+                    [redirect_time_us] => 0
+                    [starttransfer_time_us] => 260041
+                    [total_time_us] => 260516
+                    [request_header] => POST /realms/internal/protocol/openid-connect/token HTTP/1.1
+Host: keycloak.local
+User-Agent: Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+Accept-Encoding: identity
+Accept: */*
+Cache-Control: max-age=0
+Connection: keep-alive
+Content-Length: 284
+Content-Type: application/x-www-form-urlencoded
+
+
+                )
+
+            [opts] => Array
+                (
+                    [13] => 30
+                    [78] => 30
+                    [64] => 
+                    [81] => 
+                    [19913] => 1
+                    [52] => 1
+                    [68] => 5
+                    [2] => 1
+                    [10102] => identity
+                    [10018] => Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+                    [47] => 1
+                    [10015] => client_id=itop&client_secret=NElsUtEMwJz6slGAUaH8VG55GPddJfVM&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fitop.local%2Fenv-production%2Fcombodo-hybridauth%2Flanding.php&code=d6545e5b-dca9-d836-65c2-b18f47146dc8.NEjlDTM6q55W36Cv6hOgpHRu.571574a1-e4c2-4077-954a-fe58ea7eb800
+                    [10002] => http://keycloak.local/realms/internal/protocol/openid-connect/token
+                    [10023] => Array
+                        (
+                            [0] => Accept: */*
+                            [1] => Cache-Control: max-age=0
+                            [2] => Connection: keep-alive
+                            [3] => Expect: 
+                            [4] => Pragma: 
+                        )
+
+                    [20079] => *omitted
+                )
+
+        )
+
+)
+
+debug -- 172.18.0.14 -- 2026-03-13T16:10:42+01:00 -- Hybridauth\HttpClient\Curl::request( http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?, GET ), response:
+Array
+(
+    [request] => Array
+        (
+            [uri] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+            [method] => GET
+            [parameters] => Array
+                (
+                )
+
+            [headers] => Array
+                (
+                    [Accept] => */*
+                    [Cache-Control] => max-age=0
+                    [Connection] => keep-alive
+                    [Expect] => 
+                    [Pragma] => 
+                    [Authorization] => Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MTU1NDEsImlhdCI6MTc3MzQxNDY0MSwiYXV0aF90aW1lIjoxNzczNDE0NjQwLCJqdGkiOiJvbnJ0YWM6MTdiZjYwNDQtYWYwMC03NmIyLTU0ZTAtNTRhMDJmMjgxZmExIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoiTkVqbERUTTZxNTVXMzZDdjZoT2dwSFJ1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.BWj9dBjIDJm4WSJGi3qtrnfmdc3l7nUoAJpjJqTNh0Te5mPRkpzJoBJybv_ZvvT60asVoMBtjwizfUrSqYpswrFg0_JBDZ0JJXh44Mw6qVkEsXWObS6UCZs1irY9BgfmwjoCA-pTZqcMRZsVmolhp21w2RbIuQJ1q6eRnG6C3bN6BJ8X7OeljD6mNJvjlLevdlt2_-Gq_-T6mRaFqPhdsxw6hDRjVyqsRJnzYtz8e63OqV2NKo02nI4OzZFVUUxpFS5PiDbPQg-QgwYvGM85fdcRa9zzLflAypLztEIBJPFd94GzkXzDD6wJ32HrXoJVbDaEkde1xH2FlDCV6UXksQ
+                )
+
+        )
+
+    [response] => Array
+        (
+            [code] => 200
+            [headers] => Array
+                (
+                    [server] => nginx/1.29.5
+                    [date] => Fri, 13 Mar 2026 15:10:42 GMT
+                    [content_type] => application/json
+                    [content_length] => 202
+                    [connection] => keep-alive
+                    [cache_control] => no-cache
+                    [pragma] => no-cache
+                    [referrer_policy] => no-referrer
+                    [strict_transport_security] => max-age=31536000; includeSubDomains
+                    [x_content_type_options] => nosniff
+                    [x_frame_options] => SAMEORIGIN
+                    [x_robots_tag] => none
+                )
+
+            [body] => {"sub":"db001051-7065-4e26-af7d-cfc6cf522cb0","email_verified":false,"name":"Anton Timofeef","preferred_username":"anton228","given_name":"Anton","family_name":"Timofeef","email":"timofeev228@test.com"}
+        )
+
+    [client] => Array
+        (
+            [error] => 
+            [info] => Array
+                (
+                    [url] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo
+                    [content_type] => application/json
+                    [http_code] => 200
+                    [header_size] => 356
+                    [request_size] => 1791
+                    [filetime] => -1
+                    [ssl_verify_result] => 0
+                    [redirect_count] => 0
+                    [total_time] => 0.132712
+                    [namelookup_time] => 0.000668
+                    [connect_time] => 0.000802
+                    [pretransfer_time] => 0.000872
+                    [size_upload] => 0
+                    [size_download] => 202
+                    [speed_download] => 1522
+                    [speed_upload] => 0
+                    [download_content_length] => 202
+                    [upload_content_length] => 0
+                    [starttransfer_time] => 0.132655
+                    [redirect_time] => 0
+                    [redirect_url] => 
+                    [primary_ip] => 172.18.0.14
+                    [certinfo] => Array
+                        (
+                        )
+
+                    [primary_port] => 80
+                    [local_ip] => 172.18.0.15
+                    [local_port] => 46882
+                    [http_version] => 2
+                    [protocol] => 1
+                    [ssl_verifyresult] => 0
+                    [scheme] => http
+                    [appconnect_time_us] => 0
+                    [connect_time_us] => 802
+                    [namelookup_time_us] => 668
+                    [pretransfer_time_us] => 872
+                    [redirect_time_us] => 0
+                    [starttransfer_time_us] => 132655
+                    [total_time_us] => 132712
+                    [request_header] => GET /realms/internal/protocol/openid-connect/userinfo HTTP/1.1
+Host: keycloak.local
+User-Agent: Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+Accept-Encoding: identity
+Accept: */*
+Cache-Control: max-age=0
+Connection: keep-alive
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MTU1NDEsImlhdCI6MTc3MzQxNDY0MSwiYXV0aF90aW1lIjoxNzczNDE0NjQwLCJqdGkiOiJvbnJ0YWM6MTdiZjYwNDQtYWYwMC03NmIyLTU0ZTAtNTRhMDJmMjgxZmExIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoiTkVqbERUTTZxNTVXMzZDdjZoT2dwSFJ1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.BWj9dBjIDJm4WSJGi3qtrnfmdc3l7nUoAJpjJqTNh0Te5mPRkpzJoBJybv_ZvvT60asVoMBtjwizfUrSqYpswrFg0_JBDZ0JJXh44Mw6qVkEsXWObS6UCZs1irY9BgfmwjoCA-pTZqcMRZsVmolhp21w2RbIuQJ1q6eRnG6C3bN6BJ8X7OeljD6mNJvjlLevdlt2_-Gq_-T6mRaFqPhdsxw6hDRjVyqsRJnzYtz8e63OqV2NKo02nI4OzZFVUUxpFS5PiDbPQg-QgwYvGM85fdcRa9zzLflAypLztEIBJPFd94GzkXzDD6wJ32HrXoJVbDaEkde1xH2FlDCV6UXksQ
+
+
+                )
+
+            [opts] => Array
+                (
+                    [13] => 30
+                    [78] => 30
+                    [64] => 
+                    [81] => 
+                    [19913] => 1
+                    [52] => 1
+                    [68] => 5
+                    [2] => 1
+                    [10102] => identity
+                    [10018] => Hybridauth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)
+                    [10002] => http://keycloak.local/realms/internal/protocol/openid-connect/userinfo?
+                    [10023] => Array
+                        (
+                            [0] => Accept: */*
+                            [1] => Cache-Control: max-age=0
+                            [2] => Connection: keep-alive
+                            [3] => Expect: 
+                            [4] => Pragma: 
+                            [5] => Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDX3RadHh2Z1dnUWNkY3A4ZWgyS0xMbjZrQ0xRR0gzZGt4ek9HN19kaEM0In0.eyJleHAiOjE3NzM0MTU1NDEsImlhdCI6MTc3MzQxNDY0MSwiYXV0aF90aW1lIjoxNzczNDE0NjQwLCJqdGkiOiJvbnJ0YWM6MTdiZjYwNDQtYWYwMC03NmIyLTU0ZTAtNTRhMDJmMjgxZmExIiwiaXNzIjoiaHR0cDovL2tleWNsb2FrLmxvY2FsL3JlYWxtcy9pbnRlcm5hbCIsImF1ZCI6WyJhdWRpdG9yLXNlcnZpY2UiLCJpdG9wIiwiYWNjb3VudCJdLCJzdWIiOiJkYjAwMTA1MS03MDY1LTRlMjYtYWY3ZC1jZmM2Y2Y1MjJjYjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJpdG9wIiwic2lkIjoiTkVqbERUTTZxNTVXMzZDdjZoT2dwSFJ1IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vaXRvcC5sb2NhbCJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtaW50ZXJuYWwiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhdWRpdG9yLXNlcnZpY2UiOnsicm9sZXMiOlsiQVVESVRPUl9BRE1JTiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkFudG9uIFRpbW9mZWVmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW50b24yMjgiLCJnaXZlbl9uYW1lIjoiQW50b24iLCJmYW1pbHlfbmFtZSI6IlRpbW9mZWVmIiwiZW1haWwiOiJ0aW1vZmVldjIyOEB0ZXN0LmNvbSJ9.BWj9dBjIDJm4WSJGi3qtrnfmdc3l7nUoAJpjJqTNh0Te5mPRkpzJoBJybv_ZvvT60asVoMBtjwizfUrSqYpswrFg0_JBDZ0JJXh44Mw6qVkEsXWObS6UCZs1irY9BgfmwjoCA-pTZqcMRZsVmolhp21w2RbIuQJ1q6eRnG6C3bN6BJ8X7OeljD6mNJvjlLevdlt2_-Gq_-T6mRaFqPhdsxw6hDRjVyqsRJnzYtz8e63OqV2NKo02nI4OzZFVUUxpFS5PiDbPQg-QgwYvGM85fdcRa9zzLflAypLztEIBJPFd94GzkXzDD6wJ32HrXoJVbDaEkde1xH2FlDCV6UXksQ
+                        )
+
+                    [20079] => *omitted
+                )
+
+        )
+
+)
+

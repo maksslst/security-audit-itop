@@ -283,7 +283,7 @@ $MyModuleSettings = array(
 		    'keys' => 
 		    array (
 		      'id' => 'itop',
-		      'secret' => getenv('AUDITOR_ITOP_CLIENT_SECRET'),
+		      'secret' => 'NElsUtEMwJz6slGAUaH8VG55GPddJfVM',
 		    ),
 		    'url' => 'http://keycloak.local',
 		    'realm' => 'internal',
