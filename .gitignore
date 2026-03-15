@@ -1,5 +1,7 @@
 /data/
 /log/
+itop/data/
+itop/log/
 /env-*/
 /node_modules/
 
@@ -8,10 +10,13 @@ data/cache-*/
 data/backups-*/
 
 conf/production/
-conf/params.local.php
 
-.DS_Store
-Thumbs.db
+.env
+*.log
+*.tmp
+*.bak
+*.swp
+*~
 
 ../.idea/
 .vscode/

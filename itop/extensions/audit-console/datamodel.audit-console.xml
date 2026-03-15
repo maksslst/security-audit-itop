@@ -12,15 +12,40 @@
             </fields>
         </class>
 
-        <class id="UserExternal" _delta="if_exists">
+        <class id="AuditUserMapping" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>addon</category>
+                <db_table>audit_user_mapping</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>auditor_user_id</friendlyname_attcode>
+            </properties>
             <fields>
-                <field id="auditor_user_id" xsi:type="AttributeInteger" _delta="define">
+                <field id="user" xsi:type="AttributeExternalKey">
+                    <sql>user_id</sql>
+                    <target_class>UserExternal</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="auditor_user_id" xsi:type="AttributeInteger">
                     <sql>auditor_user_id</sql>
-                    <is_null_allowed>true</is_null_allowed>
-                    <is_editable>false</is_editable>
-                    <tracking_level>none</tracking_level>
+                    <is_null_allowed>false</is_null_allowed>
                 </field>
             </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="user"/>
+                        <item id="auditor_user_id"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="user"/>
+                        <item id="auditor_user_id"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods/>
         </class>
 
         <class id="CustomAudit" _delta="define">
@@ -84,18 +109,8 @@
                     <is_null_allowed>true</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
-                <field id="agent" xsi:type="AttributeExternalKey">
-                    <sql>agent_id</sql>
-                    <target_class>AuditAgent</target_class>
-                    <is_null_allowed>true</is_null_allowed>
-                </field>
             </fields>
             <presentation>
-                <creation>
-                    <items>
-                        <item id="agent"/>
-                    </items>
-                </creation>
                 <details>
                     <items>
                         <item id="organization">
@@ -154,104 +169,17 @@
                     <code><![CDATA[
                         public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
                         {
-                            $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
-                            if (!$this->IsNew()) {
-                                $iFlags |= OPT_ATT_READONLY;
-                            }
-                            return $iFlags;
+                            return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons) | OPT_ATT_READONLY;
                         }
                     ]]></code>
                 </method>
-                <method id="BeforeInsert" _delta="define">
+                <method id="AllowWrite" _delta="define">
                     <static>false</static>
-                    <access>protected</access>
+                    <access>public</access>
                     <code><![CDATA[
-                        protected function BeforeInsert()
+                        public function AllowWrite($bAllow = true)
                         {
-                            $iAgentId = $this->Get('agent');
-                            if (empty($iAgentId)) {
-                                throw new Exception('Выберите агента для запуска аудита');
-                            }
-                            $oAgent = MetaModel::GetObject('AuditAgent', $iAgentId, false);
-                            if (!$oAgent) {
-                                throw new Exception('Агент не найден');
-                            }
-                            $oUser = UserRights::GetUserObject();
-                            if (!$oUser) {
-                                throw new Exception('Пользователь не определён');
-                            }
-                            $iContactId = $oUser->Get('contactid');
-                            if (empty($iContactId)) {
-                                throw new Exception('У текущего пользователя не задан контакт');
-                            }
-                            $oPerson = MetaModel::GetObject('Person', $iContactId, false);
-                            if (!$oPerson) {
-                                throw new Exception('Контакт пользователя не найден');
-                            }
-                            $iOrgId = $oPerson->Get('org_id');
-                            if (empty($iOrgId)) {
-                                throw new Exception('У пользователя не указана организация');
-                            }
-                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
-                            if (!$oOrg) {
-                                throw new Exception('Организация не найдена');
-                            }
-                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
-                            if ($iTenantId <= 0) {
-                                throw new Exception('Организация не синхронизирована с сервисом аудита');
-                            }
-                            $oSearch = new DBObjectSet(DBObjectSearch::FromOQL('SELECT UserExternal WHERE contactid = :cid'), array(), array('cid' => $iContactId));
-                            $oExtUser = $oSearch->Fetch();
-                            if (!$oExtUser) {
-                                throw new Exception('Внешний пользователь для этого контакта не найден. Выполните синхронизацию пользователя.');
-                            }
-                            $iAuditorUserId = (int) $oExtUser->Get('auditor_user_id');
-                            if ($iAuditorUserId <= 0) {
-                                throw new Exception('У пользователя не задан auditor_user_id. Выполните синхронизацию пользователя.');
-                            }
-                            if ((int) $oAgent->Get('organization') !== (int) $iOrgId) {
-                                throw new Exception('Агент не принадлежит организации текущего пользователя');
-                            }
-                            $sPublicId = $oAgent->Get('public_id');
-                            if (empty($sPublicId)) {
-                                throw new Exception('У агента не задан public_id');
-                            }
-                            $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
-                            $aBody = array(
-                                'tenantId' => $iTenantId,
-                                'initiatedById' => $iAuditorUserId,
-                                'agentPublicId' => $sPublicId,
-                            );
-                            $sUrl = 'http://auditor-service:8081/internal/audits';
-                            $ch = curl_init($sUrl);
-                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                            curl_setopt($ch, CURLOPT_POST, true);
-                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                                'Authorization: Bearer '.$sToken,
-                                'Content-Type: application/json',
-                                'Accept: application/json',
-                            ));
-                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
-                            $sResult = curl_exec($ch);
-                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                            curl_close($ch);
-                            if ($sResult === false) {
-                                throw new Exception('Ошибка вызова сервиса аудита: '.curl_error($ch));
-                            }
-                            if ($iStatus !== 201 && $iStatus !== 200) {
-                                throw new Exception('Сервис аудита вернул ошибку HTTP '.$iStatus.': '.$sResult);
-                            }
-                            $mResp = json_decode($sResult, true);
-                            $iAuditId = is_array($mResp) ? (int) (isset($mResp['id']) ? $mResp['id'] : reset($mResp)) : (int) $sResult;
-                            if ($iAuditId <= 0) {
-                                throw new Exception('Сервис аудита не вернул идентификатор аудита');
-                            }
-                            $this->Set('organization', $iOrgId);
-                            $this->Set('user', $oExtUser->GetKey());
-                            $this->Set('audit_id', $iAuditId);
-                            $this->Set('status', 'PENDING');
-                            $this->Set('created_at', date('Y-m-d H:i:s'));
-                            parent::BeforeInsert();
+                            return false;
                         }
                     ]]></code>
                 </method>
@@ -413,7 +341,6 @@
                                     $iFlags |= OPT_ATT_READONLY;
                                 }
                             }
-
                             return $iFlags;
                         }
                     ]]></code>
@@ -430,8 +357,8 @@
                             if (is_string($response)) {
                                 $response = json_decode($response, true);
                             }
-
-                            $expiresAt = date('Y-m-d H:i:s', time() + ((int)$response['expiresInMinutes'] * 60));
+                            $expiresIn = isset($response['expiresInMinutes']) ? (int)$response['expiresInMinutes'] : $ttl;
+                            $expiresAt = date('Y-m-d H:i:s', time() + ($expiresIn * 60));
                             $this->Set('expires_at', $expiresAt);
                             $this->AllowWrite();
                             $this->DBUpdate();
@@ -455,7 +382,6 @@
                                 if (isset($data['object_id'], $data['token']) && $data['object_id'] == $this->GetKey()) {
                                     $token = $data['token'];
                                     unset($_SESSION['audit_console_token_once']);
-
                                     $html = '
                                     <div style="
                                         margin:20px 0;
@@ -468,7 +394,7 @@
                                             Создан регистрационный токен
                                         </h3>
                                         <p style="margin:10px 0;">
-                                            Пожалуйста, скопируйте токен.
+                                            Пожалуйста, скопируйте токен
                                         </p>
                                         <div style="
                                             font-size:18px;
@@ -479,10 +405,9 @@
                                             border:1px dashed #2e7d32;
                                             word-break:break-all;
                                         ">
-                                            '.$token.'
+                                            '.htmlentities($token).'
                                         </div>
                                     </div>';
-
                                     $oPage->add($html);
                                 }
                             }
@@ -522,10 +447,7 @@
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                             curl_setopt($ch, CURLOPT_POST, true);
                             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aPost));
-                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                                'Content-Type: application/x-www-form-urlencoded',
-                            ));
-
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
                                 throw new Exception('Keycloak token request failed: '.curl_error($ch));
@@ -533,7 +455,6 @@
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-
                             if ($iStatus < 200 || $iStatus >= 300) {
                                 throw new Exception('Keycloak token HTTP '.$iStatus.': '.$sResult);
                             }
@@ -593,7 +514,8 @@
                                 'roles' => $aRoles,
                             );
 
-                            $sUrl = 'http://auditor-service:8081/internal/token/registration-token';
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                            $sUrl = rtrim($sBaseUrl, '/').'/internal/token/registration-token';
 
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -609,19 +531,16 @@
                             if ($sResult === false) {
                                 throw new Exception('Failed to call registration-token backend: '.curl_error($ch));
                             }
-
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
 
                             if ($iStatus < 200 || $iStatus >= 300) {
                                 throw new Exception('Backend registration-token returned HTTP '.$iStatus.': '.$sResult);
                             }
-
                             $aData = json_decode($sResult, true);
                             if (!is_array($aData) || !isset($aData['registrationToken'], $aData['expiresInMinutes'])) {
                                 throw new Exception('Unexpected backend response for registration-token: '.$sResult);
                             }
-
                             return $aData;
                         }
                     ]]></code>
@@ -699,11 +618,14 @@
                             $oSet = new DBObjectSet($oSearch);
 
                             while ($oOrg = $oSet->Fetch()) {
+                                $iOrgId = $oOrg->GetKey();
                                 $aBody = array(
                                     'name' => $oOrg->GetName(),
+                                    'itopOrganizationId' => $iOrgId,
                                 );
 
-                                $sUrl = 'http://auditor-service:8081/api/tenants';
+                                $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                                $sUrl = rtrim($sBaseUrl, '/').'/api/tenants';
 
                                 $ch = curl_init($sUrl);
                                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -771,7 +693,6 @@
                 <creation>
                     <items>
                         <item id="name"/>
-                        <item id="user"/>
                     </items>
                 </creation>
                 <details>
@@ -813,16 +734,11 @@
                             parent::DisplayBareRelations($oPage, $bEditMode);
                             if (isset($_SESSION['audit_user_temp_password_once']) && is_array($_SESSION['audit_user_temp_password_once'])) {
                                 $data = $_SESSION['audit_user_temp_password_once'];
-
-                                if (isset($data['job_id'], $data['username'], $data['tenant_name'], $data['password'])
-                                    && $data['job_id'] == $this->GetKey()) {
-
-                                    $username   = $data['username'];
+                                if (isset($data['job_id'], $data['username'], $data['tenant_name'], $data['password']) && $data['job_id'] == $this->GetKey()) {
+                                    $username = $data['username'];
                                     $tenantName = $data['tenant_name'];
-                                    $password   = $data['password'];
-
+                                    $password = $data['password'];
                                     unset($_SESSION['audit_user_temp_password_once']);
-
                                     $html = '
                                     <div style="
                                         margin:20px 0;
@@ -839,7 +755,7 @@
                                             Организация: <strong>'.htmlentities($tenantName).'</strong>
                                         </p>
                                         <p style="margin:10px 0;">
-                                            Пожалуйста, скопируйте пароль.
+                                            Пожалуйста, скопируйте пароль
                                         </p>
                                         <div style="
                                             font-size:18px;
@@ -853,7 +769,6 @@
                                             '.htmlentities($password).'
                                         </div>
                                     </div>';
-
                                     $oPage->add($html);
                                 }
                             }
@@ -921,9 +836,11 @@
                                 'temporaryPassword' => $sTempPwd,
                                 'role' => $sRole,
                                 'tenantId' => $iTenantId,
+                                'itopUserExternalId' => $iUserId,
                             );
 
-                            $sUrl = 'http://auditor-service:8081/api/users/internal';
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                            $sUrl = rtrim($sBaseUrl, '/').'/api/users/internal';
 
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -939,7 +856,6 @@
                             if ($sResult === false) {
                                 throw new Exception('auditor-service createUserFromItop failed: '.curl_error($ch));
                             }
-
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
 
@@ -954,10 +870,24 @@
                                 $iAuditorUserId = (int) $sResult;
                             }
 
-                            if ($iAuditorUserId > 0 && (int)$oUser->Get('auditor_user_id') === 0) {
-                                $oUser->Set('auditor_user_id', $iAuditorUserId);
-                                $oUser->AllowWrite();
-                                $oUser->DBUpdate();
+                            if ($iAuditorUserId > 0) {
+                                $oMappingSet = new DBObjectSet(
+                                    DBObjectSearch::FromOQL('SELECT AuditUserMapping WHERE user = :uid'),
+                                    array(),
+                                    array('uid' => $iUserId)
+                                );
+                                $oMapping = $oMappingSet->Fetch();
+
+                                if ($oMapping) {
+                                    $oMapping->Set('auditor_user_id', $iAuditorUserId);
+                                    $oMapping->AllowWrite();
+                                    $oMapping->DBUpdate();
+                                } else {
+                                    $oMapping = MetaModel::NewObject('AuditUserMapping');
+                                    $oMapping->Set('user', $iUserId);
+                                    $oMapping->Set('auditor_user_id', $iAuditorUserId);
+                                    $oMapping->DBInsert();
+                                }
                             }
 
                             $_SESSION['audit_user_temp_password_once'] = array(
@@ -972,11 +902,11 @@
             </methods>
         </class>
 
-        <class id="AuditUserAuditsSyncJob" _delta="define">
+        <class id="AuditCreateJob" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
                 <category>bizmodel</category>
-                <db_table>audit_user_audits_sync_job</db_table>
+                <db_table>audit_create_job</db_table>
                 <db_key_field>id</db_key_field>
                 <friendlyname_attcode>name</friendlyname_attcode>
             </properties>
@@ -985,11 +915,11 @@
                     <sql>name</sql>
                     <max_length>255</max_length>
                     <is_null_allowed>false</is_null_allowed>
-                    <default_value>Синхронизировать аудиты пользователя</default_value>
+                    <default_value>Создать аудит</default_value>
                 </field>
-                <field id="user" xsi:type="AttributeExternalKey">
-                    <sql>user_id</sql>
-                    <target_class>UserExternal</target_class>
+                <field id="agent" xsi:type="AttributeExternalKey">
+                    <sql>agent_id</sql>
+                    <target_class>AuditAgent</target_class>
                     <is_null_allowed>false</is_null_allowed>
                 </field>
             </fields>
@@ -997,23 +927,49 @@
                 <creation>
                     <items>
                         <item id="name"/>
-                        <item id="user"/>
+                        <item id="agent"/>
                     </items>
                 </creation>
                 <details>
                     <items>
                         <item id="name"/>
-                        <item id="user"/>
+                        <item id="agent"/>
                     </items>
                 </details>
                 <list>
                     <items>
                         <item id="name"/>
-                        <item id="user"/>
+                        <item id="agent"/>
                     </items>
                 </list>
             </presentation>
             <methods>
+                <method id="GetFilterFor" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function GetFilterFor($sAttCode)
+                        {
+                            if ($sAttCode === 'agent') {
+                                $iOrgId = 0;
+                                $oUser = UserRights::GetUserObject();
+                                if ($oUser) {
+                                    $iContactId = $oUser->Get('contactid');
+                                    if (!empty($iContactId)) {
+                                        $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                                        if ($oPerson) {
+                                            $iOrgId = (int) $oPerson->Get('org_id');
+                                        }
+                                    }
+                                }
+                                if ($iOrgId > 0) {
+                                    return DBObjectSearch::FromOQL('SELECT AuditAgent WHERE organization = :org', array(), array('org' => $iOrgId));
+                                }
+                            }
+                            return parent::GetFilterFor($sAttCode);
+                        }
+                    ]]></code>
+                </method>
                 <method id="AfterInsert" _delta="define">
                     <static>false</static>
                     <access>protected</access>
@@ -1023,151 +979,112 @@
                             parent::AfterInsert();
                             try {
                                 $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
-                                $this->Auditor_SyncUserAudits($sToken);
+                                $this->Auditor_CreateAudit($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('AuditUserAuditsSyncJob failed: '.$e->getMessage());
+                                IssueLog::Error('AuditCreateJob failed: '.$e->getMessage());
                             }
                         }
                     ]]></code>
                 </method>
-                <method id="Auditor_SyncUserAudits" _delta="define">
+                <method id="Auditor_CreateAudit" _delta="define">
                     <static>false</static>
                     <access>private</access>
                     <code><![CDATA[
-                        private function Auditor_SyncUserAudits($sToken)
+                        private function Auditor_CreateAudit($sToken)
                         {
-                            $iUserId = $this->Get('user');
-                            $oUser = MetaModel::GetObject('UserExternal', $iUserId, false);
+                            $iAgentId = $this->Get('agent');
+                            $oAgent = MetaModel::GetObject('AuditAgent', $iAgentId, false);
+                            if (!$oAgent) {
+                                throw new Exception('Агент не найден');
+                            }
+
+                            $oUser = UserRights::GetUserObject();
                             if (!$oUser) {
-                                throw new Exception('UserExternal not found for id '.$iUserId);
+                                throw new Exception('Пользователь не определён');
                             }
 
-                            $sTenantName = 'Default';
-                            $iTenantId = 0;
-                            $iOrgId = 0;
                             $iContactId = $oUser->Get('contactid');
-                            if (!empty($iContactId)) {
-                                $oPerson = MetaModel::GetObject('Person', $iContactId, false);
-                                if ($oPerson) {
-                                    $iOrgId = $oPerson->Get('org_id');
-                                    if (!empty($iOrgId)) {
-                                        $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
-                                        if ($oOrg) {
-                                            $sTenantName = $oOrg->GetName();
-                                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
-                                        }
-                                    }
-                                }
+                            if (empty($iContactId)) {
+                                throw new Exception('У текущего пользователя не задан контакт');
                             }
 
+                            $oPerson = MetaModel::GetObject('Person', $iContactId, false);
+                            if (!$oPerson) {
+                                throw new Exception('Контакт пользователя не найден');
+                            }
+
+                            $iOrgId = $oPerson->Get('org_id');
+                            if (empty($iOrgId)) {
+                                throw new Exception('У пользователя не указана организация');
+                            }
+
+                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
+                            if (!$oOrg) {
+                                throw new Exception('Организация не найдена');
+                            }
+
+                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
                             if ($iTenantId <= 0) {
-                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$sTenantName);
+                                throw new Exception('Организация не синхронизирована с сервисом аудита');
                             }
 
-                            $iAuditorUserId = (int) $oUser->Get('auditor_user_id');
+                            $oExtUsers = new DBObjectSet(
+                                DBObjectSearch::FromOQL('SELECT UserExternal WHERE contactid = :cid'),
+                                array(),
+                                array('cid' => $iContactId)
+                            );
+
+                            $oExtUser = $oExtUsers->Fetch();
+                            if (!$oExtUser) {
+                                throw new Exception('Внешний пользователь для этого контакта не найден. Выполните синхронизацию пользователя.');
+                            }
+
+                            $oMappingSet = new DBObjectSet(
+                                DBObjectSearch::FromOQL('SELECT AuditUserMapping WHERE user = :uid'),
+                                array(),
+                                array('uid' => $oExtUser->GetKey())
+                            );
+
+                            $oMapping = $oMappingSet->Fetch();
+                            $iAuditorUserId = $oMapping ? (int) $oMapping->Get('auditor_user_id') : 0;
                             if ($iAuditorUserId <= 0) {
-                                throw new Exception('UserExternal '.$iUserId.' has no auditor_user_id');
+                                throw new Exception('У пользователя не найден auditor_user_id. Выполните синхронизацию пользователя.');
                             }
 
-                            $sUrl = 'http://auditor-service:8081/internal/audits/tenant/'.$iTenantId.'/user/'.$iAuditorUserId;
+                            if ((int) $oAgent->Get('organization') !== (int) $iOrgId) {
+                                throw new Exception('Агент не принадлежит организации текущего пользователя');
+                            }
 
+                            $sPublicId = $oAgent->Get('public_id');
+                            if (empty($sPublicId)) {
+                                throw new Exception('У агента не задан public_id');
+                            }
+
+                            $aBody = array(
+                                'tenantId' => $iTenantId,
+                                'initiatedById' => $iAuditorUserId,
+                                'agentPublicId' => $sPublicId,
+                            );
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                            $sUrl = rtrim($sBaseUrl, '/').'/internal/audits';
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
                             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                                 'Authorization: Bearer '.$sToken,
+                                'Content-Type: application/json',
                                 'Accept: application/json',
                             ));
-
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('auditor-service getAudits failed: '.curl_error($ch));
+                                throw new Exception('auditor-service createAudit failed: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-
-                            if ($iStatus !== 200) {
-                                throw new Exception('auditor-service getAudits HTTP '.$iStatus.': '.$sResult);
-                            }
-
-                            $aData = json_decode($sResult, true);
-                            if (!is_array($aData)) {
-                                throw new Exception('Unexpected backend response for audits: '.$sResult);
-                            }
-
-                            $oExisting = new DBObjectSet(
-                                DBObjectSearch::FromOQL("SELECT CustomAudit WHERE user = :user"),
-                                array(),
-                                array('user' => $iUserId)
-                            );
-
-                            while ($oAudit = $oExisting->Fetch()) {
-                                $oAudit->DBDelete();
-                            }
-
-                            foreach ($aData as $aAudit) {
-                                if (!isset($aAudit['id'], $aAudit['status'])) {
-                                    continue;
-                                }
-
-                                $iAuditId = (int) $aAudit['id'];
-                                $sStatus  = strtoupper($aAudit['status']);
-
-                                $sCreatedAt  = isset($aAudit['createdAt']) ? $aAudit['createdAt'] : null;
-                                $sStartedAt  = isset($aAudit['startedAt']) ? $aAudit['startedAt'] : null;
-                                $sCompletedAt = isset($aAudit['completedAt']) ? $aAudit['completedAt'] : null;
-
-                                $sCreatedAtDb = null;
-                                $sStartedAtDb = null;
-                                $sCompletedAtDb = null;
-
-                                if (!empty($sCreatedAt)) {
-                                    $t = strtotime($sCreatedAt);
-                                    if ($t !== false) {
-                                        $sCreatedAtDb = date('Y-m-d H:i:s', $t);
-                                    }
-                                }
-                                if (!empty($sStartedAt)) {
-                                    $t = strtotime($sStartedAt);
-                                    if ($t !== false) {
-                                        $sStartedAtDb = date('Y-m-d H:i:s', $t);
-                                    }
-                                }
-                                if (!empty($sCompletedAt)) {
-                                    $t = strtotime($sCompletedAt);
-                                    if ($t !== false) {
-                                        $sCompletedAtDb = date('Y-m-d H:i:s', $t);
-                                    }
-                                }
-
-                                $iCount = isset($aAudit['countInstalledSoftware']) ? (int) $aAudit['countInstalledSoftware'] : 0;
-
-                                $oNew = MetaModel::NewObject('CustomAudit');
-                                $oNew->Set('organization', $iOrgId);
-                                $oNew->Set('user', $iUserId);
-                                $oNew->Set('audit_id', $iAuditId);
-                                $oNew->Set('status', $sStatus);
-
-                                if ($sCreatedAtDb !== null) {
-                                    $oNew->Set('created_at', $sCreatedAtDb);
-                                }
-                                if ($sStartedAtDb !== null) {
-                                    $oNew->Set('started_at', $sStartedAtDb);
-                                }
-                                if ($sCompletedAtDb !== null) {
-                                    $oNew->Set('completed_at', $sCompletedAtDb);
-                                }
-
-                                $oNew->Set('installed_software_count', $iCount);
-
-                                if (isset($aAudit['initiatedById'])) {
-                                    $oNew->Set('auditor_user_id', (int) $aAudit['initiatedById']);
-                                }
-                                if (isset($aAudit['agentId'])) {
-                                    $oNew->Set('auditor_agent_id', (int) $aAudit['agentId']);
-                                }
-
-                                $oNew->DBInsertNoReload();
+                            if ($iStatus !== 201 && $iStatus !== 200) {
+                                throw new Exception('auditor-service createAudit HTTP '.$iStatus.': '.$sResult);
                             }
                         }
                     ]]></code>
@@ -1175,11 +1092,11 @@
             </methods>
         </class>
 
-        <class id="AuditAgentSyncJob" _delta="define">
+        <class id="NvdSyncJob" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
                 <category>bizmodel</category>
-                <db_table>audit_agent_sync_job</db_table>
+                <db_table>nvd_sync_job</db_table>
                 <db_key_field>id</db_key_field>
                 <friendlyname_attcode>name</friendlyname_attcode>
             </properties>
@@ -1188,31 +1105,39 @@
                     <sql>name</sql>
                     <max_length>255</max_length>
                     <is_null_allowed>false</is_null_allowed>
-                    <default_value>Sync agents from auditor-service</default_value>
+                    <default_value>Синхронизация NVD</default_value>
                 </field>
-                <field id="organization" xsi:type="AttributeExternalKey">
-                    <sql>organization_id</sql>
-                    <target_class>Organization</target_class>
+                <field id="sync_type" xsi:type="AttributeEnum">
+                    <sql>sync_type</sql>
+                    <values>
+                        <value id="bootstrap">
+                            <code>bootstrap</code>
+                        </value>
+                        <value id="incremental">
+                            <code>incremental</code>
+                        </value>
+                    </values>
                     <is_null_allowed>false</is_null_allowed>
+                    <default_value>bootstrap</default_value>
                 </field>
             </fields>
             <presentation>
                 <creation>
                     <items>
                         <item id="name"/>
-                        <item id="organization"/>
+                        <item id="sync_type"/>
                     </items>
                 </creation>
                 <details>
                     <items>
                         <item id="name"/>
-                        <item id="organization"/>
+                        <item id="sync_type"/>
                     </items>
                 </details>
                 <list>
                     <items>
                         <item id="name"/>
-                        <item id="organization"/>
+                        <item id="sync_type"/>
                     </items>
                 </list>
             </presentation>
@@ -1224,82 +1149,49 @@
                         protected function AfterInsert()
                         {
                             parent::AfterInsert();
+                            if (!UserRights::IsAdministrator()) {
+                                IssueLog::Error('NvdSyncJob: only Administrator can run NVD sync');
+                                return;
+                            }
                             try {
                                 $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
-                                $this->Auditor_SyncAgents($sToken);
+                                $this->Nvd_CallSyncApi($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('AuditAgentSyncJob failed: '.$e->getMessage());
+                                IssueLog::Error('NvdSyncJob failed: '.$e->getMessage());
                             }
                         }
                     ]]></code>
                 </method>
-                <method id="Auditor_SyncAgents" _delta="define">
+                <method id="Nvd_CallSyncApi" _delta="define">
                     <static>false</static>
                     <access>private</access>
                     <code><![CDATA[
-                        private function Auditor_SyncAgents($sToken)
+                        private function Nvd_CallSyncApi($sToken)
                         {
-                            $iOrgId = $this->Get('organization');
-                            $oOrg = MetaModel::GetObject('Organization', $iOrgId, false);
-                            if (!$oOrg) {
-                                throw new Exception('Organization not found for id '.$iOrgId);
-                            }
-
-                            $iTenantId = (int) $oOrg->Get('auditor_tenant_id');
-                            if ($iTenantId <= 0) {
-                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$oOrg->GetName());
-                            }
-
-                            $sUrl = 'http://auditor-service:8081/internal/agent/tenant/'.$iTenantId;
+                            $sType = $this->Get('sync_type');
+                            $sEndpoint = ($sType === 'incremental') ? 'incremental' : 'bootstrap';
+                            $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
+                            $sUrl = rtrim($sBaseUrl, '/').'/api/nvd/'.$sEndpoint;
 
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
                             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                                 'Authorization: Bearer '.$sToken,
+                                'Content-Type: application/json',
                                 'Accept: application/json',
                             ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
 
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('auditor-service getAgents failed: '.curl_error($ch));
+                                throw new Exception('analyzer-service request failed: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-
-                            if ($iStatus !== 200) {
-                                throw new Exception('auditor-service getAgents HTTP '.$iStatus.': '.$sResult);
-                            }
-
-                            $aData = json_decode($sResult, true);
-                            if (!is_array($aData)) {
-                                throw new Exception('Unexpected backend response for agents: '.$sResult);
-                            }
-
-                            $oExisting = new DBObjectSet(
-                                DBObjectSearch::FromOQL("SELECT AuditAgent WHERE organization = :organization"),
-                                array(),
-                                array('organization' => $iOrgId)
-                            );
-
-                            while ($oAgent = $oExisting->Fetch()) {
-                                $oAgent->DBDelete();
-                            }
-
-                            foreach ($aData as $aAgent) {
-                                if (!isset($aAgent['publicId'], $aAgent['osType'])) {
-                                    continue;
-                                }
-
-                                $sPublicId = $aAgent['publicId'];
-                                $sOsType = strtoupper($aAgent['osType']);
-
-                                $oNew = MetaModel::NewObject('AuditAgent');
-                                $oNew->Set('organization', $iOrgId);
-                                $oNew->Set('public_id', $sPublicId);
-                                $oNew->Set('os_type', $sOsType);
-
-                                $oNew->DBInsertNoReload();
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('analyzer-service NVD sync HTTP '.$iStatus.': '.$sResult);
                             }
                         }
                     ]]></code>
@@ -1324,35 +1216,35 @@
             <rank>20</rank>
             <oql>SELECT AuditAgent</oql>
         </menu>
-        <menu id="AgentTokensMenu" xsi:type="OQLMenuNode" _delta="define">
+        <menu id="AuditCreateJobsMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
             <rank>30</rank>
+            <label>Создание аудитов</label>
+            <oql>SELECT AuditCreateJob</oql>
+        </menu>
+        <menu id="AgentTokensMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>40</rank>
             <label>Регистрационный токен агента</label>
             <oql>SELECT AuditAgentToken</oql>
         </menu>
         <menu id="SyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
-            <rank>40</rank>
+            <rank>50</rank>
             <label>Синхронизация организаций</label>
             <oql>SELECT AuditOrgSyncJob</oql>
         </menu>
         <menu id="UserSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
-            <rank>50</rank>
+            <rank>60</rank>
             <label>Синхронизация пользователей</label>
             <oql>SELECT AuditUserSyncJob</oql>
         </menu>
-        <menu id="UserAuditsSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+        <menu id="NvdSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
-            <rank>55</rank>
-            <label>Синхронизация аудитов пользователей</label>
-            <oql>SELECT AuditUserAuditsSyncJob</oql>
-        </menu>
-        <menu id="AgentSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
-            <rank>60</rank>
-            <label>Синхронизация агентов</label>
-            <oql>SELECT AuditAgentSyncJob</oql>
+            <rank>70</rank>
+            <label>Синхронизация NVD</label>
+            <oql>SELECT NvdSyncJob</oql>
         </menu>
     </menus>
 </itop_design>

@@ -24,6 +24,12 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Menu:AgentSyncJobsMenu' => 'Синхронизация агентов',
     'Menu:AgentSyncJobsMenu+' => 'Создание заданий на синхронизацию агентов с системой аудита',
 
+    'Menu:AuditCreateJobsMenu' => 'Создание аудитов',
+    'Menu:AuditCreateJobsMenu+' => 'Задания на создание аудита в системе аудита',
+
+    'Menu:NvdSyncJobsMenu' => 'Синхронизация базы уязвимостей',
+    'Menu:NvdSyncJobsMenu+' => 'Импорт и синхронизация базы уязвимостей',
+
     'Class:AuditAgent' => 'Агенты',
     'Class:AuditAgent+' => 'Список установленных агентов',
     'Class:AuditAgent/Attribute:organization' => 'Организация',
@@ -54,6 +60,12 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Class:AuditAgentToken/Attribute:expires_at' => 'Истекает',
     'Class:AuditAgentToken/Attribute:expires_at+' => 'Момент истечения срока действия токена',
 
+    'Class:AuditUserMapping' => 'Маппинг пользователя аудита',
+    'Class:AuditUserMapping+' => 'Связь учетной записи UserExternal в iTop с id пользователя в auditor-service',
+    'Class:AuditUserMapping/Attribute:user' => 'Пользователь (UserExternal)',
+    'Class:AuditUserMapping/Attribute:user+' => 'Учетная запись iTop, для которой сохранен id в auditor-service',
+    'Class:AuditUserMapping/Attribute:auditor_user_id' => 'Id в auditor-service',
+
     'Class:CustomAudit' => 'Аудиты пользователя',
     'Class:CustomAudit+' => 'Список аудитов, выполненных для пользователя в системе аудита',
     'Class:CustomAudit/Attribute:organization' => 'Организация',
@@ -72,15 +84,13 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Class:CustomAudit/Attribute:completed_at+' => 'Дата и время завершения аудита',
     'Class:CustomAudit/Attribute:installed_software_count' => 'Кол-во ПО',
     'Class:CustomAudit/Attribute:installed_software_count+' => 'Количество установленных программ, найденных в ходе аудита',
-    'Class:CustomAudit/Attribute:agent' => 'Агент',
-    'Class:CustomAudit/Attribute:agent+' => 'Агент, на котором будет запущен аудит (выберите при создании)',
 
     'Class:AuditUserAuditsSyncJob' => 'Синхронизация аудитов пользователя',
-    'Class:AuditUserAuditsSyncJob+' => 'Ручной запуск синхронизации аудитов выбранного пользователя в систему аудита',
+    'Class:AuditUserAuditsSyncJob+' => 'Ручной запуск синхронизации аудитов текущего пользователя (по контакту) в систему аудита',
     'Class:AuditUserAuditsSyncJob/Attribute:name' => 'Название',
     'Class:AuditUserAuditsSyncJob/Attribute:name+' => 'Произвольное название задания синхронизации аудитов',
-    'Class:AuditUserAuditsSyncJob/Attribute:user' => 'Пользователь',
-    'Class:AuditUserAuditsSyncJob/Attribute:user+' => 'Внешний пользователь iTop, для которого будут синхронизированы аудиты',
+    'Class:AuditUserAuditsSyncJob/Attribute:person' => 'Контакт (Person)',
+    'Class:AuditUserAuditsSyncJob/Attribute:person+' => 'Человек, для которого синхронизируются аудиты (подставляется автоматически)',
 
     'Class:AuditAgentSyncJob' => 'Синхронизация агентов',
     'Class:AuditAgentSyncJob+' => 'Ручной запуск синхронизации агентов в систему аудита',
@@ -88,4 +98,13 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
     'Class:AuditAgentSyncJob/Attribute:name+' => 'Произвольное название задания синхронизации',
     'Class:AuditAgentSyncJob/Attribute:organization' => 'Организация',
     'Class:AuditAgentSyncJob/Attribute:organization+' => 'Организация, для которой будут синхронизированы агенты',
+
+    'Class:NvdSyncJob' => 'Синхронизация базы уязвимостей',
+    'Class:NvdSyncJob+' => 'Задание на импорт или инкрементальную синхронизацию базы уязвимостей в analyzer-service. Доступно только администратору.',
+    'Class:NvdSyncJob/Attribute:name' => 'Название',
+    'Class:NvdSyncJob/Attribute:name+' => 'Произвольное название задания',
+    'Class:NvdSyncJob/Attribute:sync_type' => 'Тип синхронизации',
+    'Class:NvdSyncJob/Attribute:sync_type+' => 'Первоначальная загрузка (bootstrap) или инкрементальное обновление (incremental)',
+    'Enum:NvdSyncJob/sync_type/bootstrap' => 'Первоначальная загрузка',
+    'Enum:NvdSyncJob/sync_type/incremental' => 'Инкрементальная синхронизация',
 ));

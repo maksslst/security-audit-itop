@@ -25,7 +25,7 @@ $MySettings = array(
 	//	default: false
 	'activity_panel.show_author_name_below_entries' => false,
 
-	'allowed_login_types' => 'form|hybridauth-Keycloak|external|basic',
+	'allowed_login_types' => 'form|hybridauth-Keycloak|external|basic|token',
 
 	// apc_cache.enabled: If set, the APC cache is allowed (the PHP extension must also be active)
 	//	default: true
