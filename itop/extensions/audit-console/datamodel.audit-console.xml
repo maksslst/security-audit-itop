@@ -1198,6 +1198,405 @@
                 </method>
             </methods>
         </class>
+
+        <class id="NvdScheduleConfig" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>nvd_schedule_config</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="sync_type" xsi:type="AttributeEnum">
+                    <sql>sync_type</sql>
+                    <values>
+                        <value id="incremental">
+                            <code>incremental</code>
+                        </value>
+                    </values>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>incremental</default_value>
+                </field>
+                <field id="frequency" xsi:type="AttributeEnum">
+                    <sql>frequency</sql>
+                    <values>
+                        <value id="hourly">
+                            <code>hourly</code>
+                        </value>
+                        <value id="daily">
+                            <code>daily</code>
+                        </value>
+                        <value id="weekly">
+                            <code>weekly</code>
+                        </value>
+                        <value id="monthly">
+                            <code>monthly</code>
+                        </value>
+                        <value id="custom">
+                            <code>custom</code>
+                        </value>
+                    </values>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>daily</default_value>
+                </field>
+                <field id="time_of_day" xsi:type="AttributeString">
+                    <sql>time_of_day</sql>
+                    <max_length>5</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <default_value>03:00</default_value>
+                </field>
+                <field id="day_of_week" xsi:type="AttributeEnum">
+                    <sql>day_of_week</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                        </value>
+                        <value id="6">
+                            <code>6</code>
+                        </value>
+                        <value id="7">
+                            <code>7</code>
+                        </value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="day_of_month" xsi:type="AttributeInteger">
+                    <sql>day_of_month</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="custom_cron" xsi:type="AttributeString">
+                    <sql>custom_cron</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="enabled" xsi:type="AttributeBoolean">
+                    <sql>enabled</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>true</default_value>
+                </field>
+                <field id="cron_expression" xsi:type="AttributeString">
+                    <sql>cron_expression</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="remote_schedule_id" xsi:type="AttributeInteger">
+                    <sql>remote_schedule_id</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                        <item id="sync_type"/>
+                        <item id="frequency"/>
+                        <item id="time_of_day"/>
+                        <item id="day_of_week"/>
+                        <item id="day_of_month"/>
+                        <item id="custom_cron"/>
+                        <item id="enabled"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                        <item id="sync_type"/>
+                        <item id="frequency"/>
+                        <item id="time_of_day"/>
+                        <item id="day_of_week"/>
+                        <item id="day_of_month"/>
+                        <item id="custom_cron"/>
+                        <item id="enabled"/>
+                        <item id="cron_expression"/>
+                        <item id="remote_schedule_id"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                        <item id="sync_type"/>
+                        <item id="frequency"/>
+                        <item id="enabled"/>
+                        <item id="cron_expression"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="GetInitialStateAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+                        {
+                            $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+                            $sFreq = $this->Get('frequency');
+
+                            if (in_array($sAttCode, array('time_of_day','day_of_week','day_of_month','custom_cron'))) {
+                                $iFlags |= OPT_ATT_HIDDEN;
+                            }
+
+                            if ($sFreq === 'hourly') {
+                            } elseif ($sFreq === 'daily') {
+                                if ($sAttCode === 'time_of_day') {
+                                    $iFlags &= ~OPT_ATT_HIDDEN;
+                                }
+                            } elseif ($sFreq === 'weekly') {
+                                if (in_array($sAttCode, array('time_of_day','day_of_week'))) {
+                                    $iFlags &= ~OPT_ATT_HIDDEN;
+                                }
+                            } elseif ($sFreq === 'monthly') {
+                                if (in_array($sAttCode, array('time_of_day','day_of_month'))) {
+                                    $iFlags &= ~OPT_ATT_HIDDEN;
+                                }
+                            } elseif ($sFreq === 'custom') {
+                                if ($sAttCode === 'custom_cron') {
+                                    $iFlags &= ~OPT_ATT_HIDDEN;
+                                }
+                            }
+
+                            return $iFlags;
+                        }
+                    ]]></code>
+                </method>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            try {
+                                $sCron = $this->Nvd_BuildCronExpression();
+                                $this->Set('cron_expression', $sCron);
+                                $this->AllowWrite();
+                                $this->DBUpdate();
+                                $this->Nvd_PushCreateToAnalyzer($sCron);
+                            } catch (Exception $e) {
+                                IssueLog::Error('NvdScheduleConfig AfterInsert failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="AfterUpdate" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterUpdate()
+                        {
+                            parent::AfterUpdate();
+                            try {
+                                $sCron = $this->Nvd_BuildCronExpression();
+                                $this->Set('cron_expression', $sCron);
+                                $this->AllowWrite();
+                                $this->DBUpdate();
+
+                                $iRemoteId = (int) $this->Get('remote_schedule_id');
+                                if ($iRemoteId > 0) {
+                                    $this->Nvd_PushUpdateToAnalyzer($iRemoteId, $sCron);
+                                } else {
+                                    $this->Nvd_PushCreateToAnalyzer($sCron);
+                                }
+                            } catch (Exception $e) {
+                                IssueLog::Error('NvdScheduleConfig AfterUpdate failed: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Nvd_BuildCronExpression" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Nvd_BuildCronExpression()
+                        {
+                            $sFreq = $this->Get('frequency');
+                            $sTime = trim((string) $this->Get('time_of_day'));
+                            if ($sTime === '') {
+                                $sTime = '03:00';
+                            }
+                            if (!preg_match('/^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/', $sTime, $aMatches)) {
+                                throw new Exception('Некорректное время: '.$sTime);
+                            }
+                            $iHour = (int) $aMatches[1];
+                            $iMin = (int) $aMatches[2];
+
+                            $sSec = '0';
+                            $sMin = (string) $iMin;
+                            $sHour = (string) $iHour;
+                            $sDom = '*';
+                            $sMon = '*';
+                            $sDow = '*';
+
+                            if ($sFreq === 'hourly') {
+                                $sMin = '0';
+                                $sHour = '*';
+                            } elseif ($sFreq === 'daily') {
+                            } elseif ($sFreq === 'weekly') {
+                                $sDow = (string) $this->Get('day_of_week');
+                                if ($sDow === '' || $sDow === '0') {
+                                    throw new Exception('Не выбран день недели для weekly');
+                                }
+                            } elseif ($sFreq === 'monthly') {
+                                $iDom = (int) $this->Get('day_of_month');
+                                if ($iDom < 1 || $iDom > 31) {
+                                    throw new Exception('Некорректный день месяца для monthly');
+                                }
+                                $sDom = (string) $iDom;
+                            } elseif ($sFreq === 'custom') {
+                                $sCustom = trim((string) $this->Get('custom_cron'));
+                                if ($sCustom === '') {
+                                    throw new Exception('Для custom расписания cron-строка не задана');
+                                }
+
+                                return $sCustom;
+                            } else {
+                                throw new Exception('Неизвестная частота: '.$sFreq);
+                            }
+
+                            return sprintf('%s %s %s %s %s %s', $sSec, $sMin, $sHour, $sDom, $sMon, $sDow);
+                        }
+                    ]]></code>
+                </method>
+                <method id="Nvd_GetServiceAccessToken" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Nvd_GetServiceAccessToken()
+                        {
+                            return AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                        }
+                    ]]></code>
+                </method>
+                <method id="Nvd_PushCreateToAnalyzer" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Nvd_PushCreateToAnalyzer($sCron)
+                        {
+                            $bEnabled = (bool) $this->Get('enabled');
+
+                            $aBody = array(
+                                'cronExpression' => $sCron,
+                                'enabled' => $bEnabled,
+                            );
+
+                            $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
+                            if (empty($sBaseUrl)) {
+                                throw new Exception('ANALYZER_SERVICE_URL env var is not set');
+                            }
+
+                            $sUrl = rtrim($sBaseUrl, '/').'/api/nvd/schedules';
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$this->Nvd_GetServiceAccessToken(),
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('analyzer-service create schedule failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+                            if ($iStatus !== 201 && $iStatus !== 200) {
+                                throw new Exception('analyzer-service create schedule HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $aData = json_decode($sResult, true);
+                            if (!is_array($aData) || !isset($aData['id'])) {
+                                throw new Exception('Unexpected schedule response: '.$sResult);
+                            }
+
+                            $this->Set('remote_schedule_id', (int) $aData['id']);
+                            $this->AllowWrite();
+                            $this->DBUpdate();
+                        }
+                    ]]></code>
+                </method>
+                <method id="Nvd_PushUpdateToAnalyzer" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Nvd_PushUpdateToAnalyzer($iRemoteId, $sCron)
+                        {
+                            $bEnabled = (bool) $this->Get('enabled');
+                            $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
+                            if (empty($sBaseUrl)) {
+                                throw new Exception('ANALYZER_SERVICE_URL env var is not set');
+                            }
+
+                            $sBaseUrl = rtrim($sBaseUrl, '/').'/api/nvd/schedules/'.$iRemoteId;
+                            $aBody = array('cronExpression' => $sCron);
+                            $ch = curl_init($sBaseUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$this->Nvd_GetServiceAccessToken(),
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('analyzer-service update schedule failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('analyzer-service update schedule HTTP '.$iStatus.': '.$sResult);
+                            }
+
+                            $sAction = $bEnabled ? 'enable' : 'disable';
+                            $sUrl = $sBaseUrl.'/'.$sAction;
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$this->Nvd_GetServiceAccessToken(),
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('analyzer-service schedule '.$sAction.' failed: '.curl_error($ch));
+                            }
+
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('analyzer-service schedule '.$sAction.' HTTP '.$iStatus.': '.$sResult);
+                            }
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
     </classes>
 
     <menus>
@@ -1245,6 +1644,12 @@
             <rank>70</rank>
             <label>Синхронизация NVD</label>
             <oql>SELECT NvdSyncJob</oql>
+        </menu>
+        <menu id="NvdScheduleConfigMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>80</rank>
+            <label>Расписания NVD</label>
+            <oql>SELECT NvdScheduleConfig</oql>
         </menu>
     </menus>
 </itop_design>
