@@ -1597,6 +1597,199 @@
                 </method>
             </methods>
         </class>
+
+        <class id="NvdImportJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>nvd_import_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>analyzer_job_id</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="analyzer_job_id" xsi:type="AttributeString">
+                    <sql>analyzer_job_id</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="type" xsi:type="AttributeString">
+                    <sql>sync_type</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="status" xsi:type="AttributeString">
+                    <sql>status</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="current_year" xsi:type="AttributeInteger">
+                    <sql>current_year</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="incremental" xsi:type="AttributeString">
+                    <sql>incremental</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="processed_records" xsi:type="AttributeString">
+                    <sql>processed_records</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="error_message" xsi:type="AttributeString">
+                    <sql>error_message</sql>
+                    <max_length>1024</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="started_at" xsi:type="AttributeDateTime">
+                    <sql>started_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="finished_at" xsi:type="AttributeDateTime">
+                    <sql>finished_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="updated_at" xsi:type="AttributeDateTime">
+                    <sql>updated_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="type"/>
+                        <item id="status"/>
+                        <item id="current_year"/>
+                        <item id="incremental"/>
+                        <item id="processed_records"/>
+                        <item id="error_message"/>
+                        <item id="started_at"/>
+                        <item id="finished_at"/>
+                        <item id="updated_at"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="type"/>
+                        <item id="status"/>
+                        <item id="current_year"/>
+                        <item id="incremental"/>
+                        <item id="updated_at"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="DisplayBareRelations" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
+                        {
+                            parent::DisplayBareRelations($oPage, $bEditMode);
+                            if ($bEditMode) {
+                                return;
+                            }
+
+                            $sStatus = (string)$this->Get('status');
+                            if ($sStatus === 'RUNNING' || $sStatus === 'PENDING') {
+                                $oPage->add_ready_script('setTimeout(function(){ location.reload(); }, 30000);');
+                            }
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="NvdFeedState" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>nvd_feed_state_snapshot</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>feed_name</friendlyname_attcode>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="feed_name"/>
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="nvd_feed_state_unique_feed_name">
+                        <attributes>
+                            <attribute id="feed_name"/>
+                        </attributes>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="feed_name" xsi:type="AttributeString">
+                    <sql>feed_name</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="last_modified_date" xsi:type="AttributeDateTime">
+                    <sql>last_modified_date</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="last_imported_at" xsi:type="AttributeDateTime">
+                    <sql>last_imported_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="status" xsi:type="AttributeString">
+                    <sql>status</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="error_message" xsi:type="AttributeString">
+                    <sql>error_message</sql>
+                    <max_length>1024</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="updated_at" xsi:type="AttributeDateTime">
+                    <sql>updated_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="feed_name"/>
+                        <item id="status"/>
+                        <item id="last_modified_date"/>
+                        <item id="last_imported_at"/>
+                        <item id="error_message"/>
+                        <item id="updated_at"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="feed_name"/>
+                        <item id="status"/>
+                        <item id="last_modified_date"/>
+                        <item id="last_imported_at"/>
+                        <item id="updated_at"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods/>
+        </class>
     </classes>
 
     <menus>
@@ -1645,9 +1838,21 @@
             <label>Синхронизация NVD</label>
             <oql>SELECT NvdSyncJob</oql>
         </menu>
-        <menu id="NvdScheduleConfigMenu" xsi:type="OQLMenuNode" _delta="define">
+        <menu id="NvdFeedStateMenu" xsi:type="OQLMenuNode" _delta="define">
             <parent>AuditConsole</parent>
             <rank>80</rank>
+            <label>История состояния NVD Feed</label>
+            <oql>SELECT NvdFeedState</oql>
+        </menu>
+        <menu id="NvdImportJobMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>90</rank>
+            <label>История запусков синхронизации NVD</label>
+            <oql>SELECT NvdImportJob</oql>
+        </menu>
+        <menu id="NvdScheduleConfigMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditConsole</parent>
+            <rank>100</rank>
             <label>Расписания NVD</label>
             <oql>SELECT NvdScheduleConfig</oql>
         </menu>
