@@ -16,10 +16,12 @@ RUN pecl install apcu && \
 
 RUN a2enmod rewrite
 
+RUN docker-php-ext-install opcache
+
+COPY docker/php/conf.d/99-itop.ini /usr/local/etc/php/conf.d/99-itop.ini
+
 COPY itop/ /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html
-
-RUN echo "short_open_tag=Off" > /usr/local/etc/php/conf.d/itop.ini
 
 WORKDIR /var/www/html

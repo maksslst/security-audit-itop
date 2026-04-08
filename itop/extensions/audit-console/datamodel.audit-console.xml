@@ -73,11 +73,49 @@
                     <sql>audit_id</sql>
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-                <field id="status" xsi:type="AttributeString">
+                <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
-                    <max_length>32</max_length>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="IN_PROGRESS"><code>IN_PROGRESS</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                    </values>
                     <is_null_allowed>false</is_null_allowed>
                     <default_value>PENDING</default_value>
+                </field>
+                <field id="inventory_status" xsi:type="AttributeEnum">
+                    <sql>inventory_status</sql>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="IN_PROGRESS"><code>IN_PROGRESS</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="analysis_status" xsi:type="AttributeEnum">
+                    <sql>analysis_status</sql>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="IN_PROGRESS"><code>IN_PROGRESS</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="report_status" xsi:type="AttributeEnum">
+                    <sql>report_status</sql>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="IN_PROGRESS"><code>IN_PROGRESS</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
                 </field>
                 <field id="created_at" xsi:type="AttributeDateTime">
                     <sql>created_at</sql>
@@ -119,23 +157,29 @@
                         <item id="user">
                             <rank>20</rank>
                         </item>
-                        <item id="audit_id">
+                        <item id="status">
                             <rank>30</rank>
                         </item>
-                        <item id="status">
+                        <item id="inventory_status">
                             <rank>40</rank>
                         </item>
-                        <item id="created_at">
+                        <item id="analysis_status">
                             <rank>50</rank>
                         </item>
-                        <item id="started_at">
+                        <item id="report_status">
                             <rank>60</rank>
                         </item>
-                        <item id="completed_at">
+                        <item id="created_at">
                             <rank>70</rank>
                         </item>
-                        <item id="installed_software_count">
+                        <item id="started_at">
                             <rank>80</rank>
+                        </item>
+                        <item id="completed_at">
+                            <rank>90</rank>
+                        </item>
+                        <item id="installed_software_count">
+                            <rank>100</rank>
                         </item>
                     </items>
                 </details>
@@ -147,17 +191,23 @@
                         <item id="user">
                             <rank>20</rank>
                         </item>
-                        <item id="audit_id">
+                        <item id="status">
                             <rank>30</rank>
                         </item>
-                        <item id="status">
+                        <item id="inventory_status">
                             <rank>40</rank>
                         </item>
-                        <item id="created_at">
+                        <item id="analysis_status">
                             <rank>50</rank>
                         </item>
-                        <item id="completed_at">
+                        <item id="report_status">
                             <rank>60</rank>
+                        </item>
+                        <item id="created_at">
+                            <rank>70</rank>
+                        </item>
+                        <item id="completed_at">
+                            <rank>80</rank>
                         </item>
                     </items>
                 </list>
@@ -193,6 +243,13 @@
                 <db_table>audit_agent</db_table>
                 <db_key_field>id</db_key_field>
                 <friendlyname_attcode>public_id</friendlyname_attcode>
+                <naming>
+                    <format>%1$s</format>
+                    <attributes>
+                        <attribute id="public_id"/>
+                    </attributes>
+                </naming>
+                <display_template/>
             </properties>
             <fields>
                 <field id="organization" xsi:type="AttributeExternalKey">
@@ -434,7 +491,7 @@
                             $sClientId = 'itop';
                             $sClientSecret = getenv('AUDITOR_ITOP_CLIENT_SECRET');
                             if (empty($sClientSecret)) {
-                                throw new Exception('AUDITOR_ITOP_CLIENT_SECRET env var is not set');
+                                throw new Exception('Не задан секрет интеграции (переменная окружения AUDITOR_ITOP_CLIENT_SECRET)');
                             }
 
                             $aPost = array(
@@ -450,18 +507,18 @@
                             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('Keycloak token request failed: '.curl_error($ch));
+                                throw new Exception('Не удалось получить токен доступа: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus < 200 || $iStatus >= 300) {
-                                throw new Exception('Keycloak token HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось получить токен доступа. HTTP '.$iStatus.': '.$sResult);
                             }
 
                             $aData = json_decode($sResult, true);
                             if (!is_array($aData) || empty($aData['access_token'])) {
-                                throw new Exception('Keycloak token response invalid: '.$sResult);
+                                throw new Exception('Некорректный ответ при получении токена доступа: '.$sResult);
                             }
 
                             return $aData['access_token'];
@@ -497,7 +554,7 @@
                             }
 
                             if ($iTenantId <= 0) {
-                                throw new Exception('Tenant is not synchronized with auditor-service for current organization');
+                                throw new Exception('Для текущей организации не выполнена синхронизация с системой аудита (не задан идентификатор организации)');
                             }
 
                             $aRoles = array();
@@ -514,7 +571,7 @@
                                 'roles' => $aRoles,
                             );
 
-                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL');
                             $sUrl = rtrim($sBaseUrl, '/').'/internal/token/registration-token';
 
                             $ch = curl_init($sUrl);
@@ -529,17 +586,17 @@
 
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('Failed to call registration-token backend: '.curl_error($ch));
+                                throw new Exception('Не удалось запросить регистрационный токен агента: '.curl_error($ch));
                             }
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
 
                             if ($iStatus < 200 || $iStatus >= 300) {
-                                throw new Exception('Backend registration-token returned HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось получить регистрационный токен агента. HTTP '.$iStatus.': '.$sResult);
                             }
                             $aData = json_decode($sResult, true);
                             if (!is_array($aData) || !isset($aData['registrationToken'], $aData['expiresInMinutes'])) {
-                                throw new Exception('Unexpected backend response for registration-token: '.$sResult);
+                                throw new Exception('Некорректный ответ при получении регистрационного токена агента: '.$sResult);
                             }
                             return $aData;
                         }
@@ -561,23 +618,30 @@
                     <sql>name</sql>
                     <max_length>255</max_length>
                     <is_null_allowed>false</is_null_allowed>
-                    <default_value>Синхронизировать организации с сервисом аудита</default_value>
+                </field>
+                <field id="organization" xsi:type="AttributeExternalKey">
+                    <sql>organization_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
                 </field>
             </fields>
             <presentation>
                 <creation>
                     <items>
                         <item id="name"/>
+                        <item id="organization"/>
                     </items>
                 </creation>
                 <details>
                     <items>
                         <item id="name"/>
+                        <item id="organization"/>
                     </items>
                 </details>
                 <list>
                     <items>
                         <item id="name"/>
+                        <item id="organization"/>
                     </items>
                 </list>
             </presentation>
@@ -593,7 +657,7 @@
                                 $sToken = $this->Auditor_GetServiceAccessToken();
                                 $this->Auditor_SyncOrganizations($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('AuditOrgSyncJob failed: '.$e->getMessage());
+                                IssueLog::Error('Синхронизация организаций не выполнена: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -614,53 +678,56 @@
                     <code><![CDATA[
                         private function Auditor_SyncOrganizations($sToken)
                         {
-                            $oSearch = DBObjectSearch::FromOQL("SELECT Organization");
-                            $oSet = new DBObjectSet($oSearch);
+                            $iSelectedOrgId = (int) $this->Get('organization');
+                            if ($iSelectedOrgId <= 0) {
+                                throw new Exception('Не выбрана организация');
+                            }
+                            $oOrg = MetaModel::GetObject('Organization', $iSelectedOrgId, false);
+                            if ($oOrg === null) {
+                                throw new Exception('Организация не найдена: '.$iSelectedOrgId);
+                            }
+                            $iOrgId = $oOrg->GetKey();
+                            $aBody = array(
+                                'name' => $oOrg->GetName(),
+                                'itopOrganizationId' => $iOrgId,
+                            );
 
-                            while ($oOrg = $oSet->Fetch()) {
-                                $iOrgId = $oOrg->GetKey();
-                                $aBody = array(
-                                    'name' => $oOrg->GetName(),
-                                    'itopOrganizationId' => $iOrgId,
-                                );
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL');
+                            $sUrl = rtrim($sBaseUrl, '/').'/internal/tenants';
 
-                                $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
-                                $sUrl = rtrim($sBaseUrl, '/').'/api/tenants';
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Content-Type: application/json',
+                                'Accept: application/json',
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
 
-                                $ch = curl_init($sUrl);
-                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                                curl_setopt($ch, CURLOPT_POST, true);
-                                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                                    'Authorization: Bearer '.$sToken,
-                                    'Content-Type: application/json',
-                                    'Accept: application/json',
-                                ));
-                                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('Не удалось синхронизировать организацию: '.curl_error($ch));
+                            }
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
 
-                                $sResult = curl_exec($ch);
-                                if ($sResult === false) {
-                                    throw new Exception('auditor-service createTenant failed: '.curl_error($ch));
-                                }
-                                $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                                curl_close($ch);
+                            if ($iStatus !== 201 && $iStatus !== 200) {
+                                IssueLog::Error('Не удалось синхронизировать организацию. HTTP '.$iStatus.': '.$sResult);
+                                return;
+                            }
 
-                                if ($iStatus !== 201 && $iStatus !== 200) {
-                                    IssueLog::Error('auditor-service createTenant HTTP '.$iStatus.': '.$sResult);
-                                    continue;
-                                }
+                            $mData = json_decode($sResult, true);
+                            if (is_array($mData)) {
+                                $iTenantId = (int) reset($mData);
+                            } else {
+                                $iTenantId = (int) $sResult;
+                            }
 
-                                $mData = json_decode($sResult, true);
-                                if (is_array($mData)) {
-                                    $iTenantId = (int) reset($mData);
-                                } else {
-                                    $iTenantId = (int) $sResult;
-                                }
-
-                                if ($iTenantId > 0 && (int)$oOrg->Get('auditor_tenant_id') === 0) {
-                                    $oOrg->Set('auditor_tenant_id', $iTenantId);
-                                    $oOrg->AllowWrite();
-                                    $oOrg->DBUpdate();
-                                }
+                            if ($iTenantId > 0 && (int)$oOrg->Get('auditor_tenant_id') === 0) {
+                                $oOrg->Set('auditor_tenant_id', $iTenantId);
+                                $oOrg->AllowWrite();
+                                $oOrg->DBUpdate();
                             }
                         }
                     ]]></code>
@@ -681,7 +748,6 @@
                     <sql>name</sql>
                     <max_length>255</max_length>
                     <is_null_allowed>false</is_null_allowed>
-                    <default_value>Синхронизировать пользователя с сервисом аудита</default_value>
                 </field>
                 <field id="user" xsi:type="AttributeExternalKey">
                     <sql>user_id</sql>
@@ -693,6 +759,7 @@
                 <creation>
                     <items>
                         <item id="name"/>
+                        <item id="user"/>
                     </items>
                 </creation>
                 <details>
@@ -720,7 +787,7 @@
                                 $sToken = $this->Auditor_GetServiceAccessToken();
                                 $this->Auditor_SyncSingleUser($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('AuditUserSyncJob failed: '.$e->getMessage());
+                                IssueLog::Error('Синхронизация пользователя не выполнена: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -794,12 +861,12 @@
                             $iUserId = $this->Get('user');
                             $oUser = MetaModel::GetObject('UserExternal', $iUserId, false);
                             if (!$oUser) {
-                                throw new Exception('UserExternal not found for id '.$iUserId);
+                                throw new Exception('Внешний пользователь не найден: '.$iUserId);
                             }
 
                             $sUsername = $oUser->Get('login');
                             if (empty($sUsername)) {
-                                throw new Exception('UserExternal '.$iUserId.' has empty login');
+                                throw new Exception('У внешнего пользователя не задан логин: '.$iUserId);
                             }
 
                             $sTenantName = 'Default';
@@ -820,7 +887,7 @@
                             }
 
                             if ($iTenantId <= 0) {
-                                throw new Exception('Tenant is not synchronized with auditor-service for organization '.$sTenantName);
+                                throw new Exception('Для организации «'.$sTenantName.'» не выполнена синхронизация с системой аудита (не задан идентификатор организации)');
                             }
 
                             $sTempPwd = bin2hex(random_bytes(8));
@@ -839,8 +906,8 @@
                                 'itopUserExternalId' => $iUserId,
                             );
 
-                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
-                            $sUrl = rtrim($sBaseUrl, '/').'/api/users/internal';
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL');
+                            $sUrl = rtrim($sBaseUrl, '/').'/internal/users';
 
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -854,13 +921,13 @@
 
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('auditor-service createUserFromItop failed: '.curl_error($ch));
+                                throw new Exception('Не удалось создать пользователя в системе аудита: '.curl_error($ch));
                             }
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
 
                             if ($iStatus !== 201 && $iStatus !== 200) {
-                                throw new Exception('auditor-service createUserFromItop HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось создать пользователя в системе аудита. HTTP '.$iStatus.': '.$sResult);
                             }
 
                             $mData = json_decode($sResult, true);
@@ -951,20 +1018,18 @@
                         public function GetFilterFor($sAttCode)
                         {
                             if ($sAttCode === 'agent') {
+                                if (UserRights::IsAdministrator()) {
+                                    return parent::GetFilterFor($sAttCode);
+                                }
                                 $iOrgId = 0;
-                                $oUser = UserRights::GetUserObject();
-                                if ($oUser) {
-                                    $iContactId = $oUser->Get('contactid');
-                                    if (!empty($iContactId)) {
-                                        $oPerson = MetaModel::GetObject('Person', $iContactId, false);
-                                        if ($oPerson) {
-                                            $iOrgId = (int) $oPerson->Get('org_id');
-                                        }
-                                    }
+                                $oContact = UserRights::GetContactObject();
+                                if ($oContact) {
+                                    $iOrgId = (int) $oContact->Get('org_id');
                                 }
                                 if ($iOrgId > 0) {
                                     return DBObjectSearch::FromOQL('SELECT AuditAgent WHERE organization = :org', array(), array('org' => $iOrgId));
                                 }
+                                return DBObjectSearch::FromOQL('SELECT AuditAgent WHERE id = 0');
                             }
                             return parent::GetFilterFor($sAttCode);
                         }
@@ -981,7 +1046,7 @@
                                 $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
                                 $this->Auditor_CreateAudit($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('AuditCreateJob failed: '.$e->getMessage());
+                                IssueLog::Error('Создание аудита не выполнено: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -1000,7 +1065,7 @@
 
                             $oUser = UserRights::GetUserObject();
                             if (!$oUser) {
-                                throw new Exception('Пользователь не определён');
+                                throw new Exception('Пользователь не определен');
                             }
 
                             $iContactId = $oUser->Get('contactid');
@@ -1048,7 +1113,7 @@
                             $oMapping = $oMappingSet->Fetch();
                             $iAuditorUserId = $oMapping ? (int) $oMapping->Get('auditor_user_id') : 0;
                             if ($iAuditorUserId <= 0) {
-                                throw new Exception('У пользователя не найден auditor_user_id. Выполните синхронизацию пользователя.');
+                                throw new Exception('Не найден идентификатор пользователя в системе аудита. Выполните синхронизацию пользователя.');
                             }
 
                             if ((int) $oAgent->Get('organization') !== (int) $iOrgId) {
@@ -1057,7 +1122,7 @@
 
                             $sPublicId = $oAgent->Get('public_id');
                             if (empty($sPublicId)) {
-                                throw new Exception('У агента не задан public_id');
+                                throw new Exception('У агента не задан идентификатор');
                             }
 
                             $aBody = array(
@@ -1065,7 +1130,7 @@
                                 'initiatedById' => $iAuditorUserId,
                                 'agentPublicId' => $sPublicId,
                             );
-                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL') ?: 'http://auditor-service:8081';
+                            $sBaseUrl = getenv('AUDITOR_SERVICE_URL');
                             $sUrl = rtrim($sBaseUrl, '/').'/internal/audits';
                             $ch = curl_init($sUrl);
                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -1078,13 +1143,13 @@
                             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('auditor-service createAudit failed: '.curl_error($ch));
+                                throw new Exception('Не удалось создать аудит: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus !== 201 && $iStatus !== 200) {
-                                throw new Exception('auditor-service createAudit HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось создать аудит. HTTP '.$iStatus.': '.$sResult);
                             }
                         }
                     ]]></code>
@@ -1150,14 +1215,14 @@
                         {
                             parent::AfterInsert();
                             if (!UserRights::IsAdministrator()) {
-                                IssueLog::Error('NvdSyncJob: only Administrator can run NVD sync');
+                                IssueLog::Error('Синхронизация NVD доступна только администратору');
                                 return;
                             }
                             try {
                                 $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
                                 $this->Nvd_CallSyncApi($sToken);
                             } catch (Exception $e) {
-                                IssueLog::Error('NvdSyncJob failed: '.$e->getMessage());
+                                IssueLog::Error('Синхронизация NVD не выполнена: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -1185,18 +1250,439 @@
 
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('analyzer-service request failed: '.curl_error($ch));
+                                throw new Exception('Не удалось выполнить запрос синхронизации NVD: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus < 200 || $iStatus >= 300) {
-                                throw new Exception('analyzer-service NVD sync HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Синхронизация NVD завершилась с ошибкой. HTTP '.$iStatus.': '.$sResult);
                             }
                         }
                     ]]></code>
                 </method>
             </methods>
+        </class>
+
+        <class id="OvalFeedImportJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel</category>
+                <db_table>oval_feed_import_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>name</friendlyname_attcode>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>Импорт OVAL</default_value>
+                </field>
+                <field id="oval_feed_selection" xsi:type="AttributeEnum">
+                    <sql>oval_feed_selection</sql>
+                    <values>
+                        <value id="ubuntu_bionic"><code>ubuntu:bionic</code></value>
+                        <value id="ubuntu_bluefield_jammy"><code>ubuntu:bluefield/jammy</code></value>
+                        <value id="ubuntu_fips_preview_jammy"><code>ubuntu:fips-preview/jammy</code></value>
+                        <value id="ubuntu_fips_updates_bionic"><code>ubuntu:fips-updates/bionic</code></value>
+                        <value id="ubuntu_fips_updates_focal"><code>ubuntu:fips-updates/focal</code></value>
+                        <value id="ubuntu_fips_updates_jammy"><code>ubuntu:fips-updates/jammy</code></value>
+                        <value id="ubuntu_fips_updates_xenial"><code>ubuntu:fips-updates/xenial</code></value>
+                        <value id="ubuntu_fips_bionic"><code>ubuntu:fips/bionic</code></value>
+                        <value id="ubuntu_fips_focal"><code>ubuntu:fips/focal</code></value>
+                        <value id="ubuntu_fips_xenial"><code>ubuntu:fips/xenial</code></value>
+                        <value id="ubuntu_focal"><code>ubuntu:focal</code></value>
+                        <value id="ubuntu_jammy"><code>ubuntu:jammy</code></value>
+                        <value id="ubuntu_noble"><code>ubuntu:noble</code></value>
+                        <value id="ubuntu_oracular"><code>ubuntu:oracular</code></value>
+                        <value id="ubuntu_plucky"><code>ubuntu:plucky</code></value>
+                        <value id="ubuntu_questing"><code>ubuntu:questing</code></value>
+                        <value id="ubuntu_realtime_jammy"><code>ubuntu:realtime/jammy</code></value>
+                        <value id="ubuntu_realtime_noble"><code>ubuntu:realtime/noble</code></value>
+                        <value id="ubuntu_trusty"><code>ubuntu:trusty</code></value>
+                        <value id="ubuntu_xenial"><code>ubuntu:xenial</code></value>
+                        <value id="debian_bookworm"><code>debian:bookworm</code></value>
+                        <value id="debian_bullseye"><code>debian:bullseye</code></value>
+                        <value id="debian_buster"><code>debian:buster</code></value>
+                        <value id="debian_jessie"><code>debian:jessie</code></value>
+                        <value id="debian_stretch"><code>debian:stretch</code></value>
+                        <value id="debian_trixie"><code>debian:trixie</code></value>
+                        <value id="debian_wheezy"><code>debian:wheezy</code></value>
+                    </values>
+                    <is_null_allowed>false</is_null_allowed>
+                    <default_value>ubuntu:jammy</default_value>
+                </field>
+                <field id="oval_vendor" xsi:type="AttributeString">
+                    <sql>oval_vendor</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="feed_path" xsi:type="AttributeString">
+                    <sql>feed_path</sql>
+                    <max_length>128</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <creation>
+                    <items>
+                        <item id="name"/>
+                        <item id="oval_feed_selection"/>
+                    </items>
+                </creation>
+                <details>
+                    <items>
+                        <item id="name"/>
+                        <item id="oval_feed_selection"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="name"/>
+                        <item id="oval_feed_selection"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods>
+                <method id="OnInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function OnInsert()
+                        {
+                            $sSel = (string) $this->Get('oval_feed_selection');
+                            $aParts = explode(':', $sSel, 2);
+                            if (count($aParts) !== 2 || $aParts[0] === '' || $aParts[1] === '') {
+                                throw new Exception('Некорректно выбрана целевая выгрузка OVAL');
+                            }
+                            $this->Set('oval_vendor', $aParts[0]);
+                            $this->Set('feed_path', $aParts[1]);
+                            parent::OnInsert();
+                        }
+                    ]]></code>
+                </method>
+                <method id="AfterInsert" _delta="define">
+                    <static>false</static>
+                    <access>protected</access>
+                    <code><![CDATA[
+                        protected function AfterInsert()
+                        {
+                            parent::AfterInsert();
+                            if (!UserRights::IsAdministrator()) {
+                                IssueLog::Error('Импорт OVAL доступен только администратору');
+                                return;
+                            }
+                            try {
+                                $sToken = AuditAgentToken::Auditor_StaticGetServiceAccessToken();
+                                $this->Oval_CallRefreshApi($sToken);
+                            } catch (Exception $e) {
+                                IssueLog::Error('Импорт OVAL не выполнен: '.$e->getMessage());
+                            }
+                        }
+                    ]]></code>
+                </method>
+                <method id="Oval_GetAllowedPathsByVendor" _delta="define">
+                    <static>true</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public static function Oval_GetAllowedPathsByVendor()
+                        {
+                            return array(
+                                'ubuntu' => array(
+                                    'bionic',
+                                    'bluefield/jammy',
+                                    'fips-preview/jammy',
+                                    'fips-updates/bionic',
+                                    'fips-updates/focal',
+                                    'fips-updates/jammy',
+                                    'fips-updates/xenial',
+                                    'fips/bionic',
+                                    'fips/focal',
+                                    'fips/xenial',
+                                    'focal',
+                                    'jammy',
+                                    'noble',
+                                    'oracular',
+                                    'plucky',
+                                    'questing',
+                                    'realtime/jammy',
+                                    'realtime/noble',
+                                    'trusty',
+                                    'xenial',
+                                ),
+                                'debian' => array(
+                                    'bookworm',
+                                    'bullseye',
+                                    'buster',
+                                    'jessie',
+                                    'stretch',
+                                    'trixie',
+                                    'wheezy',
+                                ),
+                            );
+                        }
+                    ]]></code>
+                </method>
+                <method id="Oval_CallRefreshApi" _delta="define">
+                    <static>false</static>
+                    <access>private</access>
+                    <code><![CDATA[
+                        private function Oval_CallRefreshApi($sToken)
+                        {
+                            $sVendor = (string) $this->Get('oval_vendor');
+                            $sFeedPath = trim((string) $this->Get('feed_path'));
+                            $aByVendor = static::Oval_GetAllowedPathsByVendor();
+                            if (!isset($aByVendor[$sVendor])) {
+                                throw new Exception('Неизвестный поставщик OVAL');
+                            }
+                            if (!in_array($sFeedPath, $aByVendor[$sVendor], true)) {
+                                throw new Exception('Недопустимый каталог выгрузки OVAL: '.$sFeedPath);
+                            }
+
+                            $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
+                            if ($sBaseUrl === false || $sBaseUrl === '') {
+                                throw new Exception('Не задан адрес системы синхронизации (переменная окружения ANALYZER_SERVICE_URL)');
+                            }
+                            $sUrl = rtrim($sBaseUrl, '/').'/api/oval/'.rawurlencode($sVendor).'/refresh?feedPath='.rawurlencode($sFeedPath);
+
+                            $ch = curl_init($sUrl);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Bearer '.$sToken,
+                                'Accept: application/json',
+                            ));
+
+                            $sResult = curl_exec($ch);
+                            if ($sResult === false) {
+                                throw new Exception('Не удалось запустить импорт OVAL: '.curl_error($ch));
+                            }
+                            $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+                            if ($iStatus < 200 || $iStatus >= 300) {
+                                throw new Exception('Не удалось запустить импорт OVAL. HTTP '.$iStatus.': '.$sResult);
+                            }
+                        }
+                    ]]></code>
+                </method>
+            </methods>
+        </class>
+
+        <class id="OvalFeedState" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>oval_feed_state_snapshot</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>feed_key</friendlyname_attcode>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="feed_key"/>
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="oval_feed_state_unique_feed_key">
+                        <attributes>
+                            <attribute id="feed_key"/>
+                        </attributes>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="feed_key" xsi:type="AttributeString">
+                    <sql>feed_key</sql>
+                    <max_length>160</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="vendor" xsi:type="AttributeString">
+                    <sql>vendor</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="feed_path" xsi:type="AttributeString">
+                    <sql>feed_path</sql>
+                    <max_length>128</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="source_url" xsi:type="AttributeString">
+                    <sql>source_url</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="fetched_at" xsi:type="AttributeDateTime">
+                    <sql>fetched_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="rule_count" xsi:type="AttributeString">
+                    <sql>rule_count</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="last_error" xsi:type="AttributeString">
+                    <sql>last_error</sql>
+                    <max_length>1024</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="OK"><code>OK</code></value>
+                        <value id="ERROR"><code>ERROR</code></value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="updated_at" xsi:type="AttributeDateTime">
+                    <sql>updated_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="feed_key"/>
+                        <item id="vendor"/>
+                        <item id="feed_path"/>
+                        <item id="status"/>
+                        <item id="fetched_at"/>
+                        <item id="rule_count"/>
+                        <item id="last_error"/>
+                        <item id="updated_at"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="feed_key"/>
+                        <item id="status"/>
+                        <item id="fetched_at"/>
+                        <item id="updated_at"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods/>
+        </class>
+
+        <class id="OvalImportJob" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>oval_import_job</db_table>
+                <db_key_field>id</db_key_field>
+                <friendlyname_attcode>analyzer_job_id</friendlyname_attcode>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="analyzer_job_id"/>
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="oval_import_job_unique_analyzer_job_id">
+                        <attributes>
+                            <attribute id="analyzer_job_id"/>
+                        </attributes>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="analyzer_job_id" xsi:type="AttributeString">
+                    <sql>analyzer_job_id</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>false</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="vendor" xsi:type="AttributeString">
+                    <sql>vendor</sql>
+                    <max_length>32</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="feed_path" xsi:type="AttributeString">
+                    <sql>feed_path</sql>
+                    <max_length>128</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="RUNNING"><code>RUNNING</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                        <value id="CANCELLED"><code>CANCELLED</code></value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="source_url" xsi:type="AttributeString">
+                    <sql>source_url</sql>
+                    <max_length>255</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="processed_rules" xsi:type="AttributeString">
+                    <sql>processed_rules</sql>
+                    <max_length>64</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="error_message" xsi:type="AttributeString">
+                    <sql>error_message</sql>
+                    <max_length>1024</max_length>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="started_at" xsi:type="AttributeDateTime">
+                    <sql>started_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="finished_at" xsi:type="AttributeDateTime">
+                    <sql>finished_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+                <field id="updated_at" xsi:type="AttributeDateTime">
+                    <sql>updated_at</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                    <is_editable>false</is_editable>
+                </field>
+            </fields>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="vendor"/>
+                        <item id="feed_path"/>
+                        <item id="status"/>
+                        <item id="processed_rules"/>
+                        <item id="error_message"/>
+                        <item id="started_at"/>
+                        <item id="finished_at"/>
+                        <item id="updated_at"/>
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="status"/>
+                        <item id="updated_at"/>
+                    </items>
+                </list>
+            </presentation>
+            <methods/>
         </class>
 
         <class id="NvdScheduleConfig" _delta="define">
@@ -1328,7 +1814,6 @@
                         <item id="custom_cron"/>
                         <item id="enabled"/>
                         <item id="cron_expression"/>
-                        <item id="remote_schedule_id"/>
                     </items>
                 </details>
                 <list>
@@ -1349,6 +1834,9 @@
                         public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
                         {
                             $iFlags = parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+                            if ($sAttCode === 'remote_schedule_id') {
+                                $iFlags |= OPT_ATT_HIDDEN;
+                            }
                             $sFreq = $this->Get('frequency');
 
                             if (in_array($sAttCode, array('time_of_day','day_of_week','day_of_month','custom_cron'))) {
@@ -1392,7 +1880,7 @@
                                 $this->DBUpdate();
                                 $this->Nvd_PushCreateToAnalyzer($sCron);
                             } catch (Exception $e) {
-                                IssueLog::Error('NvdScheduleConfig AfterInsert failed: '.$e->getMessage());
+                                IssueLog::Error('Создание расписания синхронизации NVD не выполнено: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -1417,7 +1905,7 @@
                                     $this->Nvd_PushCreateToAnalyzer($sCron);
                                 }
                             } catch (Exception $e) {
-                                IssueLog::Error('NvdScheduleConfig AfterUpdate failed: '.$e->getMessage());
+                                IssueLog::Error('Обновление расписания синхронизации NVD не выполнено: '.$e->getMessage());
                             }
                         }
                     ]]></code>
@@ -1453,18 +1941,18 @@
                             } elseif ($sFreq === 'weekly') {
                                 $sDow = (string) $this->Get('day_of_week');
                                 if ($sDow === '' || $sDow === '0') {
-                                    throw new Exception('Не выбран день недели для weekly');
+                                    throw new Exception('Не выбран день недели для еженедельного расписания');
                                 }
                             } elseif ($sFreq === 'monthly') {
                                 $iDom = (int) $this->Get('day_of_month');
                                 if ($iDom < 1 || $iDom > 31) {
-                                    throw new Exception('Некорректный день месяца для monthly');
+                                    throw new Exception('Некорректный день месяца для ежемесячного расписания');
                                 }
                                 $sDom = (string) $iDom;
                             } elseif ($sFreq === 'custom') {
                                 $sCustom = trim((string) $this->Get('custom_cron'));
                                 if ($sCustom === '') {
-                                    throw new Exception('Для custom расписания cron-строка не задана');
+                                    throw new Exception('Для произвольного расписания не задано Cron-выражение');
                                 }
 
                                 return $sCustom;
@@ -1501,7 +1989,7 @@
 
                             $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
                             if (empty($sBaseUrl)) {
-                                throw new Exception('ANALYZER_SERVICE_URL env var is not set');
+                                throw new Exception('Не задан адрес системы синхронизации (переменная окружения ANALYZER_SERVICE_URL)');
                             }
 
                             $sUrl = rtrim($sBaseUrl, '/').'/api/nvd/schedules';
@@ -1517,18 +2005,18 @@
 
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('analyzer-service create schedule failed: '.curl_error($ch));
+                                throw new Exception('Не удалось создать расписание синхронизации: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus !== 201 && $iStatus !== 200) {
-                                throw new Exception('analyzer-service create schedule HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось создать расписание синхронизации. HTTP '.$iStatus.': '.$sResult);
                             }
 
                             $aData = json_decode($sResult, true);
                             if (!is_array($aData) || !isset($aData['id'])) {
-                                throw new Exception('Unexpected schedule response: '.$sResult);
+                                throw new Exception('Некорректный ответ при создании расписания синхронизации: '.$sResult);
                             }
 
                             $this->Set('remote_schedule_id', (int) $aData['id']);
@@ -1546,7 +2034,7 @@
                             $bEnabled = (bool) $this->Get('enabled');
                             $sBaseUrl = getenv('ANALYZER_SERVICE_URL');
                             if (empty($sBaseUrl)) {
-                                throw new Exception('ANALYZER_SERVICE_URL env var is not set');
+                                throw new Exception('Не задан адрес системы синхронизации (переменная окружения ANALYZER_SERVICE_URL)');
                             }
 
                             $sBaseUrl = rtrim($sBaseUrl, '/').'/api/nvd/schedules/'.$iRemoteId;
@@ -1562,13 +2050,13 @@
                             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($aBody));
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('analyzer-service update schedule failed: '.curl_error($ch));
+                                throw new Exception('Не удалось обновить расписание синхронизации: '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus < 200 || $iStatus >= 300) {
-                                throw new Exception('analyzer-service update schedule HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось обновить расписание синхронизации. HTTP '.$iStatus.': '.$sResult);
                             }
 
                             $sAction = $bEnabled ? 'enable' : 'disable';
@@ -1584,13 +2072,13 @@
                             curl_setopt($ch, CURLOPT_POSTFIELDS, '{}');
                             $sResult = curl_exec($ch);
                             if ($sResult === false) {
-                                throw new Exception('analyzer-service schedule '.$sAction.' failed: '.curl_error($ch));
+                                throw new Exception('Не удалось изменить состояние расписания ('.$sAction.'): '.curl_error($ch));
                             }
 
                             $iStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
                             if ($iStatus < 200 || $iStatus >= 300) {
-                                throw new Exception('analyzer-service schedule '.$sAction.' HTTP '.$iStatus.': '.$sResult);
+                                throw new Exception('Не удалось изменить состояние расписания ('.$sAction.'). HTTP '.$iStatus.': '.$sResult);
                             }
                         }
                     ]]></code>
@@ -1613,15 +2101,24 @@
                     <is_null_allowed>false</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
-                <field id="type" xsi:type="AttributeString">
+                <field id="type" xsi:type="AttributeEnum">
                     <sql>sync_type</sql>
-                    <max_length>32</max_length>
+                    <values>
+                        <value id="bootstrap"><code>bootstrap</code></value>
+                        <value id="incremental"><code>incremental</code></value>
+                    </values>
                     <is_null_allowed>true</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
-                <field id="status" xsi:type="AttributeString">
+                <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
-                    <max_length>32</max_length>
+                    <values>
+                        <value id="PENDING"><code>PENDING</code></value>
+                        <value id="RUNNING"><code>RUNNING</code></value>
+                        <value id="COMPLETED"><code>COMPLETED</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                        <value id="CANCELLED"><code>CANCELLED</code></value>
+                    </values>
                     <is_null_allowed>true</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
@@ -1749,9 +2246,13 @@
                     <is_null_allowed>true</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
-                <field id="status" xsi:type="AttributeString">
+                <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
-                    <max_length>32</max_length>
+                    <values>
+                        <value id="RUNNING"><code>RUNNING</code></value>
+                        <value id="SUCCESS"><code>SUCCESS</code></value>
+                        <value id="FAILED"><code>FAILED</code></value>
+                    </values>
                     <is_null_allowed>true</is_null_allowed>
                     <is_editable>false</is_editable>
                 </field>
@@ -1793,66 +2294,84 @@
     </classes>
 
     <menus>
-        <menu id="AuditConsole" xsi:type="MenuGroup" _delta="define">
+        <menu id="AuditSystem" xsi:type="MenuGroup" _delta="define">
             <parent>ConfigManagement</parent>
             <rank>100</rank>
-            <label>Консоль аудита</label>
+            <label>Система аудита</label>
         </menu>
         <menu id="AuditMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>10</rank>
             <oql>SELECT CustomAudit</oql>
         </menu>
         <menu id="AgentsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>20</rank>
             <oql>SELECT AuditAgent</oql>
         </menu>
         <menu id="AuditCreateJobsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>30</rank>
             <label>Создание аудитов</label>
             <oql>SELECT AuditCreateJob</oql>
         </menu>
         <menu id="AgentTokensMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>40</rank>
             <label>Регистрационный токен агента</label>
             <oql>SELECT AuditAgentToken</oql>
         </menu>
         <menu id="SyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>50</rank>
             <label>Синхронизация организаций</label>
             <oql>SELECT AuditOrgSyncJob</oql>
         </menu>
         <menu id="UserSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>60</rank>
             <label>Синхронизация пользователей</label>
             <oql>SELECT AuditUserSyncJob</oql>
         </menu>
         <menu id="NvdSyncJobsMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+            <parent>AuditSystem</parent>
             <rank>70</rank>
-            <label>Синхронизация NVD</label>
+            <label>Синхронизация базы уязвимостей NVD</label>
             <oql>SELECT NvdSyncJob</oql>
         </menu>
-        <menu id="NvdFeedStateMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
+        <menu id="OvalFeedImportJobsMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditSystem</parent>
             <rank>80</rank>
-            <label>История состояния NVD Feed</label>
+            <label>Импорт OVAL</label>
+            <oql>SELECT OvalFeedImportJob</oql>
+        </menu>
+        <menu id="OvalFeedStateMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditSystem</parent>
+            <rank>90</rank>
+            <label>Состояние OVAL выгрузок</label>
+            <oql>SELECT OvalFeedState</oql>
+        </menu>
+        <menu id="OvalImportJobMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditSystem</parent>
+            <rank>100</rank>
+            <label>Запуски импорта OVAL</label>
+            <oql>SELECT OvalImportJob</oql>
+        </menu>
+        <menu id="NvdFeedStateMenu" xsi:type="OQLMenuNode" _delta="define">
+            <parent>AuditSystem</parent>
+            <rank>110</rank>
+            <label>Состояние выгрузок NVD</label>
             <oql>SELECT NvdFeedState</oql>
         </menu>
         <menu id="NvdImportJobMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
-            <rank>90</rank>
+            <parent>AuditSystem</parent>
+            <rank>120</rank>
             <label>История запусков синхронизации NVD</label>
             <oql>SELECT NvdImportJob</oql>
         </menu>
         <menu id="NvdScheduleConfigMenu" xsi:type="OQLMenuNode" _delta="define">
-            <parent>AuditConsole</parent>
-            <rank>100</rank>
+            <parent>AuditSystem</parent>
+            <rank>130</rank>
             <label>Расписания NVD</label>
             <oql>SELECT NvdScheduleConfig</oql>
         </menu>

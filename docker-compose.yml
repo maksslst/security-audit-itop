@@ -21,8 +21,6 @@ services:
     restart: always
     depends_on:
       - db
-    volumes:
-      - ./itop:/var/www/html
     networks:
       - sso-network
 

@@ -226,7 +226,7 @@ $MySettings = array(
 
 	// timezone: Timezone (reference: http://php.net/manual/en/timezones.php). If empty, it will be left unchanged and MUST be explicitly configured in PHP
 	//	default: 'Europe/Paris'
-	'timezone' => 'Europe/Paris',
+	'timezone' => 'Europe/Moscow',
 
 	// tracking_level_linked_set_default: Default tracking level if not explicitly set at the attribute level, for AttributeLinkedSet (defaults to NONE in case of a fresh install, LIST otherwise - this to preserve backward compatibility while upgrading from a version older than 2.0.3 - see TRAC #936)
 	//	default: 1
@@ -254,6 +254,7 @@ $MyModuleSettings = array(
 	'itop-attachments' => array (
 		'allowed_classes' => array (
 		  0 => 'Ticket',
+		  1 => 'CustomAudit',
 		),
 		'position' => 'relations',
 		'preview_max_width' => 290,
